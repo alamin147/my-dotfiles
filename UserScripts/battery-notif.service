@@ -1,0 +1,8 @@
+[Unit]
+Description=Battery low notification
+
+[Service]
+Type=oneshot
+ExecStart=/home/alamin/.config/hypr/UserScripts/battery_notif.sh
+Environment=DISPLAY=:0
+Environment=DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
