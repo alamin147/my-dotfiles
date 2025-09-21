@@ -1,0 +1,14 @@
+return {
+  {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    build = ":Copilot auth",
+    opts = {
+      suggestion = { enabled = true, auto_trigger = true },
+      panel = { enabled = true },
+    },
+    config = function(_, opts)
+      require("copilot").setup(opts)
+    end,
+  },
+}
