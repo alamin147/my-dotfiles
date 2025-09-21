@@ -119,6 +119,3 @@ Also I like minimal and clean setups for waybar/taskbar.
 
 This dotfiles setup is based on [JaKooLit's Hyprland Dots](https://github.com/JaKooLit). Special thanks to the Hyprland community and contributors.
 
-## License
-
-Refer to the original repository for licensing information.
