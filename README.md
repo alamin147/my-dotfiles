@@ -8,7 +8,11 @@ A comprehensive collection of configuration files and scripts to set up and cust
 ![Desktop Demo 2](Screenshot_02-Sep_19-32-55_27097.png)
 
 Also I like minimal and clean setups for waybar/taskbar.
-![Waybar](![Desktop Demo 2](Screenshot_02-Sep_19-42-07_20429.png))
+![Desktop Demo 3](Screenshot_02-Sep_19-42-07_20429.png)
+
+### Neovim + Tmux Setup (My Coding Environment/IDE)
+![Neovim with Tmux 1](Screenshot_21-Sep_16-10-17_9366.png)
+![Neovim with Tmux 2](Screenshot_21-Sep_16-07-34_10276.png)
 ## Features
 
 ### Core Functionality
@@ -42,6 +46,11 @@ Also I like minimal and clean setups for waybar/taskbar.
 - **Laptop Configurations**: Specific settings for battery, touchpad, and display.
 - **Multi-Monitor**: Profiles for different monitor setups.
 - **NixOS Compatibility**: Adjusted settings for NixOS systems.
+
+### Development Environment
+- **Neovim Configuration**: LazyVim-based setup with modern plugins and configurations.
+- **Tmux Integration**: Terminal multiplexer with mouse support, vi mode keys, and plugin management via TPM (Tmux Plugin Manager).
+- **Terminal Support**: Optimized for Kitty terminal with RGB color support.
 
 ## Installation
 
@@ -103,6 +112,8 @@ Also I like minimal and clean setups for waybar/taskbar.
 - `configs/`: Default configurations
 - `wallpaper_effects/`: Wallpaper-related files
 - `wallust/`: Color scheme configurations
+- `nvim/`: Neovim configuration with LazyVim setup
+- `tmux/`: Tmux configuration with plugin management
 
 ## Credits
 
