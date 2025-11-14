@@ -21,8 +21,9 @@ return {
         function()
           local builtin = require("telescope.builtin")
           builtin.find_files({
-            no_ignore = false,
+            no_ignore = true, -- Don't respect .gitignore
             hidden = true,
+            file_ignore_patterns = {}, -- Clear any ignore patterns
           })
         end,
         desc = "Lists files in your current working directory, respects .gitignore",
@@ -68,6 +69,32 @@ return {
         desc = "Lists Function names, variables, from Treesitter",
       },
       {
+        ";d",
+        function()
+          local builtin = require("telescope.builtin")
+          local current_dir = vim.fn.expand("%:p:h")
+          builtin.find_files({
+            prompt_title = "Find Files in Current Directory",
+            cwd = current_dir,
+            hidden = true,
+            no_ignore = false,
+          })
+        end,
+        desc = "Find all files in current file's directory and subdirectories",
+      },
+      {
+        ";w",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.grep_string()
+        end,
+        desc = "Search for the word under cursor in all files",
+      }, grep_string = {
+          layout_config = {
+            preview_width = 0.95,
+          },
+        },
+      {
         "sf",
         function()
           local telescope = require("telescope")
@@ -93,9 +120,13 @@ return {
     config = function(_, opts)
       local telescope = require("telescope")
       local actions = require("telescope.actions")
-      local fb_actions = require("telescope").extensions.file_browser.actions
+      -- Load file_browser actions directly from the extension module to avoid order issues
+      local fb_actions = require("telescope._extensions.file_browser.actions")
 
-      opts.defaults = vim.tbl_deep_extend("force", opts.defaults, {
+      -- Ensure opts and its sub-tables exist before deep-extending
+      opts = opts or {}
+
+      opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
         wrap_results = true,
         layout_strategy = "horizontal",
         layout_config = { prompt_position = "top" },
@@ -105,7 +136,7 @@ return {
           n = {},
         },
       })
-      opts.pickers = {
+      opts.pickers = vim.tbl_deep_extend("force", opts.pickers or {}, {
         diagnostics = {
           theme = "ivy",
           initial_mode = "normal",
@@ -113,8 +144,31 @@ return {
             preview_cutoff = 9999,
           },
         },
-      }
-      opts.extensions = {
+        -- Make find files grep preview wider
+        find_files = {
+          layout_config = {
+            preview_width = 0.55,
+          },
+        },
+        -- Make grep preview a bit wider
+        live_grep = {
+          layout_config = {
+            preview_width = 0.5,
+          },
+        },
+        grep_string = {
+          layout_config = {
+            preview_width = 0.55,
+          },
+        },
+        -- Make current buffer fuzzy preview wider too
+        current_buffer_fuzzy_find = {
+          layout_config = {
+            preview_width = 0.5,
+          },
+        },
+      })
+      opts.extensions = vim.tbl_deep_extend("force", opts.extensions or {}, {
         file_browser = {
           theme = "dropdown",
           -- disables netrw and use telescope-file-browser in its place
@@ -136,10 +190,10 @@ return {
             },
           },
         },
-      }
+      })
       telescope.setup(opts)
-      require("telescope").load_extension("fzf")
-      require("telescope").load_extension("file_browser")
+      telescope.load_extension("fzf")
+      telescope.load_extension("file_browser")
     end,
   },
 }

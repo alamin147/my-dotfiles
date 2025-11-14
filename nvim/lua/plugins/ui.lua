@@ -1,14 +1,5 @@
 return {
   {
-    "nvimdev/dashboard-nvim",
-    enabled = false,
-  },
-  {
-    "nvim-lualine/lualine.nvim",
-    enabled = false,
-  },
-  -- messages, cmdline and the popupmenu
-  {
     "folke/noice.nvim",
     opts = function(_, opts)
       table.insert(opts.routes, {
@@ -36,7 +27,10 @@ return {
           end,
         },
         view = "notify_send",
-        opts = { stop = false },
+        opts = {
+          stop = false,
+          fps = 30,
+        },
       })
 
       opts.commands = {
@@ -49,6 +43,15 @@ return {
       }
 
       opts.presets.lsp_doc_border = true
+    end,
+    config = function(_, opts)
+      require("noice").setup(opts)
+
+      vim.defer_fn(function()
+        vim.notify("      Cat will take the world 😼", vim.log.levels.INFO, {
+          title = "Welcome back, Alamin!",
+        })
+      end, 1000)
     end,
   },
 
@@ -179,16 +182,20 @@ return {
           sorter = "case_sensitive",
         },
         view = {
-          width = 30,
+          width = 15,
           relativenumber = true,
         },
         renderer = {
           group_empty = true,
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false, -- Set to false to show dotfiles like .gitignore
           custom = {
             "node_modules/.*",
+          },
+          exclude = { -- Files to explicitly NOT filter
+            "*.txt",
+            ".gitignore",
           },
         },
         log = {
@@ -202,10 +209,6 @@ return {
           },
         },
       })
-
-      if vim.fn.argc(-1) == 0 then
-        vim.cmd("NvimTreeFocus")
-      end
     end,
   },
 }

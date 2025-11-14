@@ -13,6 +13,14 @@ return {
         "typescript-language-server",
         "css-lsp",
         "clangd",
+        "pyright",
+        "debugpy",
+        "codelldb",
+        -- Formatters
+        "clang-format", -- C/C++ formatter
+        "black",        -- Python formatter
+        "prettier",     -- JS/TS/CSS/HTML/JSON formatter
+        "stylua",       -- Lua formatter
       })
     end,
   },
@@ -135,5 +143,16 @@ return {
     opts = function(_, opts)
       table.insert(opts.sources, { name = "emoji" })
     end,
+  },
+  {
+    "jay-babu/mason-nvim-dap.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "mason-org/mason.nvim",
+      "mfussenegger/nvim-dap",
+    },
+    opts = {
+      handlers = {},
+    },
   },
 }

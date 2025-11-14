@@ -11,8 +11,9 @@ return {
         dim = 0.18,
         cleaning_interval = 1250,
       },
-      trigger_events = { "InsertLeave", "TextChanged", "TextChangedI" }, -- auto-save triggers
-      debounce_delay = 2000, -- 2 seconds after change
+      trigger_events = { "InsertLeave"}, -- auto-save triggers
+      -- Removed TextChanged and TextChangedI for better performance
+      debounce_delay = 3000, -- 3 seconds after change
       condition = function(buf)
         local fn = vim.fn
         local utils = require("auto-save.utils.data")
