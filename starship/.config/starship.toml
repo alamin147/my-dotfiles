@@ -1,0 +1,223 @@
+# ──────────────────────────────────────────────────────────────
+# Starship prompt – merged modules + new colour scheme
+# ──────────────────────────────────────────────────────────────
+
+# $os\
+format = """
+[](#9A348E)\
+$username\
+[](bg:#DA627D fg:#9A348E)\
+$directory\
+[](fg:#DA627D bg:#FCA17D)\
+$git_branch\
+$git_status\
+[](fg:#FCA17D bg:#86BBD8)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$custom_html\
+$custom_javascript\
+$custom_typescript\
+$custom_cpp\
+$kotlin\
+$haskell\
+$python\
+[](fg:#86BBD8 bg:#06969A)\
+$docker_context\
+$conda\
+[](fg:#06969A bg:#33658A)\
+$time\
+${custom.cat}\
+${custom.quote}\
+[ ](fg:#33658A)\
+$line_break$character
+"""
+
+# Uncomment to remove the leading blank line
+# add_newline = false
+
+# ───────── OS / USER ─────────
+[os]
+disabled = false
+style    = "bg:#9A348E fg:#FFFFFF"
+
+
+[username]
+show_always = true
+style_user  = "bg:#9A348E fg:#FFFFFF"
+style_root  = "bg:#9A348E fg:#FFFFFF"
+format      = "[ alamin ]($style)"   # customise if you prefer $user
+
+
+# ───────── RANDOM CAT EMOJI ─────────
+[custom.cat]
+description = "Random cat face"
+command = "shuf -n1 -e 😺 😸 😹 😻 😼 😽 🐈 🐱 😾 😿 🙀| tr -d '\\n'"
+#command = "shuf -n1 -e 🐒 🦍 🦧 🐕 🦮 🐕‍🦺 🐩 🐺 🦊 🦝 🐱 🐈 🐈‍⬛ 🦁 🐯 🐅 🐎 🦄 🦓 🦌 🐮 🐂 🐃 🐄 🐖 🐗 🐏 🐑 🐐 🦙 🦒 🐘 🦣 🦏 🦛 🐁 🐀 🐹 🐰 🐇 🐿️ 🦫 🦔 🦇 🐻 🐻‍❄️ 🐨 🐼 🦥 🦦 🦘 🦡 🐤 🐥 🐦 🐧 🕊️ 🦅 🦆 🦢 🦉 🦤 🪿 🐸 🐊 🐢 🐍 🦎 🦖 🦕 🐙 🐚 🐠 🐟 🐡 🦈 🐬 🐳 🐋 🐌 🦋 🐛 🐜 🐝 🪲 🐞 🦗| tr -d '\\n'"
+ 
+when    = "true"
+#style   = "bg:#9A348E fg:#FFFFFF"
+style = "bg:#33658A fg:#FFFFFF"
+#prefix  = ""
+format  = "[| $output:]($style)"
+
+# ───────── RANDOM CAT quote ─────────
+[custom.quote]
+description = "Random funny cat quote"
+command = '''
+shuf -n1 -e \
+"Meow is law." \
+"Code? I nap." \
+"Keyboard is meaw bed." \
+"Obey the purr." \
+"Meow owns this shell." \
+"Feed me, human." \
+"Paws and reflect." \
+"Ctrl + Cat = Chaos" \
+"Meow > sudo" \
+"Purrfection takes time." \
+"Meow is the new sudo." \
+"Keyboard? You mean my bed." \
+"Cats write bugs, not code." \
+"Ctrl + Meow = World Domination." \
+"One cat to rule them all." \
+"Commit early, nap often." \
+"Born to nap, forced to debug." \
+"Scratch logs > error logs." \
+"Code like a cat: unpredictable." \
+"All your yarn are belong to us." \
+| tr -d '\\n'
+'''
+when = "true"
+#style = "bg:#556574 fg:#FFFFFF"
+style = "bg:#33658A fg:#FFFFFF"
+format = "[ $output ]($style)"
+
+
+
+
+# ───────── DIRECTORY ─────────
+[directory]
+style  = "fg:#FFFFFF bg:#DA627D"
+format = "[ $path ]($style)"
+truncation_length  = 3
+truncation_symbol  = "…/"
+
+[directory.substitutions]
+"Documents"  = "󰈙 "
+"Downloads"  = " "
+"Music"      = " "
+"Pictures"   = " "
+"Developer"  = "󰲋 "
+
+# ───────── GIT ─────────
+[git_branch]
+symbol = ""
+style  = "bg:#FCA17D fg:#FFFFFF"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style  = "bg:#FCA17D fg:#FFFFFF"
+format = "[$all_status$ahead_behind ]($style)"
+
+# ───────── LANGUAGE RUNTIMES ─────────
+# all share the same colour block for a cohesive “stack”
+
+[c]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[rust]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[golang]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[nodejs]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[php]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[java]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[kotlin]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[haskell]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+[python]
+symbol = ""
+style  = "bg:#86BBD8 fg:#FFFFFF"
+format = "[ $symbol ($version) ]($style)"
+
+# ───────── CUSTOM FILE‑TYPE DETECTORS ─────────
+[custom.cpp]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.cpp" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:#86BBD8 fg:#FFFFFF"
+format  = "[ $symbol C++ ]($style)"
+
+[custom.html]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.html" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:#86BBD8 fg:#FFFFFF"
+format  = "[ $symbol HTML ]($style)"
+
+[custom.javascript]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.js" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:#86BBD8 fg:#FFFFFF"
+format  = "[ $symbol JS ]($style)"
+
+[custom.typescript]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.ts" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:#86BBD8 fg:#FFFFFF"
+format  = "[ $symbol TS ]($style)"
+
+# ───────── DOCKER / CONDA / TIME ─────────
+[docker_context]
+symbol = ""
+style  = "bg:#06969A fg:#FFFFFF"
+format = "[ $symbol $context ]($style)"
+
+[conda]
+style  = "bg:#06969A fg:#FFFFFF"
+format = "[ $symbol $environment ]($style)"
+
+[time]
+disabled     = false
+time_format  = "%I:%M%P"   # 12‑hour, lowercase am/pm
+style        = "bg:#33658A fg:#FFFFFF"
+format       = "[ ♥ $time ]($style)"
+
+# ───────── PROMPT SYMBOLS ─────────
+[character]
+success_symbol            = "[ 󱞪](bold fg:#06969A)"
+error_symbol              = "[ ✖](bold fg:#FCA17D)"
+vimcmd_symbol             = "[ ❯](bold fg:#06969A)"
+vimcmd_replace_one_symbol = "[ ❯](bold fg:#9A348E)"
+vimcmd_replace_symbol     = "[ ❯](bold fg:#9A348E)"
+vimcmd_visual_symbol      = "[ ❯](bold fg:#DA627D)"
+

@@ -1,0 +1,65 @@
+
+
+{
+  "include": [
+    "$HOME/.config/waybar/Modules",
+    "$HOME/.config/waybar/ModulesWorkspaces",
+    "$HOME/.config/waybar/ModulesCustom",
+    "$HOME/.config/waybar/ModulesGroups",
+    "$HOME/.config/waybar/UserModules"
+  ],
+
+    "layer": "top",
+    "exclusive": true,
+    "passthrough": false,
+    "position": "bottom",
+    "spacing": 4,
+    "fixed-center": true,
+    "ipc": true,
+    "margin-top": 5,
+    "margin-bottom": 5,
+    "margin-left": 100,
+    "margin-right": 100,
+    "padding-left": 50,
+    "padding-right": 50,
+    "padding-bottom": 10,
+    "padding-top": 10,
+
+
+  "modules-left": [
+    "custom/separator#blank",
+    "custom/separator#blank",
+    "hyprland/workspaces#pacman",
+    "custom/cava_mviz",
+    "custom/separator#blank",
+    "wlr/taskbar#1"
+	,"custom/playerctl"
+  ],
+
+
+  "modules-center": [
+    "group/app_drawer",
+      "clock#4"
+
+    ],
+
+    "modules-right": [
+    // "custom/codes",
+    //   "custom/separator#dot-line",
+    "custom/swaync",
+
+    "custom/separator#dot-line",
+    "network",
+    "custom/separator#dot-line",
+    "battery",
+    "custom/separator#dot-line",
+    "pulseaudio",
+    "custom/separator#dot-line",
+    "pulseaudio#microphone",
+    "custom/separator#dot-line",
+    "group/mobo_drawer"
+]
+}
+
+// "tray",
+// "custom/separator#dot-line",

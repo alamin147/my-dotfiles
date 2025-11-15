@@ -1,0 +1,18 @@
+general.import = [
+  "~/.config/alacritty/dracula.toml"
+]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 16.0
+normal.family = "JetBrainsMono Nerd Font"
+bold.family = "JetBrainsMono Nerd Font"
+italic.family = "JetBrainsMono Nerd Font"
+bold_italic.family = "JetBrainsMono Nerd Font"
+
+# You can tweak these to fix small alignment issues (esp. for  glyphs)
+[font.offset]
+x = 0
+y = -1

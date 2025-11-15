@@ -1,0 +1,27 @@
+// "temperature"
+//"group/app_drawer"
+//"group/app_drawer"
+//"custom/separator#dot-line",
+//"group/status"
+//"custom/lock"
+//"mode": "dock",
+// "custom/separator#blank"
+//"pulseaudio",
+// "wireplumber",
+//  "pulseaudio#microphone",
+//    "group/app_drawer",
+// "custom/separator#line",
+//"group/notify",
+// "custom/light_dark"
+//"mpris",
+//"network#speed",
+//"group/laptop",
+// "custom/tty",
+// "custom/separator#dot-line",
+//"custom/braves",
+//"custom/separator#dot-line",
+// "custom/separator#dot-line",
+//"group/mobo_drawer",
+//#mode,
+// "power-profiles-daemon",
+//"group/audio",
