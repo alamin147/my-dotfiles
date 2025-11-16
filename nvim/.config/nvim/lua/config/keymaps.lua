@@ -554,6 +554,8 @@ end, { noremap = true, silent = true, desc = "g++ --debug mirror cp/* -> /output
 keymap.set("n", "<leader>/.", "gcc", { desc = "Toggle comment", remap = true })
 keymap.set("v", "<leader>/.", "gc", { desc = "Toggle comment", remap = true })
 
+--neotree
+vim.api.nvim_set_keymap("n", "<leader>tr", ":Neotree toggle<CR>", { noremap = true, silent = true })
 -- =====
 -- TODO: COMMENTS
 -- =====
