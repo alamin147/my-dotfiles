@@ -4,14 +4,14 @@
 
 # $os\
 format = """
-[](#9A348E)\
+[](#123456)\
 $username\
-[](bg:#DA627D fg:#9A348E)\
+[](bg:#f9e2af fg:#123456)\
 $directory\
-[](fg:#DA627D bg:#FCA17D)\
+[](fg:#f9e2af bg:#a6e3a1)\
 $git_branch\
 $git_status\
-[](fg:#FCA17D bg:#86BBD8)\
+[](fg:#a6e3a1 bg:#89b4fa)\
 $c\
 $rust\
 $golang\
@@ -25,10 +25,10 @@ $custom_cpp\
 $kotlin\
 $haskell\
 $python\
-[](fg:#86BBD8 bg:#06969A)\
+[](fg:#89b4fa bg:#f5c2e7)\
 $docker_context\
 $conda\
-[](fg:#06969A bg:#33658A)\
+[](fg:#f5c2e7 bg:#33658A)\
 $time\
 ${custom.cat}\
 ${custom.quote}\
@@ -42,12 +42,12 @@ $line_break$character
 # ───────── OS / USER ─────────
 [os]
 disabled = false
-style    = "bg:#9A348E fg:#FFFFFF"
+style    = "bg:#123456 fg:#1e1e2e"
 
 
 [username]
 show_always = true
-style_user  = "bg:#9A348E fg:#FFFFFF"
+style_user  = "bg:#123456 fg:#FFFFFF"
 style_root  = "bg:#9A348E fg:#FFFFFF"
 format      = "[ alamin ]($style)"   # customise if you prefer $user
 
@@ -62,7 +62,7 @@ when    = "true"
 #style   = "bg:#9A348E fg:#FFFFFF"
 style = "bg:#33658A fg:#FFFFFF"
 #prefix  = ""
-format  = "[| $output:]($style)"
+format  = "[ $output:]($style)"
 
 # ───────── RANDOM CAT quote ─────────
 [custom.quote]
@@ -99,9 +99,9 @@ format = "[ $output ]($style)"
 
 
 
-# ───────── DIRECTORY ─────────
+# ───────── RY ─────────
 [directory]
-style  = "fg:#FFFFFF bg:#DA627D"
+style  = "fg:#1e1e2e bg:#f9e2af"
 format = "[ $path ]($style)"
 truncation_length  = 3
 truncation_symbol  = "…/"
@@ -112,15 +112,17 @@ truncation_symbol  = "…/"
 "Music"      = " "
 "Pictures"   = " "
 "Developer"  = "󰲋 "
+"minecrafts" = "󰢷 "
+"my-dotfiles" = " "
 
 # ───────── GIT ─────────
 [git_branch]
 symbol = ""
-style  = "bg:#FCA17D fg:#FFFFFF"
+style  = "bg:#a6e3a1 fg:#1e1e2e"
 format = "[ $symbol $branch ]($style)"
 
 [git_status]
-style  = "bg:#FCA17D fg:#FFFFFF"
+style  = "bg:#a6e3a1 fg:#1e1e2e"
 format = "[$all_status$ahead_behind ]($style)"
 
 # ───────── LANGUAGE RUNTIMES ─────────
@@ -128,7 +130,7 @@ format = "[$all_status$ahead_behind ]($style)"
 
 [c]
 symbol = ""
-style  = "bg:#86BBD8 fg:#FFFFFF"
+style  = "bg:#89b4fa fg:#FFFFFF"
 format = "[ $symbol ($version) ]($style)"
 
 [rust]
@@ -206,11 +208,11 @@ format = "[ $symbol $context ]($style)"
 style  = "bg:#06969A fg:#FFFFFF"
 format = "[ $symbol $environment ]($style)"
 
-[time]
-disabled     = false
-time_format  = "%I:%M%P"   # 12‑hour, lowercase am/pm
-style        = "bg:#33658A fg:#FFFFFF"
-format       = "[ ♥ $time ]($style)"
+# [time]
+# disabled     = false
+# time_format  = "%I:%M%P"   # 12‑hour, lowercase am/pm
+# style        = "bg:#33658A fg:#FFFFFF"
+# format       = "[ ♥ $time ]($style)"
 
 # ───────── PROMPT SYMBOLS ─────────
 [character]
