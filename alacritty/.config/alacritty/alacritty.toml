@@ -1,12 +1,12 @@
 general.import = [
-  "~/.config/alacritty/colors-wallust.yml"
+    "~/.config/alacritty/dracula.toml"
 ]
 
 [env]
 TERM = "xterm-256color"
 
 [font]
-size = 16.0
+size = 15.0
 normal.family = "JetBrainsMono Nerd Font"
 bold.family = "JetBrainsMono Nerd Font"
 italic.family = "JetBrainsMono Nerd Font"
