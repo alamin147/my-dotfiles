@@ -35,6 +35,14 @@ end, { desc = "Grep in current file" })
 keymap.set("n", "+", "<C-a>")
 keymap.set("n", "-", "<C-x>")
 
+-- Keymap: code center, input top right, output bottom right
+vim.api.nvim_set_keymap(
+  "n",
+  "<leader>io",
+  [[:vsplit | wincmd l | split io/output.txt | wincmd k | edit io/input.txt | wincmd j | edit io/output.txt | wincmd h | vertical resize 125<CR>]],
+  { noremap = true, silent = true }
+)
+
 -- Select all
 keymap.set("n", "<C-a>", "gg<S-v>G")
 
