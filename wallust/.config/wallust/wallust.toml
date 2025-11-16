@@ -52,9 +52,6 @@ kitty.target = '~/.config/kitty/kitty-themes/01-Wallust.conf'
 quickshell.template = 'qml_color.json'
 quickshell.target = '~/.config/quickshell/qml_color.json'
 
-alacritty.template = "colors-alacritty.yml"
-alacritty.target   = "~/.config/alacritty/colors-wallust.yml"
-
 neovim.template = "colors-neovim.lua"
 neovim.target   = "~/.config/nvim/lua/colors/wallust.lua"
 
