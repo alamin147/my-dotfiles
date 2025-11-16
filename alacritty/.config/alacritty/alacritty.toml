@@ -1,5 +1,5 @@
 general.import = [
-  "~/.config/alacritty/dracula.toml"
+  "~/.config/alacritty/colors-wallust.yml"
 ]
 
 [env]

@@ -1,3 +1,6 @@
+import:
+  - ~/.config/alacritty/colors-wallust.yml
+
 font:
   normal:
     family: "JetBrainsMono Nerd Font"
