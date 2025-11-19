@@ -23,7 +23,7 @@ source $ZSH/oh-my-zsh.sh
 #pokemon-colorscripts --no-title -s -r #without fastfetch
 #pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
 
-$HOME/stcat.sh # fastfetch. Will be disabled if above colorscript was chosen to install
+$HOME/bins/stcat.sh # fastfetch. Will be disabled if above colorscript was chosen to install
 #fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
