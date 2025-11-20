@@ -1,0 +1,8 @@
+[theme]
+use = "~/.config/yazi/themes/dracula.toml"
+# use = "~/.config/yazi/themes/ayu-dark.toml"
+# use = "~/.config/yazi/themes/catpucchin-mocha.toml"
+# use = "~/.config/yazi/themes/flexoki-light.toml"
+# use = "~/.config/yazi/themes/gruvbox-dark.toml"
+# use = "~/.config/yazi/themes/rose-pine.toml"
+# use = "~/.config/yazi/themes/tokyo-night.toml"
