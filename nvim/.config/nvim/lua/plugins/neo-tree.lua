@@ -15,6 +15,13 @@ return {
       require("neo-tree").setup({
         window = {
           width = 28,
+--           position = "left",
+--            title = "  FILE MANAGER",
+--   title_position = "center",
+          mappings = {
+            ["l"] = "open",            -- open file or expand folder
+            ["<enter>"] = "open",      -- keep Enter working
+          },
         },
         filesystem = {
           filtered_items = {
