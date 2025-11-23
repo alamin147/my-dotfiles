@@ -8,6 +8,9 @@ return {
       "nvim-tree/nvim-web-devicons",
     },
     lazy = false,
+      keys = {
+      { "<leader>tr", "<cmd>Neotree toggle<cr>", desc = "Toggle NeoTree" },
+    },
     config = function()
       require("neo-tree").setup({
         window = {
@@ -15,6 +18,7 @@ return {
         },
         filesystem = {
           filtered_items = {
+            visible = true,
             hide_dotfiles = false,
             hide_gitignored = false,
             hide_hidden = false,

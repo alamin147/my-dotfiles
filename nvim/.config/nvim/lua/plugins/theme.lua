@@ -38,7 +38,7 @@
 local config = {
   -- Active colorscheme: "sonokai", "gruvbox", "nord", "onedark", "cyberdream", "tokyonight", "monokai-pro"
 
-  active_theme = "gruvbox", --Change to any available theme
+  active_theme = "tokyonight", --Change to any available theme
   --  also change in lazy.lua:  colorscheme = "gruvbox",
   -- Theme-specific settings
   monokai_pro = {

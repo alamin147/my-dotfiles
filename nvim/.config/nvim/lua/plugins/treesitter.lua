@@ -23,6 +23,7 @@ return {
           "bash",
           "markdown",
           "markdown_inline",
+          "jsonc",
         },
         highlight = {
           enable = true,
