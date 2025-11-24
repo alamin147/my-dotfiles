@@ -257,7 +257,7 @@ local config = {
     },
   },
   vscode = {
-    style = "light",
+    style = "dark",
     transparent = false,
     italic_comments = true,
     styles = {
