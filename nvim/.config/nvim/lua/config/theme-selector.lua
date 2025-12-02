@@ -1,0 +1,78 @@
+-- ═══════════════════════════════════════════════════════════════════════════
+-- THEME SELECTOR - Change only the line below to switch themes
+-- ═══════════════════════════════════════════════════════════════════════════
+
+local ACTIVE_THEME = "gruvbox" -- ← CHANGE THIS LINE ONLY
+
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Available themes (just for reference, don't edit):
+-- ═══════════════════════════════════════════════════════════════════════════
+-- Plugin-based themes:
+-- "bamboo"
+-- "ash"
+-- "aether"
+-- "ethereal"
+-- "hackerman"
+-- "catppuccin"
+-- "catppuccin-latte"
+-- "catppuccin-frappe"
+-- "catppuccin-macchiato"
+-- "catppuccin-mocha"
+-- "everforest"
+-- "flexoki"
+-- "flexoki-dark"
+-- "flexoki-light"
+-- "gruvbox"
+-- "everviolet"
+-- "dracula"
+-- "kanagawa"
+-- "kanagawa-wave"
+-- "kanagawa-dragon"
+-- "kanagawa-lotus"
+-- "matteblack"
+-- "monokai-pro"
+-- "monokai-pro-classic"
+-- "monokai-pro-machine"
+-- "monokai-pro-octagon"
+-- "monokai-pro-ristretto"
+-- "monokai-pro-spectrum"
+-- "nord"
+-- "rose-pine"
+-- "rose-pine-main"
+-- "rose-pine-moon"
+-- "rose-pine-dawn"
+-- "tokyonight"
+-- "tokyonight-night"
+-- "tokyonight-storm"
+-- "tokyonight-day"
+-- "tokyonight-moon"
+-- "gruvbox-material"
+-- "sonokai"
+-- "sonokai-default"
+-- "sonokai-atlantis"
+-- "sonokai-andromeda"
+-- "sonokai-shusia"
+-- "sonokai-maia"
+-- "sonokai-espresso"
+-- "vscode"
+-- "vscode-dark"
+-- "vscode-light"
+--
+-- Custom inline themes (no plugin needed):
+-- "aetheria"           -- Neon green/purple theme
+-- "arc-blueberry"      -- Minimal blue theme
+-- "azure-glow"         -- Azure blue theme
+-- "abhijeet-custom"    -- Custom green theme
+-- "neovoid"            -- Deep blue void theme
+--
+-- Plugin themes with custom config:
+-- "onedark"            -- OneDark Pro theme
+-- "pixel"              -- Pixel theme
+-- "poimandres"         -- Poimandres theme
+-- "aether-custom"      -- Aether with custom colors
+-- "vesper"             -- Vesper theme
+-- "vhs80"              -- VHS80 retro theme
+-- "carbonfox"          -- Nightfox RetroPC custom theme
+-- ═══════════════════════════════════════════════════════════════════════════
+
+return ACTIVE_THEME

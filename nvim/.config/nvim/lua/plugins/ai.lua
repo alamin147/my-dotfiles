@@ -1,91 +1,76 @@
 return {
+  -- Copilot for blink.cmp integration
   {
-    "folke/sidekick.nvim",
+    "zbirenbaum/copilot.lua",
+    event = "InsertEnter",
+    config = function()
+      vim.schedule(function()
+        require("copilot").setup({
+          suggestion = {
+            enabled = false, -- Disabled, using blink-copilot instead
+          },
+          panel = {
+            enabled = false,
+          },
+          filetypes = {
+            markdown = true,
+            help = true,
+            html = true,
+            javascript = true,
+            typescript = true,
+            cpp = false,
+            c = false,
+            ["*"] = true,
+          },
+        })
+      end)
+    end,
+  },
+  -- Blink-copilot integration
+  {
+    "giuxtaposition/blink-cmp-copilot",
+    dependencies = { "saghen/blink.cmp" },
+  },
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    version = false,
     opts = {
-      -- add any options here
+      debug = false,
+
+      -- Choose your main provider
+      provider = "copilot", -- or "copilot", "ollama"
+
+      auto_suggestions_provider = nil,
+
+      providers = {
+        openai = {
+          endpoint = "https://api.openai.com/v1",
+          model = "gpt-4o-mini", -- switch to gpt-4o if you want more power
+          timeout = 30000,
+
+          -- All OpenAI request settings are now here
+          extra_request_body = {
+            temperature = 0,
+            max_completion_tokens = 8192,
+          },
+        },
+
+        ollama = {
+          model = "qwen3:1.7b",
+        },
+      },
     },
-    keys = {
-      {
-        "<tab>",
-        function()
-          -- if there is a next edit, jump to it, otherwise apply it if any
-          if not require("sidekick").nes_jump_or_apply() then
-            return "<Tab>" -- fallback to normal tab
-          end
-        end,
-        expr = true,
-        desc = "Goto/Apply Next Edit Suggestion",
-      },
-      {
-        "<c-.>",
-        function()
-          require("sidekick.cli").toggle()
-        end,
-        desc = "Sidekick Toggle",
-        mode = { "n", "t", "i", "x" },
-      },
-      {
-        "<leader>aa",
-        function()
-          require("sidekick.cli").toggle()
-        end,
-        desc = "Sidekick Toggle CLI",
-      },
-      {
-        "<leader>as",
-        function()
-          require("sidekick.cli").select()
-        end,
-        -- Or to select only installed tools:
-        -- require("sidekick.cli").select({ filter = { installed = true } })
-        desc = "Select CLI",
-      },
-      {
-        "<leader>ad",
-        function()
-          require("sidekick.cli").close()
-        end,
-        desc = "Detach a CLI Session",
-      },
-      {
-        "<leader>at",
-        function()
-          require("sidekick.cli").send({ msg = "{this}" })
-        end,
-        mode = { "x", "n" },
-        desc = "Send This",
-      },
-      {
-        "<leader>af",
-        function()
-          require("sidekick.cli").send({ msg = "{file}" })
-        end,
-        desc = "Send File",
-      },
-      {
-        "<leader>av",
-        function()
-          require("sidekick.cli").send({ msg = "{selection}" })
-        end,
-        mode = { "x" },
-        desc = "Send Visual Selection",
-      },
-      {
-        "<leader>ap",
-        function()
-          require("sidekick.cli").prompt()
-        end,
-        mode = { "n", "x" },
-        desc = "Sidekick Select Prompt",
-      },
-      -- Example of a keybinding to open Claude directly
-      {
-        "<leader>ac",
-        function()
-          require("sidekick.cli").toggle({ name = "claude", focus = true })
-        end,
-        desc = "Sidekick Toggle Claude",
-      },
+
+    build = "make",
+    dependencies = {
+      "zbirenbaum/copilot.lua",
+      "nvim-treesitter/nvim-treesitter",
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "hrsh7th/nvim-cmp",
+      "nvim-tree/nvim-web-devicons",
     },
   },
 }

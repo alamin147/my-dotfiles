@@ -45,8 +45,8 @@ return {
       -- Floating terminal options
       float_opts = {
         border = "curved", -- 'single' | 'double' | 'shadow' | 'curved'
-        width = math.floor(vim.o.columns * 0.6),  -- 70% of screen width (reduced from 85%)
-        height = math.floor(vim.o.lines * 0.65),   -- 70% of screen height (reduced from 85%)
+        width = math.floor(vim.o.columns * 0.6), -- 70% of screen width (reduced from 85%)
+        height = math.floor(vim.o.lines * 0.65), -- 70% of screen height (reduced from 85%)
         winblend = 0,
         highlights = {
           border = "Normal",
@@ -62,24 +62,24 @@ return {
 
     -- Function to set terminal keymaps
     function _G.set_terminal_keymaps()
-      local opts = {buffer = 0}
+      local opts = { buffer = 0 }
       -- Easy escape from terminal mode (just hide, don't kill)
-      vim.keymap.set('t', '<esc>', [[<C-\><C-n>]], opts)
-      vim.keymap.set('t', 'jk', [[<C-\><C-n>]], opts)
+      vim.keymap.set("t", "<esc>", [[<C-\><C-n>]], opts)
+      vim.keymap.set("t", "jk", [[<C-\><C-n>]], opts)
 
       -- KILL terminal (close and delete it)
-      vim.keymap.set('t', '<C-q>', [[<C-\><C-n>:bd!<CR>]], opts) -- Ctrl+q to kill terminal
-      vim.keymap.set('t', '<C-x>', [[<C-\><C-n>:bd!<CR>]], opts) -- Ctrl+x alternative
+      vim.keymap.set("t", "<C-q>", [[<C-\><C-n>:bd!<CR>]], opts) -- Ctrl+q to kill terminal
+      vim.keymap.set("t", "<C-x>", [[<C-\><C-n>:bd!<CR>]], opts) -- Ctrl+x alternative
 
       -- Navigate windows in terminal mode
-      vim.keymap.set('t', '<C-h>', [[<Cmd>wincmd h<CR>]], opts)
-      vim.keymap.set('t', '<C-j>', [[<Cmd>wincmd j<CR>]], opts)
-      vim.keymap.set('t', '<C-k>', [[<Cmd>wincmd k<CR>]], opts)
-      vim.keymap.set('t', '<C-l>', [[<Cmd>wincmd l<CR>]], opts)
-      vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], opts)
+      vim.keymap.set("t", "<C-h>", [[<Cmd>wincmd h<CR>]], opts)
+      vim.keymap.set("t", "<C-j>", [[<Cmd>wincmd j<CR>]], opts)
+      vim.keymap.set("t", "<C-k>", [[<Cmd>wincmd k<CR>]], opts)
+      vim.keymap.set("t", "<C-l>", [[<Cmd>wincmd l<CR>]], opts)
+      vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], opts)
     end
 
     -- Apply terminal keymaps automatically
-    vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
+    vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
   end,
 }

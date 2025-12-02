@@ -6,21 +6,32 @@ return {
     "mason-org/mason.nvim",
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
-        "luacheck",
-        "shellcheck",
-        "shfmt",
-        "tailwindcss-language-server",
-        "typescript-language-server",
-        "css-lsp",
-        "clangd",
-        "pyright",
-        "debugpy",
-        "codelldb",
+        -- Language Servers
+        "clangd",              -- C/C++
+        "pyright",             -- Python
+        "typescript-language-server", -- JavaScript/TypeScript
+        "html-lsp",            -- HTML
+        "css-lsp",             -- CSS
+        "tailwindcss-language-server", -- TailwindCSS
+        "jdtls",               -- Java
+        "emmet-ls",            -- HTML/CSS snippets
+
+        -- Linters
+        "luacheck",            -- Lua linter
+        "shellcheck",          -- Shell script linter
+        "eslint-lsp",          -- JS/TS linter
+
         -- Formatters
-        "clang-format", -- C/C++ formatter
-        "black",        -- Python formatter
-        "prettier",     -- JS/TS/CSS/HTML/JSON formatter
-        "stylua",       -- Lua formatter
+        "clang-format",        -- C/C++ formatter
+        "black",               -- Python formatter
+        "prettier",            -- JS/TS/CSS/HTML/JSON formatter
+        "stylua",              -- Lua formatter
+
+        -- Debuggers
+        "debugpy",             -- Python debugger
+        "codelldb",            -- C/C++/Rust debugger
+
+        "shfmt",
       })
     end,
   },
@@ -31,12 +42,41 @@ return {
       inlay_hints = { enabled = true },
       ---@type lspconfig.options
       servers = {
-        cssls = {},
-        tailwindcss = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
-          end,
+        -- C/C++
+        clangd = {
+          cmd = {
+            "clangd",
+            "--background-index",
+            "--clang-tidy",
+            "--header-insertion=iwyu",
+            "--completion-style=detailed",
+            "--function-arg-placeholders",
+            "--fallback-style=llvm",
+          },
+          init_options = {
+            usePlaceholders = true,
+            completeUnimported = true,
+            clangdFileStatus = true,
+          },
         },
+
+        -- Python
+        pyright = {
+          settings = {
+            python = {
+              analysis = {
+                typeCheckingMode = "basic",
+                diagnosticMode = "workspace",
+                inlayHints = {
+                  variableTypes = true,
+                  functionReturnTypes = true,
+                },
+              },
+            },
+          },
+        },
+
+        -- JavaScript/TypeScript
         tsserver = {
           root_dir = function(...)
             return require("lspconfig.util").root_pattern(".git")(...)
@@ -67,9 +107,44 @@ return {
             },
           },
         },
-        html = {},
+
+        -- HTML
+        html = {
+          filetypes = { "html", "htmldjango" },
+        },
+
+        -- CSS
+        cssls = {
+          settings = {
+            css = {
+              validate = true,
+              lint = {
+                unknownAtRules = "ignore",
+              },
+            },
+          },
+        },
+
+        -- TailwindCSS
+        tailwindcss = {
+          root_dir = function(...)
+            return require("lspconfig.util").root_pattern(".git")(...)
+          end,
+          filetypes = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        },
+
+        -- Emmet (HTML/CSS snippets)
+        emmet_ls = {
+          filetypes = { "html", "css", "javascriptreact", "typescriptreact" },
+        },
+
+        -- Java
+        jdtls = {
+          -- Java LSP will be configured automatically
+        },
+
+        -- Lua
         lua_ls = {
-          -- enabled = false,
           single_file_support = true,
           settings = {
             Lua = {
@@ -80,11 +155,6 @@ return {
                 workspaceWord = true,
                 callSnippet = "Both",
               },
-              misc = {
-                parameters = {
-                  -- "--log-level=trace",
-                },
-              },
               hint = {
                 enable = true,
                 setType = false,
@@ -93,42 +163,16 @@ return {
                 semicolon = "Disable",
                 arrayIndex = "Disable",
               },
-              doc = {
-                privateName = { "^_" },
-              },
-              type = {
-                castNumberToInteger = true,
-              },
               diagnostics = {
                 disable = { "incomplete-signature-doc", "trailing-space" },
-                -- enable = false,
                 groupSeverity = {
                   strong = "Warning",
                   strict = "Warning",
-                },
-                groupFileStatus = {
-                  ["ambiguity"] = "Opened",
-                  ["await"] = "Opened",
-                  ["codestyle"] = "None",
-                  ["duplicate"] = "Opened",
-                  ["global"] = "Opened",
-                  ["luadoc"] = "Opened",
-                  ["redefined"] = "Opened",
-                  ["strict"] = "Opened",
-                  ["strong"] = "Opened",
-                  ["type-check"] = "Opened",
-                  ["unbalanced"] = "Opened",
-                  ["unused"] = "Opened",
                 },
                 unusedLocalExclude = { "_*" },
               },
               format = {
                 enable = false,
-                defaultConfig = {
-                  indent_style = "space",
-                  indent_size = "2",
-                  continuation_indent_size = "2",
-                },
               },
             },
           },

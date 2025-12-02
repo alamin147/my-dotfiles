@@ -13,53 +13,24 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
   end
 end
 vim.opt.rtp:prepend(lazypath)
--- TODO: THIS is todo test
--- FIX: ERROR
--- WARN: ERROR
--- NOTE: To change themes, transparency, or theme settings, edit:
---       lua/plugins/theme.lua
 
 require("lazy").setup({
-  rocks = {
-    enabled = false,
-  },
   spec = {
     -- add LazyVim and import its plugins
-    {
-      "LazyVim/LazyVim",
-      import = "lazyvim.plugins",
-      opts = {
-        -- NOTE: Colorscheme is managed in lua/plugins/theme.lua
-        colorscheme = "monokai-pro",
-        news = {
-          lazyvim = true,
-          neovim = true,
-        },
-      },
-    },
-    { import = "lazyvim.plugins.extras.linting.eslint" },
-    { import = "lazyvim.plugins.extras.formatting.prettier" },
-    { import = "lazyvim.plugins.extras.lang.typescript" },
-    { import = "lazyvim.plugins.extras.lang.json" },
-    { import = "lazyvim.plugins.extras.lang.tailwind" },
-    { import = "lazyvim.plugins.extras.ai.copilot" },
-    { import = "lazyvim.plugins.extras.ai.copilot-chat" },
-    { import = "lazyvim.plugins.extras.util.mini-hipatterns" },
-    { import = "lazyvim.plugins.extras.lang.python" },
-    { import = "lazyvim.plugins.extras.dap.core" },
+    { "LazyVim/LazyVim", import = "lazyvim.plugins" },
     -- import/override with your plugins
     { import = "plugins" },
   },
   defaults = {
     -- By default, only LazyVim plugins will be lazy-loaded. Your custom plugins will load during startup.
     -- If you know what you're doing, you can set this to `true` to have all your custom plugins lazy-loaded by default.
-    lazy = true,
+    lazy = false,
     -- It's recommended to leave version=false for now, since a lot the plugin that support versioning,
     -- have outdated releases, which may break your Neovim install.
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  --install = { colorscheme = { "tokyonight", "habamax" } },
+  install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -77,14 +48,6 @@ require("lazy").setup({
         "tutor",
         "zipPlugin",
       },
-    },
-    -- removeeee
-    cache = {
-      enabled = true,
-    },
-    reset_packpath = true, -- ⚡ Reset packpath to improve startup time
-    rtp = {
-      reset = true, -- ⚡ Reset rtp to only include essential paths
     },
   },
 })

@@ -37,6 +37,33 @@ vim.opt.splitkeep = "cursor"
 -- Add asterisks in block comments
 vim.opt.formatoptions:append({ "r" })
 
+-- ========================================
+-- Diagnostic Configuration
+-- ========================================
+
+-- Hide diagnostics in insert mode, only show in normal mode
+vim.diagnostic.config({
+  virtual_text = false, -- Disable inline virtual text by default
+  signs = true,         -- Keep error signs in the gutter
+  underline = true,     -- Keep underlining errors
+  update_in_insert = false, -- Don't update diagnostics while typing
+})
+
+-- Show diagnostics only in normal mode
+vim.api.nvim_create_autocmd("ModeChanged", {
+  pattern = "*",
+  callback = function()
+    local mode = vim.fn.mode()
+    if mode == "n" then
+      -- Show virtual text in normal mode
+      vim.diagnostic.config({ virtual_text = true })
+    else
+      -- Hide virtual text in insert/visual modes
+      vim.diagnostic.config({ virtual_text = false })
+    end
+  end,
+})
+
 -- removeeee
 -- ========================================
 -- Performance Optimizations

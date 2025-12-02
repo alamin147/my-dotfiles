@@ -4,45 +4,38 @@ return {
     "stevearc/conform.nvim",
     opts = {
       formatters_by_ft = {
-        -- Languages with auto-format on save
+        -- C/C++
+        c = { "clang-format" },
+        cpp = { "clang-format" },
+
+        -- Python
+        python = { "black" },
+
+        -- JavaScript/TypeScript
         javascript = { "prettier" },
         typescript = { "prettier" },
         javascriptreact = { "prettier" },
         typescriptreact = { "prettier" },
-        css = { "prettier" },
+
+        -- Web
         html = { "prettier" },
+        css = { "prettier" },
+
+        -- Config files
         json = { "prettier" },
         yaml = { "prettier" },
         markdown = { "prettier" },
+
+        -- Lua
         lua = { "stylua" },
 
-        -- C++ and Python - formatters available but NO auto-format
-        cpp = { "clang-format" },
-        c = { "clang-format" },
-        python = { "black" }, -- or use "autopep8" if you prefer
+        -- Java
+        java = { "google-java-format" },
       },
-      -- Completely disable format_on_save, we'll control it per-buffer
+      -- Disable auto-format on save completely
+      -- Use <leader>cf to format manually (LazyVim default)
       format_on_save = nil,
-      -- Instead, use this function to selectively enable format on save
-      format_after_save = function(bufnr)
-        local filetype = vim.bo[bufnr].filetype
-
-        -- NEVER auto-format C++, C, and Python
-        if filetype == "cpp" or filetype == "c" or filetype == "python" or filetype == "markdown" then
-          return nil
-        end
-
-        -- Check if autoformat is disabled for this buffer
-        if vim.b[bufnr].autoformat == false then
-          return nil
-        end
-
-        -- Enable auto-format for all other filetypes
-        return {
-          timeout_ms = 500,
-          lsp_fallback = true,
-        }
-      end,
+      format_after_save = nil,
     },
   },
 }

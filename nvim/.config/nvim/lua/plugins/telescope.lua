@@ -89,11 +89,12 @@ return {
           builtin.grep_string()
         end,
         desc = "Search for the word under cursor in all files",
-      }, grep_string = {
-          layout_config = {
-            preview_width = 0.95,
-          },
+      },
+      grep_string = {
+        layout_config = {
+          preview_width = 0.95,
         },
+      },
       {
         "sf",
         function()

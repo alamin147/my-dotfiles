@@ -541,64 +541,14 @@ keymap.set("n", "<leader>gD", function()
   end
 end, { noremap = true, silent = true, desc = "g++ --debug mirror cp/* -> /outputs/*" })
 
--- ============================================================================
--- THEME PICKER
--- ============================================================================
--- <leader>th - Open interactive theme picker (defined in plugins/theme.lua)
-
--- ============================================================================
--- COMMENT TOGGLE
--- ============================================================================
--- Toggle comment for selected lines (visual mode) or current line (normal mode)
--- Uses built-in commenting (gc operator from LazyVim/ts-comments)
-keymap.set("n", "<leader>/.", "gcc", { desc = "Toggle comment", remap = true })
-keymap.set("v", "<leader>/.", "gc", { desc = "Toggle comment", remap = true })
-
 -- =====
 -- TODO: COMMENTS
 -- =====
 keymap.set("n", "<leader>xt", ":TodoQuickFix<CR>", { desc = "Find TODO comments" })
 
-----===========
----NOTE: typewriter mode
----==========
-
-vim.keymap.set("n", "<leader>tyty", ":Speedtyper<CR>", { desc = "Start typing test" })
--- a============================================================================
--- COPILOT CHAT KEYBINDINGS
--- ============================================================================
-
--- Main inline chat - ask Copilot to write code at cursor position
---keymap.set({ "n", "v" }, "<leader>ai", function()
---  local input = vim.fn.input("Ask Copilot: ")
---  if input ~= "" then
---    vim.cmd("CopilotChat " .. input)
---  end
---end, { desc = "CopilotChat - Ask inline (write function here)" })
---
----- Quick chat toggle
---keymap.set("n", "<leader>aa", "<cmd>CopilotChatToggle<cr>", { desc = "CopilotChat - Toggle window" })
---
----- Explain selected code
---keymap.set({ "n", "v" }, "<leader>ae", "<cmd>CopilotChatExplain<cr>", { desc = "CopilotChat - Explain code" })
---
----- Fix code issues
---keymap.set({ "n", "v" }, "<leader>af", "<cmd>CopilotChatFix<cr>", { desc = "CopilotChat - Fix bugs" })
---
----- Optimize code
---keymap.set({ "n", "v" }, "<leader>ao", "<cmd>CopilotChatOptimize<cr>", { desc = "CopilotChat - Optimize" })
---
----- Generate documentation
---keymap.set({ "n", "v" }, "<leader>ad", "<cmd>CopilotChatDocs<cr>", { desc = "CopilotChat - Generate docs" })
---
----- Generate tests
---keymap.set({ "n", "v" }, "<leader>at", "<cmd>CopilotChatTests<cr>", { desc = "CopilotChat - Generate tests" })
---
----- Review code
---keymap.set({ "n", "v" }, "<leader>ar", "<cmd>CopilotChatReview<cr>", { desc = "CopilotChat - Review code" })
---
----- Quick prompts with visual selection
---keymap.set("v", "<leader>av", function()
---  local actions = require("CopilotChat.actions")
---  require("CopilotChat.integrations.telescope").pick(actions.prompt_actions())
---end, { desc = "CopilotChat - Quick actions (visual)" })
+-- Normal mode
+vim.keymap.set("n", "<C-s>", ":w<CR>")
+-- Insert mode
+vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>i")
+-- Visual mode
+vim.keymap.set("v", "<C-s>", "<Esc>:w<CR>gv")
