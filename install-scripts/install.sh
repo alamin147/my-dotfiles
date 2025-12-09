@@ -22,5 +22,15 @@ sudo auto-cpufreq --install
 # ./fun-tools.sh
 
 sudo npm install --global yarn
-    sudo dnf copr enable atim/lazygit -y
-    sudo dnf install lazygit
+sudo dnf copr enable atim/lazygit -y
+sudo dnf install lazygit
+
+sudo dnf install transmission
+
+flatpak install flathub org.localsend.localsend_app
+
+sudo dnf install dnf-plugins-core
+
+sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
+
+sudo dnf install brave-browser
