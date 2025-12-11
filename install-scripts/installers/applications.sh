@@ -3,8 +3,6 @@
 # Applications Installer
 # Desktop applications: transmission, localsend, brave-browser, vlc, vscode
 
-set -e
-
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "${SCRIPT_DIR}/../utils/logging.sh"
 
@@ -56,22 +54,15 @@ install_applications() {
         TEMP_DIR=$(mktemp -d)
         cd "$TEMP_DIR"
 
-        # Get latest Thorium release URL for RPM
-        log_info "Fetching latest Thorium release..."
-        THORIUM_URL=$(curl -s https://api.github.com/repos/Alex313031/thorium/releases/latest | grep "browser_download_url.*\.rpm" | grep -v "AVX" | grep "x86_64" | head -1 | cut -d '"' -f 4)
+        THORIUM_URL="https://github.com/Alex313031/thorium/releases/download/M130.0.6723.174/thorium-browser_130.0.6723.174_AVX.rpm"
+        log_info "Downloading Thorium from GitHub..."
 
-        if [ -z "$THORIUM_URL" ]; then
-            log_warning "Could not find Thorium RPM. Trying direct URL..."
-            THORIUM_URL="https://github.com/Alex313031/thorium/releases/download/M128.0.6613.189/thorium-browser-128.0.6613.189-1.x86_64.rpm"
-        fi
-
-        log_info "Downloading from: $THORIUM_URL"
         if curl -fsSL -o thorium.rpm "$THORIUM_URL" && [ -f thorium.rpm ]; then
             sudo dnf install -y ./thorium.rpm
             log_success "Thorium Browser installed"
+            rm -f thorium.rpm
         else
-            log_warning "Failed to download Thorium, you may need to install it manually"
-            log_info "Visit: https://github.com/Alex313031/thorium/releases"
+            log_warning "Failed to download Thorium"
         fi
 
         cd - > /dev/null
@@ -97,9 +88,8 @@ install_applications() {
         log_info "Visual Studio Code already installed, skipping"
     else
         log_info "Installing Visual Studio Code..."
-        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+        sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
         echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
-        sudo dnf check-update
         sudo dnf install -y code
         log_success "Visual Studio Code installed"
     fi

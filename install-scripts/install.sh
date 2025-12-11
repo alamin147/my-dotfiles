@@ -33,19 +33,19 @@ show_menu() {
 install_all() {
     log_section "Installing All Components"
 
-    install_core_tools
+    install_core_tools || log_error "Core tools installation had errors"
     echo ""
 
-    install_shell_tools
+    install_shell_tools || log_error "Shell tools installation had errors"
     echo ""
 
-    install_system_tools
+    install_system_tools || log_error "System tools installation had errors"
     echo ""
 
-    install_dev_tools
+    install_dev_tools || log_error "Dev tools installation had errors"
     echo ""
 
-    install_applications
+    install_applications || log_error "Applications installation had errors"
     echo ""
 
     log_section "All Installations Complete!"
