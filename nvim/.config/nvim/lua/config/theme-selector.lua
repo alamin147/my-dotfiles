@@ -2,7 +2,7 @@
 -- THEME SELECTOR - Change only the line below to switch themes
 -- ═══════════════════════════════════════════════════════════════════════════
 
-local ACTIVE_THEME = "gruvbox" -- ← CHANGE THIS LINE ONLY
+local ACTIVE_THEME = "monokai-pro" -- ← CHANGE THIS LINE ONLY
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Available themes (just for reference, don't edit):
