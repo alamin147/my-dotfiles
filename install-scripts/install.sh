@@ -5,16 +5,15 @@
 
 set -e
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/utils/logging.sh"
+source utils/logging.sh
 
 # Import installer functions
-source "${SCRIPT_DIR}/installers/core-tools.sh"
-source "${SCRIPT_DIR}/installers/shell-tools.sh"
-source "${SCRIPT_DIR}/installers/system-tools.sh"
-source "${SCRIPT_DIR}/installers/dev-tools.sh"
-source "${SCRIPT_DIR}/installers/applications.sh"
-source "${SCRIPT_DIR}/installers/stow-manager.sh"
+source installers/core-tools.sh
+source installers/shell-tools.sh
+source installers/system-tools.sh
+source installers/dev-tools.sh
+source installers/applications.sh
+source installers/stow-manager.sh
 
 show_menu() {
     echo ""
