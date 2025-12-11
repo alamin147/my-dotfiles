@@ -11,6 +11,27 @@ source "${SCRIPT_DIR}/../utils/logging.sh"
 # Get the dotfiles root directory (parent of install-scripts)
 DOTFILES_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 
+# Define package target locations
+# Format: package_name:target_path
+declare -A PACKAGE_TARGETS=(
+    ["alacritty"]="$HOME/.config/alacritty"
+    ["cava"]="$HOME/.config/cava"
+    ["fastfetch"]="$HOME/.config/fastfetch"
+    ["hypr"]="$HOME/.config/hypr"
+    ["kitty"]="$HOME/.config/kitty"
+    ["nvim"]="$HOME/.config/nvim"
+    ["rofi"]="$HOME/.config/rofi"
+    ["starship"]="$HOME/.config/starship"
+    ["swappy"]="$HOME/.config/swappy"
+    ["swaync"]="$HOME/.config/swaync"
+    ["tmux"]="$HOME/.config/tmux"
+    ["wallust"]="$HOME/.config/wallust"
+    ["waybar"]="$HOME/.config/waybar"
+    ["wlogout"]="$HOME/.config/wlogout"
+    ["yazi"]="$HOME/.config/yazi"
+    ["zsh"]="$HOME"
+)
+
 # Get available stow packages
 get_stow_packages() {
     local packages=()
@@ -29,40 +50,43 @@ get_stow_packages() {
 # Stow a single package
 stow_package() {
     local package="$1"
+    local target="${PACKAGE_TARGETS[$package]}"
 
     log_info "Processing $package..."
 
-    cd "$DOTFILES_ROOT"
+    # If target location is defined, remove it first
+    if [ -n "$target" ]; then
+        # For packages that stow to HOME directly (like zsh)
+        if [ "$target" = "$HOME" ]; then
+            # Remove individual dotfiles from the package
+            for file in "$DOTFILES_ROOT/$package/".*; do
+                [ -e "$file" ] || continue
+                local filename=$(basename "$file")
+                [[ "$filename" == "." || "$filename" == ".." ]] && continue
 
-    # First, do a dry run to find conflicts
-    local conflicts
-    conflicts=$(stow -n -v "$package" 2>&1 | grep "existing target" | awk '{print $NF}' | sed 's/:.*//')
-
-    # Remove any conflicting files/directories
-    if [ -n "$conflicts" ]; then
-        while IFS= read -r conflict; do
-            if [ -n "$conflict" ]; then
-                local target="$HOME/$conflict"
-                if [ -e "$target" ] || [ -L "$target" ]; then
-                    log_warning "Removing existing: $target"
-                    rm -rf "$target"
+                local target_file="$HOME/$filename"
+                if [ -e "$target_file" ] || [ -L "$target_file" ]; then
+                    log_warning "Removing existing: $target_file"
+                    rm -rf "$target_file"
                 fi
+            done
+        else
+            # For packages that go to specific directories
+            if [ -e "$target" ] || [ -L "$target" ]; then
+                log_warning "Removing existing: $target"
+                rm -rf "$target"
             fi
-        done <<< "$conflicts"
+        fi
     fi
 
     # Stow the package
     cd "$DOTFILES_ROOT"
-    if stow -v "$package" 2>&1; then
+    if stow "$package" 2>&1; then
         log_success "$package stowed successfully"
+        return 0
     else
         log_error "Failed to stow $package"
-        # Restore backup if exists
-        local backup=$(ls -t "$config_dir.backup."* 2>/dev/null | head -1)
-        if [ -n "$backup" ]; then
-            log_info "Restoring backup..."
-            mv "$backup" "$config_dir"
-        fi
+        return 1
     fi
 }
 
