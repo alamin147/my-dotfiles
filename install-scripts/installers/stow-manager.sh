@@ -29,24 +29,26 @@ get_stow_packages() {
 # Stow a single package
 stow_package() {
     local package="$1"
-    local config_dir="$HOME/.config/$package"
 
     log_info "Processing $package..."
 
-    # Check if config directory exists
-    if [ -d "$config_dir" ]; then
-        log_warning "Existing config found at $config_dir"
-        read -p "Delete existing config and stow? (y/N) " -n 1 -r
-        echo
+    cd "$DOTFILES_ROOT"
 
-        if [[ $REPLY =~ ^[Yy]$ ]]; then
-            log_info "Backing up to $config_dir.backup..."
-            mv "$config_dir" "$config_dir.backup.$(date +%Y%m%d_%H%M%S)"
-            log_success "Backup created"
-        else
-            log_info "Skipping $package"
-            return
-        fi
+    # First, do a dry run to find conflicts
+    local conflicts
+    conflicts=$(stow -n -v "$package" 2>&1 | grep "existing target" | awk '{print $NF}' | sed 's/:.*//')
+
+    # Remove any conflicting files/directories
+    if [ -n "$conflicts" ]; then
+        while IFS= read -r conflict; do
+            if [ -n "$conflict" ]; then
+                local target="$HOME/$conflict"
+                if [ -e "$target" ] || [ -L "$target" ]; then
+                    log_warning "Removing existing: $target"
+                    rm -rf "$target"
+                fi
+            fi
+        done <<< "$conflicts"
     fi
 
     # Stow the package
