@@ -24,8 +24,7 @@ install_applications() {
     # Brave Browser
     log_info "Installing Brave Browser..."
     sudo dnf install -y dnf-plugins-core
-    sudo dnf config-manager --add-repo https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
-    sudo rpm --import https://brave-browser-rpm-release.s3.brave.com/brave-core.asc
+    sudo dnf config-manager addrepo --from-repofile=https://brave-browser-rpm-release.s3.brave.com/brave-browser.repo
     sudo dnf install -y brave-browser
     log_success "Brave Browser installed"
 
@@ -34,11 +33,17 @@ install_applications() {
     TEMP_DIR=$(mktemp -d)
     cd "$TEMP_DIR"
 
-    # Download latest Thorium release for Fedora
-    THORIUM_URL="https://github.com/Alex313031/thorium/releases/latest/download/thorium-browser-latest.x86_64.rpm"
-    log_info "Downloading Thorium from GitHub releases..."
+    # Get latest Thorium release URL for RPM
+    log_info "Fetching latest Thorium release..."
+    THORIUM_URL=$(curl -s https://api.github.com/repos/Alex313031/thorium/releases/latest | grep "browser_download_url.*\.rpm" | grep -v "AVX" | grep "x86_64" | head -1 | cut -d '"' -f 4)
 
-    if curl -sL -o thorium.rpm "$THORIUM_URL"; then
+    if [ -z "$THORIUM_URL" ]; then
+        log_warning "Could not find Thorium RPM. Trying direct URL..."
+        THORIUM_URL="https://github.com/Alex313031/thorium/releases/download/M128.0.6613.189/thorium-browser-128.0.6613.189-1.x86_64.rpm"
+    fi
+
+    log_info "Downloading from: $THORIUM_URL"
+    if curl -fsSL -o thorium.rpm "$THORIUM_URL" && [ -f thorium.rpm ]; then
         sudo dnf install -y ./thorium.rpm
         log_success "Thorium Browser installed"
     else
