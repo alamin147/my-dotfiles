@@ -75,6 +75,41 @@ vim.opt.updatetime = 250 -- default is 4000ms
 -- Faster key sequence completion
 vim.opt.timeoutlen = 300 -- default is 1000ms
 
+-- ========================================
+-- Filetype detection for extensionless config files
+-- ========================================
+vim.filetype.add({
+  filename = {
+    ["config"] = "bash",
+    ["hyprland.conf"] = "hyprlang",
+    ["hyprlock.conf"] = "hyprlang",
+    ["hyprpaper.conf"] = "hyprlang",
+  },
+  pattern = {
+    -- Ghostty config files
+    [".*/.config/ghostty/.*"] = "bash",
+    -- Hyprland config files
+    [".*/.config/hypr/.*%.conf"] = "hyprlang",
+    -- Generic config files
+    [".*%.conf"] = function(path, bufnr)
+      -- Check if it looks like a shell/bash config
+      local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+      if first_line:match("^#!.*sh") then
+        return "sh"
+      end
+      return "conf"
+    end,
+    -- Files in .config with no extension
+    [".*/%.config/.*/[^%.]+$"] = function(path, bufnr)
+      local first_line = vim.api.nvim_buf_get_lines(bufnr, 0, 1, false)[1] or ""
+      if first_line:match("^#") then
+        return "bash"
+      end
+      return "conf"
+    end,
+  },
+})
+
 -- Make background transparent in Neovim
 --vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
 --vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })

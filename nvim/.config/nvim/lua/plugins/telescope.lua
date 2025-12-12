@@ -32,7 +32,11 @@ return {
         ";r",
         function()
           local builtin = require("telescope.builtin")
-          builtin.live_grep()
+          -- Use the original cwd (symlink path, not resolved)
+          local cwd = vim.g.original_cwd or vim.fn.getcwd()
+          builtin.live_grep({
+            cwd = cwd,
+          })
         end,
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
       },

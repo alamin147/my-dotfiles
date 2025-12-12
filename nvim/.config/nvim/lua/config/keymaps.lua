@@ -43,6 +43,19 @@ keymap.set("n", "<Leader>w", ":update<Return>", opts)
 keymap.set("n", "<Leader>q", ":quit<Return>", opts)
 keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
 
+-- Live grep in current directory (fix for symlinked dirs)
+keymap.set("n", "<Leader>/", function()
+  if not has_telescope then
+    vim.notify("Telescope not available", vim.log.levels.WARN)
+    return
+  end
+  -- Use the original cwd (symlink path, not resolved)
+  local cwd = vim.g.original_cwd or vim.fn.getcwd()
+  telescope_builtin.live_grep({
+    cwd = cwd,
+  })
+end, { desc = "Grep in current directory" })
+
 -- File explorer with NvimTree
 keymap.set("n", "<Leader>f", ":NvimTreeFindFile<Return>", opts)
 -- keymap.set("n", "<Leader>t", function()
