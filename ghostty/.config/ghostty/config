@@ -1,0 +1,23 @@
+# ======================
+# Ghostty Main Config
+# ======================
+
+# ---- Transparency / Blur ----
+background-opacity = 0.80
+background-blur = true
+
+# ---- Padding ----
+
+# ---- Font ----
+font-family = "JetBrainsMono Nerd Font"
+font-size = 15
+
+# ---- Cursor ----
+cursor-style = block
+
+
+# config-file = themes/tokyonight
+# config-file = themes/catppuccin
+theme = kanagawa
+# config-file = themes/gruvbox
+# config-file = themes/dracula
