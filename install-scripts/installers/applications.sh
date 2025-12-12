@@ -10,7 +10,7 @@ install_applications() {
     log_section "Installing Applications"
 
     # Transmission BitTorrent client
-    if command -v transmission-gtk &> /dev/null || command -v transmission-qt &> /dev/null; then
+    if command -v transmission-gtk &>/dev/null || command -v transmission-qt &>/dev/null; then
         log_info "Transmission already installed, skipping"
     else
         log_info "Installing Transmission..."
@@ -18,6 +18,14 @@ install_applications() {
         log_success "Transmission installed"
     fi
 
+    # nmtui (NetworkManager TUI)
+    if command -v nmtui &>/dev/null; then
+        log_info "nmtui already installed, skipping"
+    else
+        log_info "Installing nmtui (NetworkManager-tui)..."
+        sudo dnf install -y NetworkManager-tui
+        log_success "nmtui installed"
+    fi
     # LocalSend - local file sharing
     if flatpak list | grep -q org.localsend.localsend_app; then
         log_info "LocalSend already installed, skipping"
@@ -28,7 +36,7 @@ install_applications() {
     fi
 
     # Brave Browser
-    if command -v brave-browser &> /dev/null; then
+    if command -v brave-browser &>/dev/null; then
         log_info "Brave Browser already installed, skipping"
     else
         log_info "Installing Brave Browser..."
@@ -47,7 +55,7 @@ install_applications() {
     fi
 
     # Thorium Browser
-    if command -v thorium-browser &> /dev/null; then
+    if command -v thorium-browser &>/dev/null; then
         log_info "Thorium Browser already installed, skipping"
     else
         log_info "Installing Thorium Browser..."
@@ -65,7 +73,7 @@ install_applications() {
             log_warning "Failed to download Thorium"
         fi
 
-        cd - > /dev/null
+        cd - >/dev/null
         rm -rf "$TEMP_DIR"
     fi
 
@@ -75,7 +83,7 @@ install_applications() {
     sudo dnf install -y https://download1.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
     log_success "RPM Fusion repositories configured"
 
-    if command -v vlc &> /dev/null; then
+    if command -v vlc &>/dev/null; then
         log_info "VLC already installed, skipping"
     else
         log_info "Installing VLC..."
@@ -84,14 +92,40 @@ install_applications() {
     fi
 
     # Visual Studio Code
-    if command -v code &> /dev/null; then
+    if command -v code &>/dev/null; then
         log_info "Visual Studio Code already installed, skipping"
     else
         log_info "Installing Visual Studio Code..."
         sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc &&
-        echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo > /dev/null
+            echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\nautorefresh=1\ntype=rpm-md\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" | sudo tee /etc/yum.repos.d/vscode.repo >/dev/null
         sudo dnf install -y code
         log_success "Visual Studio Code installed"
+    fi
+
+    # OBS Studio
+    if flatpak info com.obsproject.Studio &>/dev/null; then
+        log_info "OBS Studio already installed, skipping"
+    else
+        log_info "Installing OBS Studio..."
+        flatpak install -y flathub com.obsproject.Studio
+        log_success "OBS Studio installed"
+    fi
+
+    # Obsidian
+    if flatpak info md.obsidian.Obsidian &>/dev/null; then
+        log_info "Obsidian already installed, skipping"
+    else
+        log_info "Installing Obsidian..."
+        flatpak install -y flathub md.obsidian.Obsidian
+        log_success "Obsidian installed"
+    fi
+    # bottles
+    if flatpak info com.usebottles.bottles &>/dev/null; then
+        log_info "Bottles already installed, skipping"
+    else
+        log_info "Installing Bottles..."
+        flatpak install -y flathub com.usebottles.bottles
+        log_success "Bottles installed"
     fi
 
     log_section "Applications Installation Complete"
