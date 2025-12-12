@@ -13,7 +13,7 @@ install_shell_tools() {
 
     # Starship prompt
     log_info "Installing Starship prompt..."
-    if ! command -v starship &> /dev/null; then
+    if ! command -v starship &>/dev/null; then
         curl -sS https://starship.rs/install.sh | sh -s -- -y
         log_success "Starship installed"
     else
@@ -32,19 +32,8 @@ install_shell_tools() {
 
     # Yazi file manager
     log_info "Installing Yazi..."
-    log_warning "Please follow the installation prompts for Yazi"
-    # Note: User mentioned "install with suggestion" - may need cargo or other method
-    if ! command -v yazi &> /dev/null; then
-        log_info "Installing Yazi via cargo (if available)..."
-        if command -v cargo &> /dev/null; then
-            cargo install --locked yazi-fm yazi-cli
-        else
-            log_warning "Cargo not found. Please install Yazi manually or install Rust first"
-        fi
-    else
-        log_info "Yazi already installed"
-    fi
-
+    sudo dnf copr enable lihaohong/yazi -y
+    sudo dnf install -y yazi
     log_section "Shell Tools Installation Complete"
 }
 

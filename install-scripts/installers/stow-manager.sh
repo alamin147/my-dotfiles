@@ -15,6 +15,7 @@ DOTFILES_ROOT="$(cd "${SCRIPT_DIR}/../.." && pwd)"
 # Format: package_name:target_path
 declare -A PACKAGE_TARGETS=(
     ["alacritty"]="$HOME/.config/alacritty"
+    ["ghostty"]="$HOME/.config/ghostty"
     ["cava"]="$HOME/.config/cava"
     ["fastfetch"]="$HOME/.config/fastfetch"
     ["hypr"]="$HOME/.config/hypr"
@@ -111,10 +112,10 @@ interactive_stow() {
         ((i++))
     done
     echo "  $i) Stow All"
-    echo "  $((i+1))) Return to Main Menu"
+    echo "  $((i + 1))) Return to Main Menu"
     echo ""
 
-    read -p "Select package to stow [1-$((i+1))]: " choice
+    read -p "Select package to stow [1-$((i + 1))]: " choice
 
     if [ "$choice" -eq "$i" ]; then
         # Stow all
@@ -123,12 +124,12 @@ interactive_stow() {
             stow_package "$package"
             echo ""
         done
-    elif [ "$choice" -eq "$((i+1))" ]; then
+    elif [ "$choice" -eq "$((i + 1))" ]; then
         # Return to menu
         return 0
     elif [ "$choice" -ge 1 ] && [ "$choice" -lt "$i" ]; then
         # Stow selected package
-        local selected="${packages[$((choice-1))]}"
+        local selected="${packages[$((choice - 1))]}"
         stow_package "$selected"
     else
         log_error "Invalid selection"
@@ -170,10 +171,10 @@ interactive_unstow() {
         ((i++))
     done
     echo "  $i) Unstow All"
-    echo "  $((i+1))) Return to Main Menu"
+    echo "  $((i + 1))) Return to Main Menu"
     echo ""
 
-    read -p "Select package to unstow [1-$((i+1))]: " choice
+    read -p "Select package to unstow [1-$((i + 1))]: " choice
 
     if [ "$choice" -eq "$i" ]; then
         # Unstow all
@@ -181,12 +182,12 @@ interactive_unstow() {
         for package in "${packages[@]}"; do
             unstow_package "$package"
         done
-    elif [ "$choice" -eq "$((i+1))" ]; then
+    elif [ "$choice" -eq "$((i + 1))" ]; then
         # Return to menu
         return 0
     elif [ "$choice" -ge 1 ] && [ "$choice" -lt "$i" ]; then
         # Unstow selected package
-        local selected="${packages[$((choice-1))]}"
+        local selected="${packages[$((choice - 1))]}"
         unstow_package "$selected"
     else
         log_error "Invalid selection"

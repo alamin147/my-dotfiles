@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Core Tools Installer
-# Essential tools: stow, alacritty, neovim
+# Essential tools: stow, alacritty, neovim, ghostty
 
 set -e
 
@@ -25,6 +25,12 @@ install_core_tools() {
     log_info "Installing Neovim..."
     sudo dnf install -y neovim
     log_success "Neovim installed"
+
+    # ghostty terminal emulator
+    log_info "Installing Ghostty..."
+    sudo dnf copr enable scottames/ghostty -y
+    sudo dnf install -y ghostty
+    log_success "Ghostty installed"
 
     log_section "Core Tools Installation Complete"
 }
