@@ -18,10 +18,10 @@ vim.api.nvim_create_autocmd("LspAttach", {
   end,
 })
 
--- Disable autoformat for C++, C, and Python files
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = { "cpp", "c", "python" },
-  group = vim.api.nvim_create_augroup("DisableAutoformatCppPython", { clear = true }),
+-- Disable autoformat for ALL file types globally
+vim.api.nvim_create_autocmd("BufEnter", {
+  pattern = "*",
+  group = vim.api.nvim_create_augroup("DisableAutoformatGlobal", { clear = true }),
   callback = function()
     vim.b.autoformat = false
   end,

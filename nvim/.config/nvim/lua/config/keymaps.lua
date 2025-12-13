@@ -565,3 +565,20 @@ vim.keymap.set("n", "<C-s>", ":w<CR>")
 vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>i")
 -- Visual mode
 vim.keymap.set("v", "<C-s>", "<Esc>:w<CR>gv")
+
+-- =====
+-- LSP Enhancements
+-- =====
+-- Show signature help in insert mode
+vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Show signature help" })
+
+-- Better code actions
+vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
+vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions (visual)" })
+
+-- Trigger completion manually
+vim.keymap.set("i", "<C-Space>", function()
+  if vim.fn.pumvisible() == 0 then
+    vim.cmd("normal! a")
+  end
+end, { desc = "Trigger completion" })

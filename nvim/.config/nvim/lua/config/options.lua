@@ -38,6 +38,13 @@ vim.opt.splitkeep = "cursor"
 vim.opt.formatoptions:append({ "r" })
 
 -- ========================================
+-- Completion Configuration
+-- ========================================
+vim.opt.completeopt = { "menu", "menuone", "noselect" }
+vim.opt.pumheight = 15 -- Max number of items in completion menu
+vim.opt.shortmess:append("c") -- Don't show completion messages
+
+-- ========================================
 -- Diagnostic Configuration
 -- ========================================
 
@@ -115,3 +122,8 @@ vim.filetype.add({
 --vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
 --vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
 --vim.api.nvim_set_hl(0, "FloatBorder", { bg = "none" })
+
+-- ========================================
+-- Disable Auto-Formatting Globally
+-- ========================================
+vim.g.autoformat = false -- LazyVim global autoformat disable

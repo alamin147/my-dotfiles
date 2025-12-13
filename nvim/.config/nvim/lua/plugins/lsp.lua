@@ -7,31 +7,34 @@ return {
     opts = function(_, opts)
       vim.list_extend(opts.ensure_installed, {
         -- Language Servers
-        "clangd",              -- C/C++
-        "pyright",             -- Python
-        "typescript-language-server", -- JavaScript/TypeScript
-        "html-lsp",            -- HTML
-        "css-lsp",             -- CSS
-        "tailwindcss-language-server", -- TailwindCSS
-        "jdtls",               -- Java
-        "emmet-ls",            -- HTML/CSS snippets
+        "clangd",                        -- C/C++
+        "pyright",                       -- Python
+        "typescript-language-server",    -- JavaScript/TypeScript
+        "vtsls",                         -- Enhanced TypeScript/JavaScript LSP
+        "html-lsp",                      -- HTML
+        "css-lsp",                       -- CSS
+        "tailwindcss-language-server",   -- TailwindCSS
+        "emmet-ls",                      -- HTML/CSS snippets
+        "jdtls",                         -- Java
+        "json-lsp",                      -- JSON
+        "lua-language-server",          -- Lua
 
         -- Linters
         "luacheck",            -- Lua linter
         "shellcheck",          -- Shell script linter
         "eslint-lsp",          -- JS/TS linter
+        "cpplint",             -- C/C++ linter
 
         -- Formatters
         "clang-format",        -- C/C++ formatter
         "black",               -- Python formatter
         "prettier",            -- JS/TS/CSS/HTML/JSON formatter
         "stylua",              -- Lua formatter
+        "shfmt",               -- Shell formatter
 
         -- Debuggers
         "debugpy",             -- Python debugger
         "codelldb",            -- C/C++/Rust debugger
-
-        "shfmt",
       })
     end,
   },
@@ -76,33 +79,46 @@ return {
           },
         },
 
-        -- JavaScript/TypeScript
-        tsserver = {
+        -- JavaScript/TypeScript (using vtsls for better performance)
+        vtsls = {
           root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
+            return require("lspconfig.util").root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git")(...)
           end,
-          single_file_support = false,
+          single_file_support = true,
           settings = {
             typescript = {
               inlayHints = {
-                includeInlayParameterNameHints = "literal",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = false,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+              suggest = {
+                completeFunctionCalls = true,
               },
             },
             javascript = {
               inlayHints = {
-                includeInlayParameterNameHints = "all",
-                includeInlayParameterNameHintsWhenArgumentMatchesName = false,
-                includeInlayFunctionParameterTypeHints = true,
-                includeInlayVariableTypeHints = true,
-                includeInlayPropertyDeclarationTypeHints = true,
-                includeInlayFunctionLikeReturnTypeHints = true,
-                includeInlayEnumMemberValueHints = true,
+                parameterNames = { enabled = "all" },
+                parameterTypes = { enabled = true },
+                variableTypes = { enabled = true },
+                propertyDeclarationTypes = { enabled = true },
+                functionLikeReturnTypes = { enabled = true },
+                enumMemberValues = { enabled = true },
+              },
+              suggest = {
+                completeFunctionCalls = true,
+              },
+            },
+            vtsls = {
+              enableMoveToFileCodeAction = true,
+              autoUseWorkspaceTsdk = true,
+              experimental = {
+                completion = {
+                  enableServerSideFuzzyMatch = true,
+                },
               },
             },
           },
@@ -117,7 +133,6 @@ return {
         cssls = {
           settings = {
             css = {
-              validate = true,
               lint = {
                 unknownAtRules = "ignore",
               },
@@ -128,9 +143,54 @@ return {
         -- TailwindCSS
         tailwindcss = {
           root_dir = function(...)
-            return require("lspconfig.util").root_pattern(".git")(...)
+            return require("lspconfig.util").root_pattern(
+              "tailwind.config.js",
+              "tailwind.config.cjs",
+              "tailwind.config.mjs",
+              "tailwind.config.ts",
+              "postcss.config.js",
+              "postcss.config.cjs",
+              "postcss.config.mjs",
+              "postcss.config.ts",
+              ".git"
+            )(...)
           end,
-          filetypes = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact" },
+          filetypes = {
+            "html",
+            "css",
+            "scss",
+            "javascript",
+            "javascriptreact",
+            "typescript",
+            "typescriptreact",
+            "vue",
+            "svelte",
+          },
+          init_options = {
+            userLanguages = {
+              html = "html",
+            },
+          },
+          settings = {
+            tailwindCSS = {
+              experimental = {
+                classRegex = {
+                  { "cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]" },
+                  { "cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+                },
+              },
+              validate = true,
+              lint = {
+                cssConflict = "warning",
+                invalidApply = "error",
+                invalidScreen = "error",
+                invalidVariant = "error",
+                invalidConfigPath = "error",
+                invalidTailwindDirective = "error",
+                recommendedVariantOrder = "warning",
+              },
+            },
+          },
         },
 
         -- Emmet (HTML/CSS snippets)
