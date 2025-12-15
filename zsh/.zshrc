@@ -43,7 +43,7 @@ alias lt='ls --tree'
 eval "$(zoxide init zsh)"
 
 alias cd=z 
-alias v=nvim
+alias v=nvim .
 alias know=tldr
 alias sdi="sudo dnf install"
 eval "$(starship init zsh)"

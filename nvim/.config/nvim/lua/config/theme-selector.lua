@@ -2,7 +2,7 @@
 -- THEME SELECTOR - Change only the line below to switch themes
 -- ═══════════════════════════════════════════════════════════════════════════
 
-local ACTIVE_THEME = "gruvbox-material" -- ← CHANGE THIS LINE ONLY
+local ACTIVE_THEME = "nord" -- ← CHANGE THIS LINE ONLY
 
 -- ═══════════════════════════════════════════════════════════════════════════
 -- Available themes (just for reference, don't edit):
