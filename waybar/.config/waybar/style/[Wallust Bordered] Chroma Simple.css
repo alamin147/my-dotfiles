@@ -47,6 +47,9 @@ tooltip {
     margin-top: 5px;
 	border: 2px solid @color12;
 }
+#taskbar button{
+border: none;
+}
 
 #workspaces button {
     color: @color10;
@@ -66,7 +69,10 @@ tooltip {
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
-
+#taskbar button.active{
+    background-color: @color12;
+        margin-bottom: 1px;
+}
 #workspaces button.urgent {
     color: #11111b;
     border-radius: 10px;
