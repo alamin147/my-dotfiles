@@ -119,6 +119,14 @@ install_applications() {
         flatpak install -y flathub md.obsidian.Obsidian
         log_success "Obsidian installed"
     fi
+    # Discord
+    if flatpak info com.discordapp.Discord &>/dev/null; then
+        log_info "Discord already installed, skipping"
+    else
+        log_info "Installing Discord..."
+        flatpak install -y flathub com.discordapp.Discord
+        log_success "Discord installed"
+    fi
     # bottles
     if flatpak info com.usebottles.bottles &>/dev/null; then
         log_info "Bottles already installed, skipping"
@@ -129,6 +137,10 @@ install_applications() {
     fi
 
     log_section "Applications Installation Complete"
+
+    # Run javafortlauncher.sh for Java setup
+    log_section "Running javafortlauncher.sh for Java setup"
+    bash "${SCRIPT_DIR}/javafortlauncher.sh"
 }
 
 # Run if executed directly
