@@ -1,0 +1,68 @@
+
+# Gruvbox Material (Dark – Medium) Theme for Alacritty
+
+[colors.primary]
+background = "#282828"
+foreground = "#dfbf8e"
+dim_foreground = "#a89984"
+bright_foreground = "#fbf1c7"
+
+[colors.cursor]
+text = "#282828"
+cursor = "#dfbf8e"
+
+[colors.vi_mode_cursor]
+text = "#282828"
+cursor = "#7daea3"
+
+[colors.search.matches]
+foreground = "#282828"
+background = "#a9b665"
+
+[colors.search.focused_match]
+foreground = "#282828"
+background = "#89b482"
+
+[colors.footer_bar]
+foreground = "#282828"
+background = "#a9b665"
+
+[colors.hints.start]
+foreground = "#282828"
+background = "#d8a657"
+
+[colors.hints.end]
+foreground = "#282828"
+background = "#7daea3"
+
+[colors.selection]
+text = "#282828"
+background = "#504945"
+
+[colors.normal]
+black   = "#282828"
+red     = "#ea6962"
+green   = "#a9b665"
+yellow  = "#d8a657"
+blue    = "#7daea3"
+magenta = "#d3869b"
+cyan    = "#89b482"
+white   = "#dfbf8e"
+
+[colors.bright]
+black   = "#504945"
+red     = "#ea6962"
+green   = "#a9b665"
+yellow  = "#d8a657"
+blue    = "#7daea3"
+magenta = "#d3869b"
+cyan    = "#89b482"
+white   = "#fbf1c7"
+
+[[colors.indexed_colors]]
+index = 16
+color = "#e78a4e" # orange
+
+[[colors.indexed_colors]]
+index = 17
+color = "#bd6f3e" # dark orange

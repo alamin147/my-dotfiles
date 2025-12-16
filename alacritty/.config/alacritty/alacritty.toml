@@ -1,5 +1,5 @@
 general.import = [
-    "~/.config/alacritty/dracula.toml"
+    "~/.config/alacritty/themes/tokyonight.toml"
 ]
 
 [env]
@@ -17,5 +17,5 @@ bold_italic.family = "JetBrainsMono Nerd Font"
 x = 0
 y = -1
 [window.padding]
-x = 20
+x = 30
 y = 20
