@@ -1,3 +1,11 @@
+    # GIMP
+    if flatpak info org.gimp.GIMP &>/dev/null; then
+        log_info "GIMP already installed, skipping"
+    else
+        log_info "Installing GIMP..."
+        flatpak install -y flathub org.gimp.GIMP
+        log_success "GIMP installed"
+    fi
 #!/usr/bin/env bash
 
 # Applications Installer
