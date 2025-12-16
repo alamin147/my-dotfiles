@@ -67,60 +67,60 @@ return {
     opts = {},
   },
   --noice
-  -- {
-  --   "folke/noice.nvim",
-  --   opts = function(_, opts)
-  --     table.insert(opts.routes, {
-  --       filter = {
-  --         event = "notify",
-  --         find = "No information available",
-  --       },
-  --       opts = { skip = true },
-  --     })
-  --     local focused = true
-  --     vim.api.nvim_create_autocmd("FocusGained", {
-  --       callback = function()
-  --         focused = true
-  --       end,
-  --     })
-  --     vim.api.nvim_create_autocmd("FocusLost", {
-  --       callback = function()
-  --         focused = false
-  --       end,
-  --     })
-  --     table.insert(opts.routes, 1, {
-  --       filter = {
-  --         cond = function()
-  --           return not focused
-  --         end,
-  --       },
-  --       view = "notify_send",
-  --       opts = {
-  --         stop = false,
-  --         fps = 30,
-  --       },
-  --     })
-  --
-  --     opts.commands = {
-  --       all = {
-  --         -- options for the message history that you get with `:Noice`
-  --         view = "split",
-  --         opts = { enter = true, format = "details" },
-  --         filter = {},
-  --       },
-  --     }
-  --     opts.presets.lsp_doc_border = true
-  --   end,
-  --   config = function(_, opts)
-  --     require("noice").setup(opts)
-  --
-  --     vim.defer_fn(function()
-  --       vim.notify("      Cat will take the world 😼", vim.log.levels.INFO, {
-  --         title = "Welcome back, Alamin!",
-  --       })
-  --     end, 1000)
-  --   end,
-  -- },
+  {
+    "folke/noice.nvim",
+    opts = function(_, opts)
+      table.insert(opts.routes, {
+        filter = {
+          event = "notify",
+          find = "No information available",
+        },
+        opts = { skip = true },
+      })
+      local focused = true
+      vim.api.nvim_create_autocmd("FocusGained", {
+        callback = function()
+          focused = true
+        end,
+      })
+      vim.api.nvim_create_autocmd("FocusLost", {
+        callback = function()
+          focused = false
+        end,
+      })
+      table.insert(opts.routes, 1, {
+        filter = {
+          cond = function()
+            return not focused
+          end,
+        },
+        view = "notify_send",
+        opts = {
+          stop = false,
+          fps = 30,
+        },
+      })
+
+      opts.commands = {
+        all = {
+          -- options for the message history that you get with `:Noice`
+          view = "split",
+          opts = { enter = true, format = "details" },
+          filter = {},
+        },
+      }
+      opts.presets.lsp_doc_border = true
+    end,
+    config = function(_, opts)
+      require("noice").setup(opts)
+
+      vim.defer_fn(function()
+        vim.notify("      Cat will take the world 😼", vim.log.levels.INFO, {
+          title = "Welcome back, Alamin!",
+        })
+      end, 1000)
+    end,
+  },
   {
     "CRAG666/code_runner.nvim",
     config = function()
