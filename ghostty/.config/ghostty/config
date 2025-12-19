@@ -14,6 +14,21 @@ font-size = 15
 
 # ---- Cursor ----
 cursor-style = block
+#mouse-scroll-multiplier = precision:0.05, discrete:3
+mouse-scroll-multiplier = 0.5
+
+confirm-close-surface = false
+
+
+# Add some nice looking padding
+window-padding-x = 20
+window-padding-y = 0,2
+
+# Balance extra padding across all sides
+window-padding-balance = true
+
+# Ensure background color covers the padding area
+window-padding-color = extend-always
 
 
 
