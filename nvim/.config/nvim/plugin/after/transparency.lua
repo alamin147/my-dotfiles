@@ -21,6 +21,7 @@ vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeVertSplit", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { bg = "none" })
 vim.api.nvim_set_hl(0, "NeoTreeEndOfBuffer", { bg = "none" })
+vim.api.nvim_set_hl(0, "WinSeparator", { bg = "none" })
 
 -- transparent background for nvim-tree
 vim.api.nvim_set_hl(0, "NvimTreeNormal", { bg = "none" })
