@@ -143,7 +143,14 @@ install_applications() {
         flatpak install -y flathub com.usebottles.bottles
         log_success "Bottles installed"
     fi
-
+     # Evince 
+    if command -v evince &>/dev/null; then
+        log_info "Document viewer (Evince) already installed, skipping"
+    else
+        log_info "Installing Document viewer (Evince)..."
+    sudo dnf install -y evince
+        log_success "Evince installed"
+    fi
     log_section "Applications Installation Complete"
 
     # Run javafortlauncher.sh for Java setup

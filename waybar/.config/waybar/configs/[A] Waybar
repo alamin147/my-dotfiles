@@ -29,18 +29,19 @@
   "modules-left": [
     "custom/separator#blank",
     "custom/separator#blank",
-    "hyprland/workspaces#pacman",
+    //"hyprland/workspaces#pacman",
     "custom/cava_mviz",
     "custom/separator#blank",
-    "wlr/taskbar#1"
-	,"custom/playerctl"
+    //"wlr/taskbar#1",
+    "clock#4",
+	"custom/playerctl"
   ],
 
 
   "modules-center": [
     "group/app_drawer",
-      "clock#4"
-
+    //  "clock#4"
+    "hyprland/workspaces#pacman",
     ],
 
     "modules-right": [
