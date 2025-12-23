@@ -582,3 +582,115 @@ vim.keymap.set("i", "<C-Space>", function()
     vim.cmd("normal! a")
   end
 end, { desc = "Trigger completion" })
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------
+
+-- =============================================
+-- Theme Switcher with Telescope (Fixed & Improved)
+-- Keymap: <leader>ct
+-- =============================================
+--
+-- local function switch_theme()
+--   local themes = {}
+--   local theme_selector_path = vim.fn.stdpath("config") .. "/lua/config/theme-selector.lua"
+--
+--   -- Read theme names from comments like -- "theme-name"
+--   local file = io.open(theme_selector_path, "r")
+--   if not file then
+--     vim.notify("Could not open theme-selector.lua", vim.log.levels.ERROR)
+--     return
+--   end
+--
+--   for line in file:lines() do
+--     local theme = line:match('%-%-%s*"([^"]+)"')
+--     if theme then
+--       table.insert(themes, theme)
+--     end
+--   end
+--   file:close()
+--
+--   if #themes == 0 then
+--     vim.notify("No themes found in theme-selector.lua comments", vim.log.levels.WARN)
+--     return
+--   end
+--
+--   -- Use Telescope's built-in picker
+--   local pickers = require("telescope.pickers")
+--   local finders = require("telescope.finders")
+--   local conf = require("telescope.config").values
+--   local actions = require("telescope.actions")
+--   local action_state = require("telescope.actions.state")
+--
+--   pickers.new({}, {
+--     prompt_title = "Switch Colorscheme",
+--     finder = finders.new_table({
+--       results = themes,
+--     }),
+--     sorter = conf.generic_sorter({}),
+--     attach_mappings = function(prompt_bufnr, map)
+--       actions.select_default:replace(function()
+--         local selection = action_state.get_selected_entry()
+--         actions.close(prompt_bufnr)
+--
+--         if not selection then return end
+--         local new_theme = selection[1]
+--
+--         -- Read all lines
+--         local lines = {}
+--         local read_file = io.open(theme_selector_path, "r")
+--         if read_file then
+--           for line in read_file:lines() do
+--             table.insert(lines, line)
+--           end
+--           read_file:close()
+--         end
+--
+--         -- Update the ACTIVE_THEME line
+--         local updated = false
+--         for i, line in ipairs(lines) do
+--           if line:match("^local%s+ACTIVE_THEME%s*=") then
+--             lines[i] = string.format('local ACTIVE_THEME = "%s" -- ← CHANGE THIS LINE ONLY', new_theme)
+--             updated = true
+--             break
+--           end
+--         end
+--
+--         if not updated then
+--           vim.notify("Could not find ACTIVE_THEME line", vim.log.levels.ERROR)
+--           return
+--         end
+--
+--         -- Write back
+--         local write_file = io.open(theme_selector_path, "w")
+--         if write_file then
+--           for _, line in ipairs(lines) do
+--             write_file:write(line .. "\n")
+--           end
+--           write_file:close()
+--         else
+--           vim.notify("Failed to write theme-selector.lua", vim.log.levels.ERROR)
+--           return
+--         end
+--
+--         -- Force reload
+--         package.loaded["config.theme-selector"] = nil
+--         package.loaded["plugins.theme"] = nil
+--
+--         -- Trigger your hot-reload system
+--         vim.api.nvim_exec_autocmds("User", { pattern = "LazyReload" })
+--
+--         vim.notify("Switched to theme: " .. new_theme, vim.log.levels.INFO)
+--       end)
+--
+--       return true
+--     end,
+--   }):find()
+-- end
+--
+-- -- Keybinding
+-- vim.keymap.set("n", "<leader>th", switch_theme, { desc = "Switch Colorscheme (Telescope)" })
