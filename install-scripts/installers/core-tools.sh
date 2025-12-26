@@ -26,6 +26,12 @@ install_core_tools() {
     sudo dnf install -y neovim
     log_success "Neovim installed"
 
+    # Bat 
+    log_info "Installing Bat..."
+    sudo dnf install -y bat
+    log_success "Neovim installed"
+
+
     # ghostty terminal emulator
     log_info "Installing Ghostty..."
     sudo dnf copr enable scottames/ghostty -y

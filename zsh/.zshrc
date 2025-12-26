@@ -49,9 +49,23 @@ alias sdi="sudo dnf install"
 eval "$(starship init zsh)"
 
 
+ff() {
+  local selected
+  selected=$(fzf -m --preview="bat --style=numbers --color=always --line-range :500 {}" "$@")
 
+  [[ -z "$selected" ]] && return  # Nothing selected, exit
 
-alias ff='nvim #(fzf -m --preview="bat --style=numbers --color=always --line-range :500 {}")'
+  # Split multi-selection into array
+  local items=("${(f)selected}")
+
+  for item in "${items[@]}"; do
+    if [[ -f "$item" ]]; then
+      nvim "$item"
+    else
+      xdg-open "$item" &>/dev/null & disown  # Background to keep terminal responsive
+    fi
+  done
+}
 
 
 export PATH="$HOME/.npm-global/bin:$PATH"
@@ -59,3 +73,6 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Created by `pipx` on 2025-12-26 12:15:14
+export PATH="$PATH:/home/alamin/.local/bin"
