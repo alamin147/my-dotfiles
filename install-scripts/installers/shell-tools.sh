@@ -34,6 +34,10 @@ install_shell_tools() {
     log_info "Installing Yazi..."
     sudo dnf copr enable lihaohong/yazi -y
     sudo dnf install -y yazi
+    log_section "Yazi Installation Complete"
+
+    log_info "Installing Codecs..."
+    sudo dnf install libavcodec-freeworld.
     log_section "Shell Tools Installation Complete"
 }
 
