@@ -5,7 +5,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="agnosterzak"
 
-plugins=( 
+plugins=(
     git
     dnf
     zsh-autosuggestions
@@ -42,7 +42,7 @@ alias lla='ls -la'
 alias lt='ls --tree'
 eval "$(zoxide init zsh)"
 
-alias cd=z 
+alias cd=z
 alias v=nvim .
 alias know=tldr
 alias sdi="sudo dnf install"
@@ -69,10 +69,13 @@ ff() {
 
 
 export PATH="$HOME/.npm-global/bin:$PATH"
-
+export PATH="$HOME/.cargo/bin:$PATH"
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
 # Created by `pipx` on 2025-12-26 12:15:14
 export PATH="$PATH:/home/alamin/.local/bin"
+
+export PATH=$PATH:/home/alamin/.spicetify
+export PATH=$PATH:~/.spicetify

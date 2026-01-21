@@ -32,6 +32,27 @@ install_dev_tools() {
         sudo dnf install -y lazygit
         log_success "Lazygit installed"
     fi
+    # lynx
+    if command -v lynx &> /dev/null; then
+        log_info "Lynx already installed, skipping"
+    else
+        log_info "Installing Lynx"
+        sudo dnf install -y lynx
+        log_success "Lynx installed"
+    fi
+ # discordo 
+    if command -v discordo &> /dev/null; then
+        log_info "discordo already installed, skipping"
+    else
+        log_info "Installing discordo"
+        wget https://nightly.link/ayn2op/discordo/workflows/ci/main/discordo_Linux_X64.zip
+        unzip discordo_Linux_X64.zip
+        sudo mv discordo /usr/local/bin
+        rm discordo_Linux_X64.zip
+        log_success "discordo installed"
+    fi
+
+
 
     log_section "Development Tools Installation Complete"
 }
