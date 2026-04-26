@@ -1,11 +1,3 @@
-    # GIMP
-    if flatpak info org.gimp.GIMP &>/dev/null; then
-        log_info "GIMP already installed, skipping"
-    else
-        log_info "Installing GIMP..."
-        flatpak install -y flathub org.gimp.GIMP
-        log_success "GIMP installed"
-    fi
 #!/usr/bin/env bash
 
 # Applications Installer
@@ -16,6 +8,14 @@ source "${SCRIPT_DIR}/../utils/logging.sh"
 
 install_applications() {
     log_section "Installing Applications"
+    # GIMP
+    # if flatpak info org.gimp.GIMP &>/dev/null; then
+    #     log_info "GIMP already installed, skipping"
+    # else
+    #     log_info "Installing GIMP..."
+    #     flatpak install -y flathub org.gimp.GIMP
+    #     log_success "GIMP installed"
+    # fi
 
     # Transmission BitTorrent client
     if command -v transmission-gtk &>/dev/null || command -v transmission-qt &>/dev/null; then
@@ -70,7 +70,7 @@ install_applications() {
         TEMP_DIR=$(mktemp -d)
         cd "$TEMP_DIR"
 
-        THORIUM_URL="https://github.com/Alex313031/thorium/releases/download/M130.0.6723.174/thorium-browser_130.0.6723.174_AVX.rpm"
+        THORIUM_URL="https://github.com/Alex313031/thorium/releases/download/M138.0.7204.300/thorium-browser_138.0.7204.300_AVX.rpm"
         log_info "Downloading Thorium from GitHub..."
 
         if curl -fsSL -o thorium.rpm "$THORIUM_URL" && [ -f thorium.rpm ]; then
@@ -143,7 +143,7 @@ install_applications() {
         flatpak install -y flathub com.usebottles.bottles
         log_success "Bottles installed"
     fi
-     # Evince 
+     # Evince
     if command -v evince &>/dev/null; then
         log_info "Document viewer (Evince) already installed, skipping"
     else

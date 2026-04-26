@@ -1,0 +1,9 @@
+[17:14:09 2026-02-08] FETCHING Version 2.42.8
+[17:14:09 2026-02-08] CREATING /home/alamin/.spicetify
+[17:14:09 2026-02-08] DOWNLOADING https://github.com/spicetify/cli/releases/download/v2.42.8/spicetify-2.42.8-linux-amd64.tar.gz
+[17:14:14 2026-02-08] EXTRACTING /home/alamin/.spicetify/spicetify.tar.gz
+[17:14:14 2026-02-08] SETTING EXECUTABLE PERMISSIONS TO /home/alamin/.spicetify/spicetify
+[17:14:14 2026-02-08] REMOVING /home/alamin/.spicetify/spicetify.tar.gz
+[17:14:14 2026-02-08] spicetify path already set in /home/alamin/.zshrc, continuing...
+[17:14:14 2026-02-08] spicetify v2.42.8 was installed successfully to /home/alamin/.spicetify
+[17:14:14 2026-02-08] Run 'spicetify --help' to get started

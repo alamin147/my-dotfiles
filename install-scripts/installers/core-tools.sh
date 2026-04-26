@@ -26,7 +26,7 @@ install_core_tools() {
     sudo dnf install -y neovim
     log_success "Neovim installed"
 
-    # Bat 
+    # Bat
     log_info "Installing Bat..."
     sudo dnf install -y bat
     log_success "Neovim installed"
@@ -37,6 +37,14 @@ install_core_tools() {
     sudo dnf copr enable scottames/ghostty -y
     sudo dnf install -y ghostty
     log_success "Ghostty installed"
+
+    # heic format support
+    log_info "Installing HEIC libs..."
+    sudo dnf install libheif-freeworld libheif-tools
+    rm -rf ~/.cache/thumbnails/*
+    nautilus -q
+    log_success "HEIC installed"
+
 
     log_section "Core Tools Installation Complete"
 }

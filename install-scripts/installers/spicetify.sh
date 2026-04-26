@@ -1,27 +1,32 @@
 #!/usr/bin/env bash
-
 # =============================================================================
-# Spicetify + Marketplace installer for Flatpak Spotify on Fedora / Linux
-# Run as regular user (uses sudo only where needed)
-# Last tested patterns 2025–2026
+# Spicetify + Marketplace Setup for Flatpak Spotify (Fedora / most Linux)
+# Run as regular user (uses sudo only for chmod and flatpak override)
+# Version: 2026-02-ready
 # =============================================================================
-
 set -euo pipefail
 
-USERNAME=$(whoami)
+# ──────────────────────────────────────────────────────────────────────────────
+# Variables & Detection
+# ──────────────────────────────────────────────────────────────────────────────
+USERNAME="$(whoami)"
 FLATPAK_APP="com.spotify.Client"
-SPOTIFY_FLATPAK_PATH_BASE="/var/lib/flatpak/app/$FLATPAK_APP"
-POSSIBLE_SPOTIFY_PATHS=(
-    "$SPOTIFY_FLATPAK_PATH_BASE/x86_64/stable/active/files/extra/share/spotify"
-    "$SPOTIFY_FLATPAK_PATH_BASE/current/active/files/extra/share/spotify"   # some variants use "current"
-    "$SPOTIFY_FLATPAK_PATH_BASE/x86_64/master/active/files/extra/share/spotify"
+SPOTIFY_BASE="/var/lib/flatpak/app/$FLATPAK_APP"
+
+# Possible spotify install directories (Flatpak often changes between stable/current)
+POSSIBLE_PATHS=(
+    "$SPOTIFY_BASE/x86_64/stable/active/files/extra/share/spotify"
+    "$SPOTIFY_BASE/current/active/files/extra/share/spotify"
+    "$SPOTIFY_BASE/x86_64/master/active/files/extra/share/spotify"
+    "$SPOTIFY_BASE/x86_64/current/active/files/extra/share/spotify"
 )
 
 PREFS_PATH="/home/$USERNAME/.var/app/$FLATPAK_APP/config/spotify/prefs"
 
 echo "=== Spicetify + Marketplace Setup for Flatpak Spotify ==="
-echo "User: $USERNAME"
-echo "Date: $(date '+%Y-%m-%d')"
+echo "User:       $USERNAME"
+echo "Date:       $(date '+%Y-%m-%d %H:%M')"
+echo "Spotify:    Flatpak ($FLATPAK_APP)"
 echo ""
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -29,123 +34,131 @@ echo ""
 # ──────────────────────────────────────────────────────────────────────────────
 echo "→ Checking / installing prerequisites..."
 
-if ! command -v flatpak &> /dev/null; then
+if ! command -v flatpak >/dev/null 2>&1; then
     echo "Flatpak not found → installing..."
-    sudo dnf install -y flatpak
+    sudo dnf install -y flatpak || { echo "dnf failed – are you on Fedora?"; exit 1; }
 fi
 
-if ! flatpak remote-ls flathub | grep -q com.spotify.Client; then
-    echo "Adding Flathub..."
+if ! flatpak remote-ls flathub 2>/dev/null | grep -q com.spotify.Client; then
+    echo "Adding Flathub remote..."
     flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 2. Install Spotify (Flatpak) if missing
+# 2. Install / ensure Spotify Flatpak
 # ──────────────────────────────────────────────────────────────────────────────
-if ! flatpak list | grep -q "$FLATPAK_APP"; then
-    echo "→ Spotify Flatpak not found → installing..."
+if ! flatpak list --app | grep -q "$FLATPAK_APP"; then
+    echo "→ Installing Spotify (Flatpak)..."
     flatpak install -y flathub "$FLATPAK_APP"
-    echo ""
-    echo "→ Launching Spotify once (log in if needed, then close it)..."
-    flatpak run "$FLATPAK_APP" &>/dev/null &
-    sleep 8
-    pkill -f spotify || true
-    echo "→ Spotify first-run done."
 else
     echo "→ Spotify Flatpak already installed."
 fi
 
+# Launch once to create prefs file (very important!)
+echo "→ Launching Spotify briefly to ensure prefs file is created..."
+flatpak run "$FLATPAK_APP" >/dev/null 2>&1 &
+SPOTIFY_PID=$!
+sleep 10
+kill $SPOTIFY_PID 2>/dev/null || true
+wait $SPOTIFY_PID 2>/dev/null || true
+
+if [[ ! -f "$PREFS_PATH" ]]; then
+    echo "→ WARNING: prefs file still missing after first launch."
+    echo "   Please run 'flatpak run $FLATPAK_APP' yourself, log in, play something briefly, then close Spotify."
+    echo "   Then re-run this script."
+    exit 1
+fi
+echo "→ prefs file found at $PREFS_PATH"
+
 # ──────────────────────────────────────────────────────────────────────────────
-# 3. Install Spicetify CLI (official script)
+# 3. Install / update Spicetify CLI
 # ──────────────────────────────────────────────────────────────────────────────
-if ! command -v spicetify &> /dev/null; then
-    echo "→ Installing Spicetify CLI..."
+echo "→ Installing / updating Spicetify CLI..."
+if ! command -v spicetify >/dev/null 2>&1; then
     curl -fsSL https://raw.githubusercontent.com/spicetify/cli/main/install.sh | sh
-    # Make sure it's in PATH for this session
     export PATH="$HOME/.spicetify:$PATH"
 else
-    echo "→ Spicetify already installed → updating..."
-    spicetify update
+    spicetify update || true
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 4. Detect & set spotify_path
+# 4. Detect & configure spotify_path
 # ──────────────────────────────────────────────────────────────────────────────
-echo "→ Detecting Flatpak Spotify path..."
-
+echo "→ Detecting Spotify Flatpak installation path..."
 SPOTIFY_PATH=""
-for path in "${POSSIBLE_SPOTIFY_PATHS[@]}"; do
-    if [[ -d "$path" ]]; then
-        SPOTIFY_PATH="$path"
+for p in "${POSSIBLE_PATHS[@]}"; do
+    if [[ -d "$p" && -f "$p/spotify" ]]; then
+        SPOTIFY_PATH="$p"
         break
     fi
 done
 
 if [[ -z "$SPOTIFY_PATH" ]]; then
-    echo "ERROR: Could not find Spotify installation in common Flatpak locations."
-    echo "Please check: ls -l /var/lib/flatpak/app/com.spotify.Client/"
-    echo "Then edit ~/.config/spicetify/config-xpui.ini manually."
+    echo "ERROR: Could not locate Spotify files."
+    echo "Run:   ls -ld /var/lib/flatpak/app/com.spotify.Client/*/*/active/files/extra/share/spotify"
+    echo "Then set spotify_path manually in ~/.config/spicetify/config-xpui.ini"
     exit 1
 fi
 
 echo "→ Found spotify_path = $SPOTIFY_PATH"
 
-# Set paths
-spicetify config spotify_path "$SPOTIFY_PATH"
-spicetify config prefs_path   "$PREFS_PATH"
-
-# Enable needed features
-spicetify config inject_css 1
-spicetify config replace_colors 1
+# Force-write config (bypasses detection issues)
+spicetify config spotify_path "$SPOTIFY_PATH" || true
+spicetify config prefs_path   "$PREFS_PATH"   || true
+spicetify config inject_css    1              || true
+spicetify config replace_colors 1             || true
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 5. Permissions (critical for patching to work)
+# 5. Permissions (required for patching)
 # ──────────────────────────────────────────────────────────────────────────────
-echo "→ Applying write permissions (sudo required)..."
-
-sudo chmod a+wr "$SPOTIFY_PATH" -R
-# Especially important for Apps folder (custom apps / patches go here)
+echo "→ Setting write permissions (sudo required)..."
+sudo chmod -R a+wr "$SPOTIFY_PATH"
 if [[ -d "$SPOTIFY_PATH/Apps" ]]; then
-    sudo chmod a+wr "$SPOTIFY_PATH/Apps" -R
+    sudo chmod -R a+wr "$SPOTIFY_PATH/Apps"
 fi
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 6. Flatpak filesystem overrides (for CustomApps / Extensions symlinks)
+# 6. Flatpak filesystem overrides (for extensions & custom apps)
 # ──────────────────────────────────────────────────────────────────────────────
-echo "→ Adding Flatpak overrides for CustomApps & Extensions..."
+echo "→ Adding Flatpak filesystem overrides..."
+SPICETIFY_DIR="$(spicetify -c | xargs dirname)"
 
-SPICETIFY_CONFIG_DIR="$(dirname "$(spicetify -c)")"
-
-sudo flatpak override --filesystem="$SPICETIFY_CONFIG_DIR/CustomApps/:ro" "$FLATPAK_APP"
-sudo flatpak override --filesystem="$SPICETIFY_CONFIG_DIR/Extensions/:ro" "$FLATPAK_APP"
-# Sometimes needed for the binary dir too
-sudo flatpak override --filesystem="$HOME/.spicetify/CustomApps/:ro" "$FLATPAK_APP" 2>/dev/null || true
+sudo flatpak override --filesystem="$SPICETIFY_DIR/Extensions/:ro"   "$FLATPAK_APP" || true
+sudo flatpak override --filesystem="$SPICETIFY_DIR/CustomApps/:ro"   "$FLATPAK_APP" || true
+sudo flatpak override --filesystem="$HOME/.spicetify/Extensions/:ro" "$FLATPAK_APP" || true
+sudo flatpak override --filesystem="$HOME/.spicetify/CustomApps/:ro" "$FLATPAK_APP" || true
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 7. Install Marketplace (most popular extension)
+# 7. Install Marketplace
 # ──────────────────────────────────────────────────────────────────────────────
 echo "→ Installing Spicetify Marketplace..."
 curl -fsSL https://raw.githubusercontent.com/spicetify/marketplace/main/resources/install.sh | sh || {
-    echo "→ Marketplace install failed once → retrying with backup apply first..."
-    spicetify backup apply
+    echo "→ Marketplace install failed – retrying after backup apply..."
+    spicetify backup apply || true
     curl -fsSL https://raw.githubusercontent.com/spicetify/marketplace/main/resources/install.sh | sh
 }
 
 # ──────────────────────────────────────────────────────────────────────────────
-# 8. Final apply
+# 8. Final apply & backup
 # ──────────────────────────────────────────────────────────────────────────────
-echo "→ Creating backup & applying changes..."
-spicetify apply
+echo "→ Creating backup & applying patches..."
 spicetify backup apply
+spicetify apply
+
 echo ""
-echo "=== Setup complete! ==="
+echo "=== Setup finished successfully! ==="
 echo ""
-echo "Launch Spotify:"
+echo "Launch Spotify with:"
 echo "    flatpak run com.spotify.Client"
 echo ""
-echo "→ You should see the green Marketplace icon in the left sidebar."
-echo "→ If changes don't appear: close Spotify fully → run 'spicetify apply' → restart."
-echo "→ To install themes/extensions: use the Marketplace tab or 'spicetify config'."
+echo "You should now see the green Marketplace icon in the sidebar."
 echo ""
-echo "Enjoy your customized Spotify! 🎶"
-echo "If issues → run: spicetify -c   (shows config) and share output."
+echo "Troubleshooting tips:"
+echo "  • No changes? → Close Spotify completely → 'spicetify apply' → restart"
+echo "  • Still issues? → Run 'spicetify -c' and check paths"
+echo "  • Config location: $(spicetify -c)"
+echo ""
+echo "Enjoy your themed Spotify! 🎧"
+
+echo "Exising"
+exit
