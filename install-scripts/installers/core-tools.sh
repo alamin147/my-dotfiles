@@ -17,9 +17,9 @@ install_core_tools() {
     log_success "GNU Stow installed"
 
     # Alacritty terminal emulator
-    log_info "Installing Alacritty..."
-    sudo dnf install -y alacritty
-    log_success "Alacritty installed"
+    # log_info "Installing Alacritty..."
+    # sudo dnf install -y alacritty
+    # log_success "Alacritty installed"
 
     # Neovim text editor
     log_info "Installing Neovim..."

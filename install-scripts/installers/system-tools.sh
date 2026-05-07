@@ -12,10 +12,10 @@ install_system_tools() {
     log_section "Installing System Tools"
 
     # Wlsunset - day/night gamma adjustments for Wayland
-    log_info "Installing wlsunset..."
-    sudo dnf install -y wlsunset
-    log_success "wlsunset installed"
-
+    # log_info "Installing wlsunset..."
+    # sudo dnf install -y wlsunset
+    # log_success "wlsunset installed"
+    #
     log_section "System Tools Installation Complete"
 }
 
