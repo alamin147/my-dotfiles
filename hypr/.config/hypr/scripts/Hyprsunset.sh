@@ -12,7 +12,7 @@ set -euo pipefail
 #   HYPRSUNSET_ICON_MODE  sunset|blue  (default: sunset)
 
 STATE_FILE="$HOME/.cache/.hyprsunset_state"
-TARGET_TEMP="${HYPRSUNSET_TEMP:-3200}" # lower the value stronger the night light effect; -4500K was default
+TARGET_TEMP="${HYPRSUNSET_TEMP:-2900}" # lower the value stronger the night light effect; -4500K was default
 ICON_MODE="${HYPRSUNSET_ICON_MODE:-sunset}"
 
 ensure_state() {
@@ -29,7 +29,7 @@ icon_on() {
   case "$ICON_MODE" in
     sunset)
       # sunset emoji (falls back to tofu if no emoji font)
-      printf "🌇"
+      printf "☀"
       ;;
     blue)
       # no color in text; rely on CSS .on to style if desired
