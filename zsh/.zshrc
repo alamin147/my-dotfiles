@@ -79,3 +79,6 @@ export PATH="$PATH:/home/alamin/.local/bin"
 
 export PATH=$PATH:/home/alamin/.spicetify
 export PATH=$PATH:~/.spicetify
+
+# Load secrets
+[[ -f ~/$HOME/my-dotfiles/env/secrets.env ]] && source ~/$HOME/my-dotfiles/env/secrets.env
