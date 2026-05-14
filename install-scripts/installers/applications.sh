@@ -136,13 +136,13 @@ install_applications() {
         log_success "Discord installed"
     fi
     # bottles
-    if flatpak info com.usebottles.bottles &>/dev/null; then
-        log_info "Bottles already installed, skipping"
-    else
-        log_info "Installing Bottles..."
-        flatpak install -y flathub com.usebottles.bottles
-        log_success "Bottles installed"
-    fi
+    # if flatpak info com.usebottles.bottles &>/dev/null; then
+    #     log_info "Bottles already installed, skipping"
+    # else
+    #     log_info "Installing Bottles..."
+    #     flatpak install -y flathub com.usebottles.bottles
+    #     log_success "Bottles installed"
+    # fi
      # Evince
     if command -v evince &>/dev/null; then
         log_info "Document viewer (Evince) already installed, skipping"
@@ -151,6 +151,16 @@ install_applications() {
     sudo dnf install -y evince
         log_success "Evince installed"
     fi
+     # steam
+     if command -v steam &>/dev/null; then
+        log_info "Steam already installed, skipping"
+    else
+        log_info "Installing Steam..."
+        sudo dnf install -y steam
+        sudo dnf install mesa-vulkan-drivers mesa-vulkan-drivers.i686
+        log_success "Steam installed"
+    fi
+
     log_section "Applications Installation Complete"
 
     # Run javafortlauncher.sh for Java setup
