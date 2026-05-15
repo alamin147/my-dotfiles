@@ -54,7 +54,6 @@
         "tray"
 	]
 },
-
 "group/laptop": {
 	"orientation": "inherit",
 	"modules": [
@@ -97,7 +96,6 @@
         },
 	"modules": [
 		"custom/power",
-		"custom/nightlight",
 		"custom/lock",
 		"keyboard-state",
 		"custom/keyboard",
@@ -140,7 +138,6 @@
        },
      "modules": [
         "custom/power",
-        "custom/nightlight",
         "custom/lock",
         "custom/logout",
         "custom/reboot"

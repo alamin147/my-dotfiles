@@ -47,9 +47,6 @@ tooltip {
     margin-top: 5px;
 	border: 2px solid @color12;
 }
-#taskbar button{
-border: none;
-}
 
 #workspaces button {
     color: @color10;
@@ -69,10 +66,7 @@ border: none;
     animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(.55,-0.68,.48,1.682);
 }
-#taskbar button.active{
-    background-color: @color12;
-        margin-bottom: 1px;
-}
+
 #workspaces button.urgent {
     color: #11111b;
     border-radius: 10px;
@@ -109,6 +103,7 @@ border: none;
 #window,
 #wireplumber,
 #custom-backlight,
+#custom-nightlight,
 #custom-browser,
 #custom-cava_mviz,
 #custom-cycle_wall,
@@ -117,6 +112,7 @@ border: none;
 #custom-keybinds,
 #custom-keyboard,
 #custom-light_dark,
+#custom-nightlight,
 #custom-lock,
 #custom-hint,
 #custom-hypridle,
@@ -171,14 +167,13 @@ border: none;
 
 #temperature{
 	color: @foreground;
-    /* background: @color12; */
+    background: @color12;
 }
 
 #temperature.critical {
     color: red;
 	border: 2px solid red;
 }
-
 
 #custom-power {
     color: red;
@@ -216,6 +211,10 @@ border: none;
     border: 2px solid @color9;
 }
 
+#clock {
+    color: #fab387;
+}
+
 
 #bluetooth {
     color: #b4befe;
@@ -224,42 +223,43 @@ border: none;
 
 #pulseaudio.microphone,
 #pulseaudio {
-    /* background-color: @color12; */
-    /* color: #89b4fa; */
+    background-color: @color12;
+    color: #89b4fa;
 	border: 2px solid @color13;
 }
 
 #pulseaudio.muted {
-    /* color: #f38ba8; */
-    /* padding-right: 20px; */
+    color: #f38ba8;
+    padding-right: 20px;
 }
 
 #battery {
-    /* color: #a6e3a1; */
+    color: #a6e3a1;
     margin-right: 5px;
     padding-right: 15px;
-	/* border: 2px solid @color14; */
+	border: 2px solid @color14;
 }
 
 /*-----Indicators----*/
 #custom-hypridle.notactive,
 #idle_inhibitor.activated {
 	color: #39FF14;
+    border-bottom: 8px solid rgba(0, 0, 0, 0.2);
 }
 
 #battery.good {
-    /* color: #ffd57a; */
-	/* border: 2px solid @color15; */
+    color: #ffd57a;
+	border: 2px solid @color15;
 }
 
 #battery.warning {
     color: #fab387;
     border-left: 0px;
-	/* border: 2px solid @color12; */
+	border: 2px solid @color12;
 }
 
 #battery.charging {
-    /* color: #a6e3a1; */
+    color: #a6e3a1;
 }
 
 #battery.critical {
