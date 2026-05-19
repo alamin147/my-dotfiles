@@ -18,6 +18,17 @@
 	"tooltip": true,
 },
 
+"custom/updates": {
+    "format": "{}",
+    "exec": "~/.config/hypr/UserScripts/updates.sh",
+    "interval": 10800,
+    "return-type": "json",
+    "on-click": "~/.config/hypr/UserScripts/updates.sh update",
+    "on-click-right": "~/.config/hypr/UserScripts/updates.sh check",
+    "signal": 8,
+    "tooltip": true
+},
+
 "custom/hyprpicker": {
 	"format": "",
 	"on-click": "hyprpicker | wl-copy",
@@ -152,7 +163,7 @@
 	"on-scroll-down": "$HOME/.config/hypr/scripts/Volume.sh --dec",
 	"smooth-scrolling-threshold": 1,
 },
-    
+
 "custom/power": {
 	"format": " ⏻ ",
 	"on-click": "$HOME/.config/hypr/scripts/Wlogout.sh",
@@ -167,7 +178,7 @@
     "tooltip": true,
 	"tooltip-format": "Left Click: Reboot",
 },
-    
+
 "custom/quit": {
     "format": "󰗼",
     "on-click": "hyprctl dispatch exit",

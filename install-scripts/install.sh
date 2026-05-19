@@ -14,6 +14,7 @@ source installers/system-tools.sh
 source installers/dev-tools.sh
 source installers/applications.sh
 source installers/stow-manager.sh
+source installers/post-installation.sh
 
 show_menu() {
     echo ""

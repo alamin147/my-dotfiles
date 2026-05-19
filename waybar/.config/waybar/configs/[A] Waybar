@@ -58,7 +58,9 @@
     "custom/separator#dot-line",
     "pulseaudio#microphone",
     "custom/separator#dot-line",
-    "group/mobo_drawer"
+    "group/mobo_drawer",
+    "custom/separator#dot-line",
+    "custom/updates"
 ]
 }
 

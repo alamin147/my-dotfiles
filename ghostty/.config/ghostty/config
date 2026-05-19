@@ -34,8 +34,8 @@ window-padding-balance = true
 
 # theme = kanagawa
 # theme = tokyonight
- theme = gruvbox
-
+# theme = gruvbox
+config-file = ?~/.config/ghostty/wallust.conf
 # ---- Shader ----
 #custom-shader = shaders/starfield.glsl
  #custom-shader = shaders/animated-gradient-shader.glsl #worst
