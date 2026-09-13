@@ -16,13 +16,13 @@
 
 
 # Dotfiles
-    - DankMaterialShell
-    - Zsh
-    - Neovim
-    - Tmux
-    - Hyprland
-    - Matugen
-    - Ghostty
-    - Fastfetch
+ - DankMaterialShell
+ - Zsh
+ - Neovim
+ - Tmux
+ - Hyprland
+ - Matugen
+ - Ghostty
+ - Fastfetch
 
 
