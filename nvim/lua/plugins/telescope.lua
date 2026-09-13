@@ -1,0 +1,260 @@
+local function launch_root()
+  return vim.g.original_cwd or vim.fn.getcwd()
+end
+
+local function search_current_file()
+  require("telescope.builtin").current_buffer_fuzzy_find({
+    prompt_title = "Search Current File",
+  })
+end
+
+local function search_all_files()
+  require("telescope.builtin").live_grep({
+    cwd = launch_root(),
+    prompt_title = "Search All Files",
+  })
+end
+
+local keybind_help_descriptions = {
+  ["<Space>cf"] = "Format current file or visual selection",
+  ["<Space>cd"] = "Show diagnostic under cursor",
+  ["<Space>xX"] = "Show current-file errors and warnings",
+  ["<Space>xx"] = "Show project errors and warnings",
+  [";e"] = "Open diagnostics picker",
+  ["[d"] = "Go to previous diagnostic",
+  ["]d"] = "Go to next diagnostic",
+  ["[e"] = "Go to previous error",
+  ["]e"] = "Go to next error",
+  ["[w"] = "Go to previous warning",
+  ["]w"] = "Go to next warning",
+}
+
+local function show_keybinds()
+  require("telescope.builtin").keymaps({
+    prompt_title = "All Active Keybinds",
+    show_plug = false,
+    filter = function(mapping)
+      mapping.desc = keybind_help_descriptions[mapping.lhs] or mapping.desc
+      return true
+    end,
+  })
+end
+
+return {
+  -- Highlight colors
+  {
+    "nvim-mini/mini.hipatterns",
+    event = "BufReadPre",
+    opts = {},
+  },
+  {
+    "nvim-telescope/telescope.nvim", -- ✅ fixed here
+    priority = 1000,
+    dependencies = {
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "make",
+      },
+      "nvim-telescope/telescope-file-browser.nvim",
+    },
+    init = function()
+      vim.api.nvim_create_user_command("Keybinds", show_keybinds, {
+        desc = "Show all active Neovim keybinds",
+      })
+    end,
+    keys = {
+      {
+        "<leader>hk",
+        show_keybinds,
+        desc = "Help: All Keybinds",
+      },
+      {
+        ";f",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.find_files({
+            no_ignore = true, -- Don't respect .gitignore
+            hidden = true,
+            file_ignore_patterns = {}, -- Clear any ignore patterns
+          })
+        end,
+        desc = "Lists files in your current working directory, respects .gitignore",
+      },
+      {
+        ";r",
+        search_all_files,
+        desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
+      },
+      {
+        "<leader>sf",
+        search_current_file,
+        desc = "Search Text in Current File",
+      },
+      {
+        "<leader>sg",
+        search_all_files,
+        desc = "Search Text in All Files (Launch Root)",
+      },
+      {
+        "\\\\",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.buffers()
+        end,
+        desc = "Lists open buffers",
+      },
+      {
+        ";;",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.resume()
+        end,
+        desc = "Resume the previous telescope picker",
+      },
+      {
+        ";e",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.diagnostics()
+        end,
+        desc = "Lists Diagnostics for all open buffers or a specific buffer",
+      },
+      {
+        ";s",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.treesitter()
+        end,
+        desc = "Lists Function names, variables, from Treesitter",
+      },
+      {
+        ";d",
+        function()
+          local builtin = require("telescope.builtin")
+          local current_dir = vim.fn.expand("%:p:h")
+          builtin.find_files({
+            prompt_title = "Find Files in Current Directory",
+            cwd = current_dir,
+            hidden = true,
+            no_ignore = false,
+          })
+        end,
+        desc = "Find all files in current file's directory and subdirectories",
+      },
+      {
+        ";w",
+        function()
+          local builtin = require("telescope.builtin")
+          builtin.grep_string()
+        end,
+        desc = "Search for the word under cursor in all files",
+      },
+      grep_string = {
+        layout_config = {
+          preview_width = 0.95,
+        },
+      },
+      {
+        "sf",
+        function()
+          local telescope = require("telescope")
+
+          local function telescope_buffer_dir()
+            return vim.fn.expand("%:p:h")
+          end
+
+          telescope.extensions.file_browser.file_browser({
+            path = "%:p:h",
+            cwd = telescope_buffer_dir(),
+            respect_gitignore = false,
+            hidden = true,
+            grouped = true,
+            previewer = false,
+            initial_mode = "normal",
+            layout_config = { height = 40 },
+          })
+        end,
+        desc = "Open File Browser with the path of the current buffer",
+      },
+    },
+    config = function(_, opts)
+      local telescope = require("telescope")
+      local actions = require("telescope.actions")
+      -- Load file_browser actions directly from the extension module to avoid order issues
+      local fb_actions = require("telescope._extensions.file_browser.actions")
+
+      -- Ensure opts and its sub-tables exist before deep-extending
+      opts = opts or {}
+
+      opts.defaults = vim.tbl_deep_extend("force", opts.defaults or {}, {
+        wrap_results = true,
+        layout_strategy = "horizontal",
+        layout_config = { prompt_position = "top" },
+        sorting_strategy = "ascending",
+        winblend = 0,
+        follow_symlinks = true,
+        mappings = {
+          n = {},
+        },
+      })
+      opts.pickers = vim.tbl_deep_extend("force", opts.pickers or {}, {
+        diagnostics = {
+          theme = "ivy",
+          initial_mode = "normal",
+          layout_config = {
+            preview_cutoff = 9999,
+          },
+        },
+        -- Make find files grep preview wider
+        find_files = {
+          layout_config = {
+            preview_width = 0.55,
+          },
+        },
+        -- Make grep preview a bit wider
+        live_grep = {
+          layout_config = {
+            preview_width = 0.5,
+          },
+        },
+        grep_string = {
+          layout_config = {
+            preview_width = 0.55,
+          },
+        },
+        -- Make current buffer fuzzy preview wider too
+        current_buffer_fuzzy_find = {
+          layout_config = {
+            preview_width = 0.5,
+          },
+        },
+      })
+      opts.extensions = vim.tbl_deep_extend("force", opts.extensions or {}, {
+        file_browser = {
+          theme = "dropdown",
+          -- disables netrw and use telescope-file-browser in its place
+          hijack_netrw = true,
+          mappings = {
+            ["n"] = {
+              ["N"] = fb_actions.create,
+              ["h"] = fb_actions.goto_parent_dir,
+              ["<C-u>"] = function(prompt_bufnr)
+                for i = 1, 10 do
+                  actions.move_selection_previous(prompt_bufnr)
+                end
+              end,
+              ["<C-d>"] = function(prompt_bufnr)
+                for i = 1, 10 do
+                  actions.move_selection_next(prompt_bufnr)
+                end
+              end,
+            },
+          },
+        },
+      })
+      telescope.setup(opts)
+      telescope.load_extension("fzf")
+      telescope.load_extension("file_browser")
+    end,
+  },
+}

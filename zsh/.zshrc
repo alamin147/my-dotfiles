@@ -3,8 +3,8 @@
 
 export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="agnosterzak"
-
+#ZSH_THEME="agnosterzak"
+#herhehrehrehh
 plugins=(
     git
     dnf
@@ -13,7 +13,8 @@ plugins=(
 )
 
 source $ZSH/oh-my-zsh.sh
-
+export EDITOR="nvim"
+export VISUAL="nvim"
 # check the dnf plugins commands here
 # https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/dnf
 
@@ -21,10 +22,9 @@ source $ZSH/oh-my-zsh.sh
 # Display Pokemon-colorscripts
 # Project page: https://gitlab.com/phoneybadger/pokemon-colorscripts#on-other-distros-and-macos
 #pokemon-colorscripts --no-title -s -r #without fastfetch
-#pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
-
-$HOME/bins/stcat.sh # fastfetch. Will be disabled if above colorscript was chosen to install
-#fastfetch -c $HOME/.config/fastfetch/config-compact.jsonc
+# pokemon-colorscripts --no-title -s -r | fastfetch -c $HOME/.config/fastfetch/config-pokemon.jsonc --logo-type file-raw --logo-height 10 --logo-width 5 --logo -
+#$HOME/bins/stcat.sh # fastfetch. Will be disabled if above colorscript was chosen to install
+fastfetch -c $HOME/.config/fastfetch/config.jsonc
 
 # Set-up FZF key bindings (CTRL R for fuzzy history finder)
 source <(fzf --zsh)
@@ -77,8 +77,9 @@ export SDKMAN_DIR="$HOME/.sdkman"
 # Created by `pipx` on 2025-12-26 12:15:14
 export PATH="$PATH:/home/alamin/.local/bin"
 
-export PATH=$PATH:/home/alamin/.spicetify
-export PATH=$PATH:~/.spicetify
+export PATH="$HOME/.spicetify:$PATH"
 
 # Load secrets
-[[ -f ~/$HOME/my-dotfiles/env/secrets.env ]] && source ~/$HOME/my-dotfiles/env/secrets.env
+# [[ -f ~/$HOME/my-dotfiles/env/secrets.env ]] && source ~/$HOME/my-dotfiles/env/secrets.env
+
+eval "$(/home/alamin/.local/bin/mise activate zsh)"

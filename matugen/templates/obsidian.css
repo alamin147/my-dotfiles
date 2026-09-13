@@ -1,0 +1,535 @@
+/* ═══════════════════════════════════════
+   Matugen Dynamic Theme — Obsidian
+   ═══════════════════════════════════════ */
+
+.theme-dark {
+
+  /* ── Core backgrounds ── */
+  --background-primary:          color-mix(in srgb, {{colors.surface.dark.hex}} 94%, {{colors.primary.dark.hex}});
+  --background-primary-alt:      color-mix(in srgb, {{colors.surface_container_low.dark.hex}} 94%, {{colors.primary.dark.hex}});
+  --background-secondary:        color-mix(in srgb, {{colors.surface_container_low.dark.hex}} 90%, {{colors.secondary.dark.hex}});
+  --background-secondary-alt:    color-mix(in srgb, {{colors.surface_container.dark.hex}} 90%, {{colors.primary.dark.hex}});
+  --background-modifier-hover:   color-mix(in srgb, {{colors.primary.dark.hex}} 14%, {{colors.surface_container_high.dark.hex}});
+  --background-modifier-active:  color-mix(in srgb, {{colors.primary.dark.hex}} 24%, {{colors.surface_container_high.dark.hex}});
+  --background-modifier-selected:color-mix(in srgb, {{colors.primary.dark.hex}} 22%, {{colors.surface_container_high.dark.hex}});
+  --background-modifier-border:  color-mix(in srgb, {{colors.outline_variant.dark.hex}} 68%, {{colors.primary.dark.hex}});
+  --background-modifier-border-hover: color-mix(in srgb, {{colors.outline.dark.hex}} 70%, {{colors.primary.dark.hex}});
+  --background-modifier-border-focus: {{colors.primary.dark.hex}};
+
+  /* ── Text ── */
+  --text-normal:                 {{colors.on_surface.dark.hex}};
+  --text-muted:                  {{colors.on_surface_variant.dark.hex}};
+  --text-faint:                  {{colors.outline.dark.hex}};
+  --text-on-accent:              {{colors.on_primary.dark.hex}};
+  --text-error:                  {{colors.error.dark.hex}};
+  --text-warning:                {{colors.secondary.dark.hex}};
+  --text-success:                {{colors.tertiary.dark.hex}};
+  --text-selection:              color-mix(in srgb, {{colors.primary.dark.hex}} 25%, transparent);
+  --text-accent:                 {{colors.primary.dark.hex}};
+  --text-accent-hover:           color-mix(in srgb, {{colors.primary.dark.hex}} 78%, {{colors.on_surface.dark.hex}});
+  --color-accent:                {{colors.primary.dark.hex}};
+  --color-accent-1:              color-mix(in srgb, {{colors.primary.dark.hex}} 80%, {{colors.on_surface.dark.hex}});
+  --color-accent-2:              color-mix(in srgb, {{colors.primary.dark.hex}} 68%, {{colors.on_surface.dark.hex}});
+
+  /* ── Interactive accent ── */
+  --interactive-accent:          {{colors.primary.dark.hex}};
+  --interactive-accent-hover:    color-mix(in srgb, {{colors.primary.dark.hex}} 78%, {{colors.on_surface.dark.hex}});
+  --interactive-accent-rgb:      {{colors.primary.dark.red}}, {{colors.primary.dark.green}}, {{colors.primary.dark.blue}};
+  --interactive-before:          {{colors.surface_container_high.dark.hex}};
+  --interactive-normal:          {{colors.surface_container.dark.hex}};
+  --interactive-hover:           {{colors.surface_container_high.dark.hex}};
+
+  /* ── Borders & dividers ── */
+  --divider-color:               color-mix(in srgb, {{colors.outline_variant.dark.hex}} 58%, transparent);
+  --divider-color-hover:         color-mix(in srgb, {{colors.outline.dark.hex}} 76%, {{colors.primary.dark.hex}});
+
+  /* ── Scrollbar ── */
+  --scrollbar-bg:                transparent;
+  --scrollbar-thumb-bg:          {{colors.outline_variant.dark.hex}};
+  --scrollbar-active-thumb-bg:   {{colors.primary.dark.hex}};
+
+  /* ── Navigation (file explorer) ── */
+  --nav-item-color:              {{colors.on_surface_variant.dark.hex}};
+  --nav-item-color-hover:        {{colors.on_surface.dark.hex}};
+  --nav-item-color-active:       {{colors.on_primary_container.dark.hex}};
+  --nav-item-color-selected:     {{colors.primary.dark.hex}};
+  --nav-item-background-hover:   color-mix(in srgb, {{colors.primary.dark.hex}} 14%, {{colors.surface_container.dark.hex}});
+  --nav-item-background-active:  color-mix(in srgb, {{colors.primary.dark.hex}} 24%, {{colors.surface_container.dark.hex}});
+  --nav-item-background-selected:color-mix(in srgb, {{colors.primary.dark.hex}} 20%, {{colors.surface_container.dark.hex}});
+  --nav-heading-color:           {{colors.on_surface_variant.dark.hex}};
+  --nav-indentation-guide-color: {{colors.outline_variant.dark.hex}};
+  --nav-collapse-icon-color:     {{colors.outline.dark.hex}};
+
+  /* ── Tabs ── */
+  --tab-background-active:       color-mix(in srgb, {{colors.surface.dark.hex}} 90%, {{colors.primary.dark.hex}});
+  --tab-text-color:              {{colors.on_surface_variant.dark.hex}};
+  --tab-text-color-active:       {{colors.on_surface.dark.hex}};
+  --tab-text-color-focused:      {{colors.on_surface.dark.hex}};
+  --tab-text-color-focused-active: {{colors.primary.dark.hex}};
+  --tab-outline-color:           {{colors.outline_variant.dark.hex}};
+
+  /* ── Titlebar ── */
+  --titlebar-background:         color-mix(in srgb, {{colors.surface_container_low.dark.hex}} 88%, {{colors.primary.dark.hex}});
+  --titlebar-background-focused: color-mix(in srgb, {{colors.surface_container.dark.hex}} 88%, {{colors.primary.dark.hex}});
+  --titlebar-text-color:         {{colors.on_surface_variant.dark.hex}};
+  --titlebar-text-color-focused: {{colors.on_surface.dark.hex}};
+
+  /* ── Modal / popup ── */
+  --modal-background:            {{colors.surface_container_high.dark.hex}};
+  --modal-border-color:          {{colors.outline_variant.dark.hex}};
+  --modal-border-width:          1px;
+  --prompt-background:           {{colors.surface_container_high.dark.hex}};
+  --prompt-border-color:         {{colors.outline_variant.dark.hex}};
+
+  /* ── Input ── */
+  --input-shadow:                none;
+  --input-shadow-hover:          none;
+  --background-modifier-form-field: {{colors.surface_container_highest.dark.hex}};
+  --background-modifier-form-field-highlighted: {{colors.surface_container_high.dark.hex}};
+
+  /* ── Checkbox ── */
+  --checkbox-color:              {{colors.primary.dark.hex}};
+  --checkbox-color-hover:        {{colors.primary_container.dark.hex}};
+  --checkbox-border-color:       {{colors.outline.dark.hex}};
+  --checkbox-border-color-hover: {{colors.primary.dark.hex}};
+  --checkbox-marker-color:       {{colors.on_primary.dark.hex}};
+
+  /* ── Tags / pills ── */
+  --tag-color:                   {{colors.on_primary_container.dark.hex}};
+  --tag-background:              {{colors.primary_container.dark.hex}};
+  --tag-background-hover:        {{colors.primary.dark.hex}};
+  --tag-border-color:            transparent;
+  --tag-border-width:            0px;
+  --tag-padding-x:               8px;
+  --tag-padding-y:               2px;
+  --tag-radius:                  100px;
+  --pill-background:             {{colors.secondary_container.dark.hex}};
+  --pill-color:                  {{colors.on_secondary_container.dark.hex}};
+
+  /* ── Headings ── */
+  --h1-color:                    {{colors.primary.dark.hex}};
+  --h2-color:                    {{colors.secondary.dark.hex}};
+  --h3-color:                    {{colors.tertiary.dark.hex}};
+  --h4-color:                    {{colors.on_surface.dark.hex}};
+  --h5-color:                    {{colors.on_surface.dark.hex}};
+  --h6-color:                    {{colors.on_surface_variant.dark.hex}};
+
+  /* ── Links ── */
+  --link-color:                  {{colors.primary.dark.hex}};
+  --link-color-hover:            {{colors.primary_container.dark.hex}};
+  --link-external-color:         {{colors.tertiary.dark.hex}};
+  --link-external-color-hover:   {{colors.tertiary_container.dark.hex}};
+  --link-unresolved-color:       {{colors.error.dark.hex}};
+  --link-unresolved-opacity:     0.7;
+
+  /* ── Code blocks ── */
+  --code-background:             color-mix(in srgb, {{colors.surface_container_high.dark.hex}} 86%, {{colors.primary.dark.hex}});
+  --code-normal:                 {{colors.on_surface.dark.hex}};
+  --code-comment:                {{colors.on_surface_variant.dark.hex}};
+  --code-function:               {{colors.primary.dark.hex}};
+  --code-important:              {{colors.error.dark.hex}};
+  --code-keyword:                {{colors.tertiary.dark.hex}};
+  --code-operator:               {{colors.secondary.dark.hex}};
+  --code-property:               color-mix(in srgb, {{colors.primary.dark.hex}} 72%, {{colors.on_surface.dark.hex}});
+  --code-string:                 {{colors.tertiary.dark.hex}};
+  --code-tag:                    {{colors.secondary.dark.hex}};
+  --code-value:                  {{colors.on_surface.dark.hex}};
+
+  /* ── Blockquote ── */
+  --blockquote-background-color: color-mix(in srgb, {{colors.primary.dark.hex}} 10%, {{colors.surface_container.dark.hex}});
+  --blockquote-border-thickness: 3px;
+  --blockquote-border-color:     {{colors.primary.dark.hex}};
+  --blockquote-font-style:       normal;
+  --blockquote-color:            {{colors.on_surface_variant.dark.hex}};
+
+  /* ── Callout ── */
+  --callout-default:             {{colors.primary.dark.red}}, {{colors.primary.dark.green}}, {{colors.primary.dark.blue}};
+  --callout-info:                {{colors.primary.dark.red}}, {{colors.primary.dark.green}}, {{colors.primary.dark.blue}};
+  --callout-todo:                {{colors.secondary.dark.red}}, {{colors.secondary.dark.green}}, {{colors.secondary.dark.blue}};
+  --callout-warning:             {{colors.secondary.dark.red}}, {{colors.secondary.dark.green}}, {{colors.secondary.dark.blue}};
+  --callout-error:               {{colors.error.dark.red}}, {{colors.error.dark.green}}, {{colors.error.dark.blue}};
+  --callout-success:             {{colors.tertiary.dark.red}}, {{colors.tertiary.dark.green}}, {{colors.tertiary.dark.blue}};
+  --callout-question:            {{colors.tertiary.dark.red}}, {{colors.tertiary.dark.green}}, {{colors.tertiary.dark.blue}};
+  --callout-tip:                 {{colors.tertiary.dark.red}}, {{colors.tertiary.dark.green}}, {{colors.tertiary.dark.blue}};
+
+  /* ── Table ── */
+  --table-border-color:          {{colors.outline_variant.dark.hex}};
+  --table-header-background:     color-mix(in srgb, {{colors.surface_container_high.dark.hex}} 82%, {{colors.primary.dark.hex}});
+  --table-header-color:          {{colors.on_surface.dark.hex}};
+  --table-row-background-hover:  color-mix(in srgb, {{colors.primary.dark.hex}} 8%, transparent);
+  --table-row-alt-background:    color-mix(in srgb, {{colors.surface_container_high.dark.hex}} 50%, transparent);
+
+  /* ── Graph ── */
+  --graph-line:                  {{colors.outline_variant.dark.hex}};
+  --graph-node:                  {{colors.on_surface_variant.dark.hex}};
+  --graph-node-unresolved:       {{colors.outline.dark.hex}};
+  --graph-node-focused:          {{colors.primary.dark.hex}};
+  --graph-node-tag:              {{colors.secondary.dark.hex}};
+  --graph-node-attachment:       {{colors.tertiary.dark.hex}};
+
+  /* ── Status bar ── */
+  --status-bar-background:       color-mix(in srgb, {{colors.surface_container.dark.hex}} 90%, {{colors.primary.dark.hex}});
+  --status-bar-text-color:       {{colors.on_surface_variant.dark.hex}};
+
+  /* ── Ribbon (left sidebar icons) ── */
+  --ribbon-background:           color-mix(in srgb, {{colors.surface_container_low.dark.hex}} 88%, {{colors.primary.dark.hex}});
+  --ribbon-background-collapsed: color-mix(in srgb, {{colors.surface_container_low.dark.hex}} 94%, {{colors.primary.dark.hex}});
+  --ribbon-icon-color:           {{colors.on_surface_variant.dark.hex}};
+
+  /* ── Metadata / frontmatter ── */
+  --metadata-background:         {{colors.surface_container_low.dark.hex}};
+  --metadata-property-background:{{colors.surface_container.dark.hex}};
+  --metadata-label-color:        {{colors.on_surface_variant.dark.hex}};
+  --metadata-input-background:   {{colors.surface_container.dark.hex}};
+  --metadata-divider-color:      {{colors.outline_variant.dark.hex}};
+}
+
+.theme-light {
+
+  /* ── Core backgrounds ── */
+  --background-primary:          {{colors.surface_container_lowest.light.hex}};
+  --background-primary-alt:      {{colors.surface_container_low.light.hex}};
+  --background-secondary:        {{colors.surface_container.light.hex}};
+  --background-secondary-alt:    {{colors.surface_container_high.light.hex}};
+  --background-modifier-hover:   color-mix(in srgb, {{colors.primary.light.hex}} 10%, transparent);
+  --background-modifier-active:  color-mix(in srgb, {{colors.primary.light.hex}} 18%, transparent);
+  --background-modifier-selected:color-mix(in srgb, {{colors.primary.light.hex}} 20%, transparent);
+  --background-modifier-border:  {{colors.outline_variant.light.hex}};
+
+  /* ── Text ── */
+  --text-normal:                 {{colors.on_surface.light.hex}};
+  --text-muted:                  {{colors.on_surface_variant.light.hex}};
+  --text-faint:                  {{colors.outline.light.hex}};
+  --text-on-accent:              {{colors.on_primary.light.hex}};
+  --text-error:                  {{colors.error.light.hex}};
+  --text-warning:                {{colors.secondary.light.hex}};
+  --text-success:                {{colors.tertiary.light.hex}};
+  --text-selection:              color-mix(in srgb, {{colors.primary.light.hex}} 25%, transparent);
+  --text-accent:                 {{colors.primary.light.hex}};
+  --text-accent-hover:           {{colors.primary_container.light.hex}};
+
+  /* ── Interactive accent ── */
+  --interactive-accent:          {{colors.primary.light.hex}};
+  --interactive-accent-hover:    {{colors.primary_container.light.hex}};
+  --interactive-accent-rgb:      {{colors.primary.light.red}}, {{colors.primary.light.green}}, {{colors.primary.light.blue}};
+  --interactive-before:          {{colors.surface_container_high.light.hex}};
+  --interactive-normal:          {{colors.surface_container.light.hex}};
+  --interactive-hover:           {{colors.surface_container_high.light.hex}};
+
+  /* ── Borders & dividers ── */
+  --divider-color:               {{colors.outline_variant.light.hex}};
+  --divider-color-hover:         {{colors.outline.light.hex}};
+
+  /* ── Scrollbar ── */
+  --scrollbar-bg:                transparent;
+  --scrollbar-thumb-bg:          {{colors.outline_variant.light.hex}};
+  --scrollbar-active-thumb-bg:   {{colors.primary.light.hex}};
+
+  /* ── Navigation (file explorer) ── */
+  --nav-item-color:              {{colors.on_surface_variant.light.hex}};
+  --nav-item-color-hover:        {{colors.on_surface.light.hex}};
+  --nav-item-color-active:       {{colors.on_primary_container.light.hex}};
+  --nav-item-color-selected:     {{colors.primary.light.hex}};
+  --nav-item-background-hover:   color-mix(in srgb, {{colors.primary.light.hex}} 10%, transparent);
+  --nav-item-background-active:  color-mix(in srgb, {{colors.primary.light.hex}} 18%, transparent);
+  --nav-item-background-selected:color-mix(in srgb, {{colors.primary.light.hex}} 15%, transparent);
+  --nav-heading-color:           {{colors.on_surface_variant.light.hex}};
+  --nav-indentation-guide-color: {{colors.outline_variant.light.hex}};
+  --nav-collapse-icon-color:     {{colors.outline.light.hex}};
+
+  /* ── Tabs ── */
+  --tab-background-active:       {{colors.surface_container_lowest.light.hex}};
+  --tab-text-color:              {{colors.on_surface_variant.light.hex}};
+  --tab-text-color-active:       {{colors.on_surface.light.hex}};
+  --tab-text-color-focused:      {{colors.on_surface.light.hex}};
+  --tab-text-color-focused-active: {{colors.primary.light.hex}};
+  --tab-outline-color:           {{colors.outline_variant.light.hex}};
+
+  /* ── Titlebar ── */
+  --titlebar-background:         {{colors.surface_container.light.hex}};
+  --titlebar-background-focused: {{colors.surface_container.light.hex}};
+  --titlebar-text-color:         {{colors.on_surface_variant.light.hex}};
+  --titlebar-text-color-focused: {{colors.on_surface.light.hex}};
+
+  /* ── Modal / popup ── */
+  --modal-background:            {{colors.surface_container_high.light.hex}};
+  --modal-border-color:          {{colors.outline_variant.light.hex}};
+  --modal-border-width:          1px;
+  --prompt-background:           {{colors.surface_container_high.light.hex}};
+  --prompt-border-color:         {{colors.outline_variant.light.hex}};
+
+  /* ── Input ── */
+  --input-shadow:                none;
+  --input-shadow-hover:          none;
+  --background-modifier-form-field: {{colors.surface_container_highest.light.hex}};
+  --background-modifier-form-field-highlighted: {{colors.surface_container_high.light.hex}};
+
+  /* ── Checkbox ── */
+  --checkbox-color:              {{colors.primary.light.hex}};
+  --checkbox-color-hover:        {{colors.primary_container.light.hex}};
+  --checkbox-border-color:       {{colors.outline.light.hex}};
+  --checkbox-border-color-hover: {{colors.primary.light.hex}};
+  --checkbox-marker-color:       {{colors.on_primary.light.hex}};
+
+  /* ── Tags / pills ── */
+  --tag-color:                   {{colors.on_primary_container.light.hex}};
+  --tag-background:              {{colors.primary_container.light.hex}};
+  --tag-background-hover:        {{colors.primary.light.hex}};
+  --tag-border-color:            transparent;
+  --tag-border-width:            0px;
+  --tag-padding-x:               8px;
+  --tag-padding-y:               2px;
+  --tag-radius:                  100px;
+  --pill-background:             {{colors.secondary_container.light.hex}};
+  --pill-color:                  {{colors.on_secondary_container.light.hex}};
+
+  /* ── Headings ── */
+  --h1-color:                    {{colors.primary.light.hex}};
+  --h2-color:                    {{colors.secondary.light.hex}};
+  --h3-color:                    {{colors.tertiary.light.hex}};
+  --h4-color:                    {{colors.on_surface.light.hex}};
+  --h5-color:                    {{colors.on_surface.light.hex}};
+  --h6-color:                    {{colors.on_surface_variant.light.hex}};
+
+  /* ── Links ── */
+  --link-color:                  {{colors.primary.light.hex}};
+  --link-color-hover:            {{colors.primary_container.light.hex}};
+  --link-external-color:         {{colors.tertiary.light.hex}};
+  --link-external-color-hover:   {{colors.tertiary_container.light.hex}};
+  --link-unresolved-color:       {{colors.error.light.hex}};
+  --link-unresolved-opacity:     0.7;
+
+  /* ── Code blocks ── */
+  --code-background:             {{colors.surface_container_highest.light.hex}};
+  --code-normal:                 {{colors.on_surface.light.hex}};
+  --code-comment:                {{colors.on_surface_variant.light.hex}};
+  --code-function:               {{colors.primary.light.hex}};
+  --code-important:              {{colors.error.light.hex}};
+  --code-keyword:                {{colors.tertiary.light.hex}};
+  --code-operator:               {{colors.secondary.light.hex}};
+  --code-property:               {{colors.primary_container.light.hex}};
+  --code-string:                 {{colors.tertiary.light.hex}};
+  --code-tag:                    {{colors.secondary.light.hex}};
+  --code-value:                  {{colors.on_surface.light.hex}};
+
+  /* ── Blockquote ── */
+  --blockquote-background-color: color-mix(in srgb, {{colors.primary.light.hex}} 8%, transparent);
+  --blockquote-border-thickness: 3px;
+  --blockquote-border-color:     {{colors.primary.light.hex}};
+  --blockquote-font-style:       normal;
+  --blockquote-color:            {{colors.on_surface_variant.light.hex}};
+
+  /* ── Callout ── */
+  --callout-default:             {{colors.primary.light.red}}, {{colors.primary.light.green}}, {{colors.primary.light.blue}};
+  --callout-info:                {{colors.primary.light.red}}, {{colors.primary.light.green}}, {{colors.primary.light.blue}};
+  --callout-todo:                {{colors.secondary.light.red}}, {{colors.secondary.light.green}}, {{colors.secondary.light.blue}};
+  --callout-warning:             {{colors.secondary.light.red}}, {{colors.secondary.light.green}}, {{colors.secondary.light.blue}};
+  --callout-error:               {{colors.error.light.red}}, {{colors.error.light.green}}, {{colors.error.light.blue}};
+  --callout-success:             {{colors.tertiary.light.red}}, {{colors.tertiary.light.green}}, {{colors.tertiary.light.blue}};
+  --callout-question:            {{colors.tertiary.light.red}}, {{colors.tertiary.light.green}}, {{colors.tertiary.light.blue}};
+  --callout-tip:                 {{colors.tertiary.light.red}}, {{colors.tertiary.light.green}}, {{colors.tertiary.light.blue}};
+
+  /* ── Table ── */
+  --table-border-color:          {{colors.outline_variant.light.hex}};
+  --table-header-background:     {{colors.surface_container_high.light.hex}};
+  --table-header-color:          {{colors.on_surface.light.hex}};
+  --table-row-background-hover:  color-mix(in srgb, {{colors.primary.light.hex}} 8%, transparent);
+  --table-row-alt-background:    color-mix(in srgb, {{colors.surface_container_high.light.hex}} 50%, transparent);
+
+  /* ── Graph ── */
+  --graph-line:                  {{colors.outline_variant.light.hex}};
+  --graph-node:                  {{colors.on_surface_variant.light.hex}};
+  --graph-node-unresolved:       {{colors.outline.light.hex}};
+  --graph-node-focused:          {{colors.primary.light.hex}};
+  --graph-node-tag:              {{colors.secondary.light.hex}};
+  --graph-node-attachment:       {{colors.tertiary.light.hex}};
+
+  /* ── Status bar ── */
+  --status-bar-background:       {{colors.surface_container.light.hex}};
+  --status-bar-text-color:       {{colors.on_surface_variant.light.hex}};
+
+  /* ── Ribbon (left sidebar icons) ── */
+  --ribbon-background:           {{colors.surface_container.light.hex}};
+  --ribbon-background-collapsed: {{colors.surface_container_low.light.hex}};
+  --ribbon-icon-color:           {{colors.on_surface_variant.light.hex}};
+
+  /* ── Metadata / frontmatter ── */
+  --metadata-background:         {{colors.surface_container_low.light.hex}};
+  --metadata-property-background:{{colors.surface_container.light.hex}};
+  --metadata-label-color:        {{colors.on_surface_variant.light.hex}};
+  --metadata-input-background:   {{colors.surface_container.light.hex}};
+  --metadata-divider-color:      {{colors.outline_variant.light.hex}};
+}
+
+/* Extra Obsidian polish built on top of the dynamic variables. */
+.theme-dark,
+.theme-light {
+  --radius-s: 6px;
+  --radius-m: 8px;
+  --radius-l: 10px;
+  --input-radius: 8px;
+  --tab-radius-active: 8px 8px 0 0;
+}
+
+.theme-dark {
+  --matugen-surface-raised:      color-mix(in srgb, {{colors.surface_container_high.dark.hex}} 84%, {{colors.primary.dark.hex}});
+  --matugen-surface-sunken:      color-mix(in srgb, {{colors.surface.dark.hex}} 94%, black);
+  --matugen-border-soft:         color-mix(in srgb, {{colors.outline_variant.dark.hex}} 52%, transparent);
+  --matugen-accent-soft:         color-mix(in srgb, {{colors.primary.dark.hex}} 16%, {{colors.surface_container.dark.hex}});
+  --matugen-accent-muted:        color-mix(in srgb, {{colors.secondary.dark.hex}} 14%, {{colors.surface_container.dark.hex}});
+  --matugen-shadow:              0 18px 42px color-mix(in srgb, black 28%, transparent);
+}
+
+.theme-light {
+  --matugen-surface-raised:      color-mix(in srgb, {{colors.surface_container_high.light.hex}} 88%, {{colors.primary.light.hex}});
+  --matugen-surface-sunken:      color-mix(in srgb, {{colors.surface.light.hex}} 96%, {{colors.primary.light.hex}});
+  --matugen-border-soft:         color-mix(in srgb, {{colors.outline_variant.light.hex}} 58%, transparent);
+  --matugen-accent-soft:         color-mix(in srgb, {{colors.primary.light.hex}} 12%, {{colors.surface_container_low.light.hex}});
+  --matugen-accent-muted:        color-mix(in srgb, {{colors.secondary.light.hex}} 10%, {{colors.surface_container_low.light.hex}});
+  --matugen-shadow:              0 16px 34px color-mix(in srgb, {{colors.shadow.light.hex}} 12%, transparent);
+}
+
+.theme-dark .workspace,
+.theme-light .workspace {
+  background: var(--background-primary);
+}
+
+.theme-dark .workspace-ribbon,
+.theme-dark .side-dock-ribbon,
+.theme-dark .workspace-split.mod-left-split,
+.theme-dark .workspace-split.mod-right-split,
+.theme-light .workspace-ribbon,
+.theme-light .side-dock-ribbon,
+.theme-light .workspace-split.mod-left-split,
+.theme-light .workspace-split.mod-right-split {
+  background: var(--background-secondary);
+}
+
+.theme-dark .workspace-leaf-content,
+.theme-light .workspace-leaf-content {
+  background: var(--background-primary);
+  border-color: var(--matugen-border-soft);
+}
+
+.theme-dark .workspace-tab-header-container,
+.theme-light .workspace-tab-header-container {
+  background: var(--titlebar-background);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.theme-dark .workspace-tab-header,
+.theme-light .workspace-tab-header {
+  border-radius: var(--tab-radius-active);
+}
+
+.theme-dark .workspace-tab-header.is-active,
+.theme-light .workspace-tab-header.is-active {
+  background: var(--tab-background-active);
+  box-shadow: inset 0 -2px 0 var(--interactive-accent);
+}
+
+.theme-dark .workspace-tab-header.is-active .workspace-tab-header-inner,
+.theme-light .workspace-tab-header.is-active .workspace-tab-header-inner {
+  color: var(--tab-text-color-active);
+}
+
+.theme-dark .nav-file-title,
+.theme-dark .nav-folder-title,
+.theme-light .nav-file-title,
+.theme-light .nav-folder-title {
+  border-radius: var(--radius-s);
+  margin: 1px 4px;
+}
+
+.theme-dark .nav-file-title:hover,
+.theme-dark .nav-folder-title:hover,
+.theme-light .nav-file-title:hover,
+.theme-light .nav-folder-title:hover {
+  background: var(--background-modifier-hover);
+}
+
+.theme-dark .nav-file-title.is-active,
+.theme-dark .nav-folder-title.is-active,
+.theme-light .nav-file-title.is-active,
+.theme-light .nav-folder-title.is-active {
+  background: var(--nav-item-background-active);
+  box-shadow: inset 3px 0 0 var(--interactive-accent);
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-scroller,
+.theme-dark .markdown-preview-view,
+.theme-light .markdown-source-view.mod-cm6 .cm-scroller,
+.theme-light .markdown-preview-view {
+  background: var(--background-primary);
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-active,
+.theme-light .markdown-source-view.mod-cm6 .cm-active {
+  background: var(--matugen-accent-soft);
+}
+
+.theme-dark .markdown-source-view.mod-cm6 .cm-gutters,
+.theme-light .markdown-source-view.mod-cm6 .cm-gutters {
+  background: var(--background-primary);
+  border-right: 1px solid var(--divider-color);
+  color: var(--text-faint);
+}
+
+.theme-dark .markdown-rendered blockquote,
+.theme-light .markdown-rendered blockquote {
+  background: var(--blockquote-background-color);
+  border-radius: var(--radius-m);
+  padding: 0.7em 1em;
+}
+
+.theme-dark .markdown-rendered pre,
+.theme-dark .markdown-source-view.mod-cm6 .HyperMD-codeblock,
+.theme-light .markdown-rendered pre,
+.theme-light .markdown-source-view.mod-cm6 .HyperMD-codeblock {
+  background: var(--code-background);
+  border: 1px solid var(--matugen-border-soft);
+  border-radius: var(--radius-m);
+}
+
+.theme-dark :not(pre) > code,
+.theme-light :not(pre) > code {
+  background: var(--matugen-accent-muted);
+  border: 1px solid var(--matugen-border-soft);
+  border-radius: var(--radius-s);
+  color: var(--code-normal);
+}
+
+.theme-dark .callout,
+.theme-light .callout {
+  background: color-mix(in srgb, rgb(var(--callout-color)) 12%, var(--background-primary));
+  border: 1px solid rgba(var(--callout-color), 0.28);
+  border-radius: var(--radius-m);
+}
+
+.theme-dark .callout-title,
+.theme-light .callout-title {
+  color: rgb(var(--callout-color));
+}
+
+.theme-dark .metadata-container,
+.theme-light .metadata-container {
+  background: var(--metadata-background);
+  border: 1px solid var(--metadata-divider-color);
+  border-radius: var(--radius-m);
+}
+
+.theme-dark table,
+.theme-light table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.theme-dark th,
+.theme-light th {
+  background: var(--table-header-background);
+}
+
+.theme-dark .status-bar,
+.theme-light .status-bar {
+  border-color: var(--divider-color);
+}

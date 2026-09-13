@@ -1,1 +1,0 @@
-err: auto cpu-freq

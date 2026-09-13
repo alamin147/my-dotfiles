@@ -1,0 +1,222 @@
+# ──────────────────────────────────────────────────────────────
+# Starship real – merged modules + new colour scheme
+# ──────────────────────────────────────────────────────────────
+
+# $os\
+format = """
+[](fg:{{colors.primary.default.hex}})\
+$username\
+[](bg:{{colors.secondary_container.default.hex}} fg:{{colors.primary.default.hex}})\
+$directory\
+[](fg:{{colors.secondary_container.default.hex}} bg:{{colors.tertiary_container.default.hex}})\
+$git_branch\
+$git_status\
+[](fg:{{colors.tertiary_container.default.hex}} bg:{{colors.primary_container.default.hex}})\
+$c\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$custom_html\
+$custom_javascript\
+$custom_typescript\
+$custom_cpp\
+$kotlin\
+$haskell\
+$python\
+[](fg:{{colors.primary_container.default.hex}} bg:{{colors.secondary.default.hex}})\
+$docker_context\
+$conda\
+[](fg:{{colors.secondary.default.hex}} bg:{{colors.tertiary.default.hex}})\
+$time\
+${custom.cat}\
+${custom.quote}\
+[ ](fg:{{colors.tertiary.default.hex}})\
+$line_break$character
+"""
+
+# Uncomment to remove the leading blank line
+# add_newline = false
+
+# ───────── OS / USER ─────────
+[os]
+disabled = false
+style    = "bg:{{colors.primary.default.hex}} fg:{{colors.on_primary.default.hex}}"
+
+
+[username]
+show_always = true
+style_user  = "bg:{{colors.primary.default.hex}} fg:{{colors.on_primary.default.hex}}"
+style_root  = "bg:{{colors.error.default.hex}} fg:{{colors.on_error.default.hex}}"
+format      = "[ alamin ]($style)"   # customise if you prefer $user
+
+
+# ───────── RANDOM CAT EMOJI ─────────
+[custom.cat]
+description = "Random cat face"
+command = "shuf -n1 -e 😺 😸 😹 😻 😼 😽 🐈 🐱 😾 😿 🙀| tr -d '\\n'"
+#command = "shuf -n1 -e 🐒 🦍 🦧 🐕 🦮 🐕‍🦺 🐩 🐺 🦊 🦝 🐱 🐈 🐈‍⬛ 🦁 🐯 🐅 🐎 🦄 🦓 🦌 🐮 🐂 🐃 🐄 🐖 🐗 🐏 🐑 🐐 🦙 🦒 🐘 🦣 🦏 🦛 🐁 🐀 🐹 🐰 🐇 🐿️ 🦫 🦔 🦇 🐻 🐻‍❄️ 🐨 🐼 🦥 🦦 🦘 🦡 🐤 🐥 🐦 🐧 🕊️ 🦅 🦆 🦢 🦉 🦤 🪿 🐸 🐊 🐢 🐍 🦎 🦖 🦕 🐙 🐚 🐠 🐟 🐡 🦈 🐬 🐳 🐋 🐌 🦋 🐛 🐜 🐝 🪲 🐞 🦗| tr -d '\\n'"
+
+when    = "true"
+#style   = "bg:#9A348E fg:#FFFFFF"
+style = "bg:{{colors.tertiary.default.hex}} fg:{{colors.on_tertiary.default.hex}}"
+#prefix  = ""
+format  = "[ $output:]($style)"
+
+# ───────── RANDOM CAT quote ─────────
+[custom.quote]
+description = "Random funny cat quote"
+command = '''
+shuf -n1 -e \
+"Meow is law." \
+"Code? I nap." \
+"Keyboard is meaw bed." \
+"Obey the purr." \
+"Meow owns this shell." \
+"Feed me, human." \
+"Paws and reflect." \
+"Ctrl + Cat = Chaos" \
+"Meow > sudo" \
+"Purrfection takes time." \
+"Meow is the new sudo." \
+"Keyboard? You mean my bed." \
+"Cats write bugs, not code." \
+"Ctrl + Meow = World Domination." \
+"One cat to rule them all." \
+"Commit early, nap often." \
+"Born to nap, forced to debug." \
+"Scratch logs > error logs." \
+"Code like a cat: unpredictable." \
+"All your yarn are belong to us." \
+| tr -d '\\n'
+'''
+when = "true"
+#style = "bg:#556574 fg:#FFFFFF"
+style = "bg:{{colors.tertiary.default.hex}} fg:{{colors.on_tertiary.default.hex}}"
+format = "[ $output ]($style)"
+
+
+
+
+# ───────── DIRECTORY ─────────
+[directory]
+style  = "fg:{{colors.on_secondary_container.default.hex}} bg:{{colors.secondary_container.default.hex}}"
+format = "[ $path ]($style)"
+truncation_length  = 3
+truncation_symbol  = "…/"
+
+[directory.substitutions]
+"Documents"  = "󰈙 "
+"Downloads"  = " "
+"Music"      = " "
+"Pictures"   = " "
+"Developer"  = "󰲋 "
+"minecrafts" = "󰢷 "
+"my-dotfiles" = " "
+
+# ───────── GIT ─────────
+[git_branch]
+symbol = ""
+style  = "bg:{{colors.tertiary_container.default.hex}} fg:{{colors.on_tertiary_container.default.hex}}"
+format = "[ $symbol $branch ]($style)"
+
+[git_status]
+style  = "bg:{{colors.tertiary_container.default.hex}} fg:{{colors.on_tertiary_container.default.hex}}"
+format = "[$all_status$ahead_behind ]($style)"
+
+# ───────── LANGUAGE RUNTIMES ─────────
+[c]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[rust]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[golang]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[nodejs]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[php]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[java]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[kotlin]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[haskell]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+[python]
+symbol = ""
+style  = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format = "[ $symbol ($version) ]($style)"
+
+# ───────── CUSTOM FILE‑TYPE DETECTORS ─────────
+[custom.cpp]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.cpp" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format  = "[ $symbol C++ ]($style)"
+
+[custom.html]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.html" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format  = "[ $symbol HTML ]($style)"
+
+[custom.javascript]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.js" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format  = "[ $symbol JS ]($style)"
+
+[custom.typescript]
+when    = '''[[ -n $(find . -maxdepth 1 -name "*.ts" 2>/dev/null) ]]'''
+symbol  = ""
+style   = "bg:{{colors.primary_container.default.hex}} fg:{{colors.on_primary_container.default.hex}}"
+format  = "[ $symbol TS ]($style)"
+
+# ───────── DOCKER / CONDA / TIME ─────────
+[docker_context]
+symbol = ""
+style  = "bg:{{colors.secondary.default.hex}} fg:{{colors.on_secondary.default.hex}}"
+format = "[ $symbol $context ]($style)"
+
+[conda]
+style  = "bg:{{colors.secondary.default.hex}} fg:{{colors.on_secondary.default.hex}}"
+format = "[ $symbol $environment ]($style)"
+
+# [time]
+# disabled     = false
+# time_format  = "%I:%M%P"   # 12‑hour, lowercase am/pm
+# style        = "bg:#33658A fg:#FFFFFF"
+# format       = "[ ♥ $time ]($style)"
+
+# ───────── PROMPT SYMBOLS ─────────
+[character]
+success_symbol            = "[ 󱞪](bold fg:{{colors.primary.default.hex}})"
+error_symbol              = "[ ✖](bold fg:{{colors.error.default.hex}})"
+vimcmd_symbol             = "[ ❯](bold fg:{{colors.primary.default.hex}})"
+vimcmd_replace_one_symbol = "[ ❯](bold fg:{{colors.tertiary.default.hex}})"
+vimcmd_replace_symbol     = "[ ❯](bold fg:{{colors.tertiary.default.hex}})"
+vimcmd_visual_symbol      = "[ ❯](bold fg:{{colors.secondary.default.hex}})"

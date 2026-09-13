@@ -1,0 +1,62 @@
+[config]
+
+[templates.fastfetch]
+input_path  = '/home/alamin/.config/matugen/templates/fastfetch.jsonc'
+output_path = '/home/alamin/.config/fastfetch/config.jsonc'
+
+[templates.cava]
+input_path  = '/home/alamin/.config/matugen/templates/cava.ini'
+output_path = '/home/alamin/.config/cava/config'
+
+[templates.starship]
+input_path  = '/home/alamin/.config/matugen/templates/starship.toml'
+output_path = '/home/alamin/.config/starship.toml'
+
+[templates.chromium-theme]
+input_path  = '/home/alamin/.config/matugen/templates/chromium.theme.tpl'
+output_path = '/home/alamin/.config/chromium-theme/chromium.theme'
+post_hook   = '/bin/bash /home/alamin/.config/matugen/scripts/apply-thorium-theme.sh'
+
+# [templates.discord]
+# input_path  = '/home/alamin/.config/matugen/templates/discord.css'
+# output_path = '/home/alamin/.var/app/dev.vencord.Vesktop/config/vesktop/settings/quickCss.css'
+
+[templates.obsidian]
+input_path  = '/home/alamin/.config/matugen/templates/obsidian.css'
+output_path = '/home/alamin/Documents/brain/.obsidian/snippets/matugen.css'
+
+
+[templates.spicetify-color]
+input_path  = '/home/alamin/.config/matugen/templates/spicetify-color.ini'
+output_path = '/home/alamin/.config/spicetify/Themes/Matugen/color.ini'
+
+[templates.spicetify-css]
+input_path  = '/home/alamin/.config/matugen/templates/spicetify-user.css'
+output_path = '/home/alamin/.config/spicetify/Themes/Matugen/user.css'
+post_hook   = '/bin/bash /home/alamin/.config/matugen/scripts/apply-spicetify-theme.sh'
+
+[templates.yazi]
+input_path  = '/home/alamin/.config/matugen/templates/yazi.toml'
+output_path = '/home/alamin/.config/yazi/theme.toml'
+
+[templates.yazi-init]
+input_path  = '/home/alamin/.config/matugen/templates/yazi-init.lua'
+output_path = '/home/alamin/.config/yazi/init.lua'
+
+[templates.papirus-color]
+input_path  = '/home/alamin/.config/matugen/templates/papirus-folder-color.txt'
+output_path = '/home/alamin/.config/matugen/papirus-folders/folder-color.txt'
+post_hook   = '/bin/bash /home/alamin/.config/matugen/papirus-folders/change-icons.sh'
+
+[templates.tmux]
+input_path  = '/home/alamin/.config/matugen/templates/.tmux.conf'
+output_path = '/home/alamin/.tmux.conf'
+post_hook = 'tmux source-file ~/.tmux.conf >/dev/null 2>&1 || true'
+
+[templates.nvim-dms]
+input_path  = '/home/alamin/.config/matugen/templates/nvim-dms.lua'
+output_path = '/home/alamin/.config/nvim/colors/dms.lua'
+
+[templates.nvim-dms-lualine]
+input_path  = '/home/alamin/.config/matugen/templates/nvim-dms-lualine.lua'
+output_path = '/home/alamin/.config/nvim/lua/lualine/themes/dms.lua'
