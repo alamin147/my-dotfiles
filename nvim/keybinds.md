@@ -12,7 +12,13 @@ Mode legend:
 - `c`: command-line
 - `t`: terminal
 
-This lists active custom mappings from this config. Commented-out saved mappings are listed separately at the end.
+This file lists active custom mappings from this config. The live
+`<leader>hk` / `:Keybinds` browser is broader: it discovers active custom,
+plugin, and LazyVim mappings at runtime, then adds the native Neovim defaults
+from `:help index`. Its search includes related terms, so searches such as
+`error`, `fix`, `docs`, or `window` find conceptually related actions even when
+their descriptions use different wording. Press `Enter` on a native default to
+open its full help page.
 
 ## General Editing
 
@@ -127,6 +133,32 @@ These mappings apply inside the Telescope file browser in normal mode.
 | `<M-]>` | Copilot suggestion | Show the next suggestion | `lua/plugins/ai.lua` |
 | `<M-[>` | Copilot suggestion | Show the previous suggestion | `lua/plugins/ai.lua` |
 | `<C-]>` | Copilot suggestion | Dismiss the inline suggestion | `lua/plugins/ai.lua` |
+
+## Debugger
+
+These mappings come from the enabled LazyVim DAP core. The local adapter setup
+supports C/C++, Python, JavaScript, and TypeScript. C/C++ can build the current
+single file with `-g -O0` before launch; project binaries can be selected
+manually from the same start menu.
+
+| Key | Mode | Action | Source |
+| --- | --- | --- | --- |
+| `<leader>db` | `n` | Toggle breakpoint | LazyVim DAP core |
+| `<leader>dB` | `n` | Set conditional breakpoint | LazyVim DAP core |
+| `<leader>dc` | `n` | Start or continue debug session | LazyVim DAP core |
+| `<leader>da` | `n` | Start with command-line arguments | LazyVim DAP core |
+| `<leader>dC` | `n` | Run to cursor | LazyVim DAP core |
+| `<leader>di` | `n` | Step into | LazyVim DAP core |
+| `<leader>dO` | `n` | Step over | LazyVim DAP core |
+| `<leader>do` | `n` | Step out | LazyVim DAP core |
+| `<leader>dP` | `n` | Pause | LazyVim DAP core |
+| `<leader>dt` | `n` | Terminate debug session | LazyVim DAP core |
+| `<leader>dl` | `n` | Run last debug configuration | LazyVim DAP core |
+| `<leader>dr` | `n` | Toggle debug REPL | LazyVim DAP core |
+| `<leader>du` | `n` | Toggle debugger UI | LazyVim DAP core |
+| `<leader>de` | `n`, `x` | Evaluate expression | LazyVim DAP core |
+| `<leader>dw` | `n` | Inspect value in a debugger widget | LazyVim DAP core |
+| `<leader>dj` / `<leader>dk` | `n` | Move down/up the call stack | LazyVim DAP core |
 
 ## Terminal
 

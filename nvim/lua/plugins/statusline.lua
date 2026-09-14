@@ -1,5 +1,5 @@
 local function clock_12h()
-  return " " .. os.date("%I:%M %p"):gsub("^0", "")
+  return "󰥔 " .. os.date("%I:%M %p"):gsub("^0", "")
 end
 
 local function add_clean_breadcrumbs(opts)
@@ -38,6 +38,8 @@ return {
       vim.g.trouble_lualine = false
     end,
     opts = function(_, opts)
+      opts.options = opts.options or {}
+      opts.options.theme = require("config.theme-selector").lualine_theme()
       opts.sections = opts.sections or {}
       opts.sections.lualine_c = opts.sections.lualine_c or {}
       opts.sections.lualine_z = { clock_12h }

@@ -36,6 +36,7 @@ return {
         -- Debuggers
         "debugpy", -- Python debugger
         "codelldb", -- C/C++/Rust debugger
+        "js-debug-adapter", -- JavaScript/TypeScript debugger
       }
 
       if vim.fn.executable("luarocks") == 1 then
@@ -43,6 +44,14 @@ return {
       end
 
       vim.list_extend(opts.ensure_installed, ensure_installed)
+      local seen = {}
+      opts.ensure_installed = vim.tbl_filter(function(name)
+        if seen[name] then
+          return false
+        end
+        seen[name] = true
+        return true
+      end, opts.ensure_installed)
     end,
   },
   -- lsp servers

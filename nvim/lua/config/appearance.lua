@@ -133,6 +133,9 @@ local function palette()
 end
 
 function M.bufferline_highlights()
+  if vim.g.colors_name == "nvchad" then
+    return require("config.theme-bufferline").highlights()
+  end
   local colors = palette()
   local transparent = vim.g.dms_transparent ~= false
   local panel_bg = transparent and "NONE" or colors.panel_bg
@@ -343,6 +346,12 @@ local function apply_transparency()
 end
 
 function M.apply()
+  if vim.g.colors_name == "nvchad" then
+    -- Preserve Base46's palette and integration choices; DMS contrast changes
+    -- must never recolor a static theme against the desktop wallpaper.
+    apply_transparency()
+    return
+  end
   improve_text_contrast()
   local colors = palette()
   local selected = { fg = colors.active_fg, bg = colors.active_bg, bold = true, italic = false }
@@ -384,13 +393,7 @@ function M.setup()
   })
 
   vim.api.nvim_create_user_command("EditorTransparencyToggle", function()
-    vim.g.dms_transparent = vim.g.dms_transparent == false
-    local colorscheme = vim.g.colors_name
-    if colorscheme then
-      pcall(vim.cmd.colorscheme, colorscheme)
-    else
-      M.apply()
-    end
+    require("config.theme-selector").toggle_transparency()
   end, { desc = "Toggle the transparent editor canvas" })
 
   vim.schedule(M.apply)

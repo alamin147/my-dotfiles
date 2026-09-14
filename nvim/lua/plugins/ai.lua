@@ -3,7 +3,6 @@ return {
   -- working through blink.cmp even when Copilot is signed out or unavailable.
   {
     "zbirenbaum/copilot.lua",
-    branch = "v2.0.1",
     version = "v2.0.1", -- Avoid newer releases' very large bundled cross-platform LSP checkout
     cmd = "Copilot",
     event = "InsertEnter",

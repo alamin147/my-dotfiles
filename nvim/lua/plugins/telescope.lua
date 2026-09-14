@@ -15,29 +15,8 @@ local function search_all_files()
   })
 end
 
-local keybind_help_descriptions = {
-  ["<Space>cf"] = "Format current file or visual selection",
-  ["<Space>cd"] = "Show diagnostic under cursor",
-  ["<Space>xX"] = "Show current-file errors and warnings",
-  ["<Space>xx"] = "Show project errors and warnings",
-  [";e"] = "Open diagnostics picker",
-  ["[d"] = "Go to previous diagnostic",
-  ["]d"] = "Go to next diagnostic",
-  ["[e"] = "Go to previous error",
-  ["]e"] = "Go to next error",
-  ["[w"] = "Go to previous warning",
-  ["]w"] = "Go to next warning",
-}
-
 local function show_keybinds()
-  require("telescope.builtin").keymaps({
-    prompt_title = "All Active Keybinds",
-    show_plug = false,
-    filter = function(mapping)
-      mapping.desc = keybind_help_descriptions[mapping.lhs] or mapping.desc
-      return true
-    end,
-  })
+  require("config.keybind-help").show()
 end
 
 return {
@@ -59,14 +38,14 @@ return {
     },
     init = function()
       vim.api.nvim_create_user_command("Keybinds", show_keybinds, {
-        desc = "Show all active Neovim keybinds",
+        desc = "Search custom, plugin, LazyVim, and Neovim default keybinds",
       })
     end,
     keys = {
       {
         "<leader>hk",
         show_keybinds,
-        desc = "Help: All Keybinds",
+        desc = "Help: Search all custom and default keybinds",
       },
       {
         ";f",

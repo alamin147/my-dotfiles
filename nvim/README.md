@@ -10,15 +10,19 @@ init.lua                    bootstrap and logical working-directory handling
 lua/config/                 editor options, keymaps, autocmds, appearance
 lua/plugins/                one focused plugin or feature per file
 lua/config/theme-selector.lua
-                            active theme name
-lua/colors/                 hand-written local themes
+                            live theme picker and saved selection
+lua/nvconfig.lua            NvChad Base46 options
+lua/config/theme-integrations/
+                            shared-palette UI integrations
+colors/nvchad.lua           Base46 colorscheme entry point
 colors/dms.lua              generated DMS colorscheme
 lua/lualine/themes/dms.lua  generated DMS statusline theme
 ```
 
 The Neo-tree sidebar is configured in `lua/plugins/explorer.lua`. The top file
-bar is configured in `lua/plugins/bufferline.lua`. Cross-theme readability and
-transparent UI are owned by `lua/config/appearance.lua`.
+bar is configured in `lua/plugins/bufferline.lua`. DMS readability and
+transparent UI are owned by `lua/config/appearance.lua`; NvChad themes retain
+their own palettes and native Base46 integrations.
 
 ## Everyday navigation
 
@@ -33,6 +37,6 @@ The complete custom mapping reference is in `keybinds.md`.
 
 ## Themes
 
-Change `ACTIVE_THEME` in `lua/config/theme-selector.lua`, then restart Neovim.
-Use `dms` to follow DMS/Matugen. See `THEME_GUIDE.md` for the data flow and how
-to add local or plugin themes.
+Press `<leader>th` to preview and select DMS or any bundled NvChad theme.
+Enter saves your selection; Escape restores the previous theme. Use `:Theme dms`
+to follow DMS/Matugen again. See `THEME_GUIDE.md` for integration details.

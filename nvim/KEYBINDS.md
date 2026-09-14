@@ -1,8 +1,11 @@
 # Neovim Core Keybinds
 
 `Space` is the leader key. Press `Space` and wait briefly to see the available
-groups. Use `Space+h+k` or `:Keybinds` for a searchable list of every active
-mapping; the list updates automatically when the configuration changes.
+groups. Use `Space+h+k` or `:Keybinds` for the learning-oriented keybind
+browser. It combines every active custom/plugin mapping with Neovim's native
+defaults. Search by key, action, source, or a related word: for example,
+`error` also finds diagnostics and warnings. Press `Enter` on a Neovim default
+to open its full `:help` page.
 
 ## Files and explorer
 
@@ -13,14 +16,20 @@ mapping; the list updates automatically when the configuration changes.
 | `Ctrl-b` | Toggle Neo-tree at the project launch folder |
 | `Space f` | Reveal the current file in Neo-tree |
 
+## Themes
+
+Theme picker: `Space t h` (also `Space u C`). Move to preview, `Enter` to save,
+`Esc` to cancel. Choose `dms` for dynamic desktop colors, or any NvChad palette.
+`:EditorTransparencyToggle` remembers transparency separately for each theme.
+
 ## Text search
 
 | Key | Action |
 |---|---|
 | `Space s f` | Search text in the current file |
 | `Space s g` | Search text in all files from the project launch folder |
-| `Space s k` | Search all active keymaps (LazyVim alias) |
-| `Space h k` | Search all active keymaps (help alias) |
+| `Space s k` | Search active keymaps (LazyVim's built-in picker) |
+| `Space h k` | Search custom, plugin, and Neovim default keybinds |
 
 ## Buffers, tabs, and windows
 
@@ -66,6 +75,29 @@ mapping; the list updates automatically when the configuration changes.
 Copilot is optional. Run `:Copilot auth` once to sign in; ordinary completion
 works without a Copilot account.
 
+## Debugger
+
+The debugger supports C/C++, Python, JavaScript, and TypeScript. Set a
+breakpoint, then start with `Space d c`. C/C++ offers a configuration that
+automatically builds the current file with debug symbols. The debug panels open
+when a session starts and close when it ends; `Space d u` toggles them manually.
+
+| Key | Action |
+|---|---|
+| `Space d b` | Toggle a breakpoint |
+| `Space d B` | Set a conditional breakpoint |
+| `Space d c` | Start or continue debugging |
+| `Space d a` | Start with command-line arguments |
+| `Space d i` | Step into |
+| `Space d O` | Step over |
+| `Space d o` | Step out |
+| `Space d C` | Run to the cursor |
+| `Space d P` | Pause |
+| `Space d t` | Stop the debug session |
+| `Space d u` | Toggle the debugger UI |
+| `Space d e` | Evaluate expression under cursor/selection |
+| `Space d r` | Toggle the debug REPL |
+
 ## Terminal
 
 | Key | Action |
@@ -86,5 +118,5 @@ works without a Copilot account.
 
 | Command | Action |
 |---|---|
-| `:Keybinds` | Open the searchable active-keymap picker |
+| `:Keybinds` | Open the searchable custom + default keybind browser |
 | `:EditorTransparencyToggle` | Toggle transparent/opaque editor UI |
