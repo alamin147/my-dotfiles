@@ -821,13 +821,95 @@ function M.apply()
   ------------------------------------------------------------
 
   if vim.g.colors_name == "nvchad" then
-    -- Keep the actual Base46 palette untouched,
-    -- but fix Snacks' overly dim directory/path colors.
-    improve_picker_directories()
+  local c = require("base46").get_theme_tb("base_30")
 
-    apply_transparency()
+  local transparent = vim.g.dms_transparent == true
+  local outer_bg = transparent and "NONE" or c.black
+  local panel = transparent and "NONE" or c.darker_black
+  local elevated = transparent and "NONE" or c.black2
 
-    return
+  -- Main floating windows
+  set("NormalFloat", { fg = c.white, bg = panel })
+  set("FloatBorder", { fg = c.line or c.grey, bg = outer_bg })
+  set("FloatTitle", { fg = c.blue, bg = panel, bold = true })
+
+  -- Telescope
+  set("TelescopeNormal", { fg = c.white, bg = panel })
+  set("TelescopeBorder", { fg = c.line or c.grey, bg = outer_bg })
+
+  set("TelescopePromptNormal", {
+    fg = c.white,
+    bg = elevated,
+  })
+
+  set("TelescopePromptBorder", {
+    fg = c.blue,
+    bg = outer_bg,
+  })
+
+  set("TelescopeSelection", {
+    fg = c.white,
+    bg = c.one_bg2,
+    bold = true,
+  })
+
+  set("TelescopeMatching", {
+    fg = c.blue,
+    bold = true,
+  })
+
+  -- Completion popup
+  set("BlinkCmpMenu", { fg = c.white, bg = panel })
+  set("BlinkCmpMenuBorder", { fg = c.line or c.grey, bg = outer_bg })
+
+  set("BlinkCmpMenuSelection", {
+    fg = c.white,
+    bg = c.one_bg2,
+    bold = true,
+  })
+
+  set("BlinkCmpDoc", { fg = c.white, bg = panel })
+  set("BlinkCmpDocBorder", { fg = c.line or c.grey, bg = outer_bg })
+
+  -- Neo-tree
+  set("NeoTreeNormal", { fg = c.white, bg = panel })
+  set("NeoTreeNormalNC", { fg = c.white, bg = panel })
+
+  set("NeoTreeWinSeparator", {
+    fg = c.line or c.grey,
+    bg = outer_bg,
+  })
+
+  set("NeoTreeCursorLine", {
+    fg = c.white,
+    bg = c.one_bg2,
+  })
+
+  -- Snacks
+  set("SnacksPicker", { fg = c.white, bg = panel })
+  set("SnacksPickerBorder", { fg = c.line or c.grey, bg = outer_bg })
+
+  set("SnacksPickerCursorLine", {
+    fg = c.white,
+    bg = c.one_bg2,
+  })
+
+  -- Noice
+  set("NoiceCmdlinePopup", { fg = c.white, bg = panel })
+
+  set("NoiceCmdlinePopupBorder", {
+    fg = c.blue,
+    bg = outer_bg,
+  })
+
+  -- WhichKey
+  set("WhichKeyFloat", { bg = panel })
+  set("WhichKey", { fg = c.blue, bold = true })
+  set("WhichKeyDesc", { fg = c.white })
+
+  improve_picker_directories()
+  apply_transparency()
+  return
   end
 
   ------------------------------------------------------------

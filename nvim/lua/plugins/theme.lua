@@ -30,6 +30,11 @@ return {
   -- Keep LazyVim's Snacks colorscheme picker from claiming the custom picker key.
   {
     "folke/snacks.nvim",
+    opts = {
+      indent = {
+        enabled = false,
+      },
+    },
     keys = { { "<leader>uC", false } },
   },
 }

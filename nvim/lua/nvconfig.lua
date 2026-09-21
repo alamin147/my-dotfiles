@@ -23,7 +23,7 @@ return {
     integrations_dir = "config.theme-integrations",
   },
   ui = {
-    telescope = { style = "borderless" },
+    telescope = { style = "bordered" },
     cmp = { style = "default" },
     statusline = { theme = "default" }, -- referenced by poimandres' palette polish
   },

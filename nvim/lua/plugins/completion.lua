@@ -42,7 +42,40 @@ return {
       },
     },
   },
+ {
+    "saghen/blink.pairs",
+    version = "*",
+    dependencies = "saghen/blink.lib",
 
+    build = function()
+      require("blink.pairs").download():pwait(60000)
+    end,
+
+    opts = {
+      -- Don't replace your existing auto-pair behavior.
+      mappings = {
+        enabled = false,
+      },
+
+      highlights = {
+        enabled = true,
+
+        -- Don't rainbow-color every bracket.
+        groups = { "Delimiter" },
+
+        matchparen = {
+          enabled = true,
+
+          -- IMPORTANT:
+          -- highlight the nearest {} / () / [] surrounding the cursor
+          include_surrounding = true,
+
+          group = "MatchParen",
+          priority = 250,
+        },
+      },
+    },
+  },
   -- Tailwind CSS color preview
   {
     "roobert/tailwindcss-colorizer-cmp.nvim",
