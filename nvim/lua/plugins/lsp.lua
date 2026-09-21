@@ -158,19 +158,9 @@ return {
 
         -- TailwindCSS
         tailwindcss = {
-          root_dir = function(...)
-            return require("lspconfig.util").root_pattern(
-              "tailwind.config.js",
-              "tailwind.config.cjs",
-              "tailwind.config.mjs",
-              "tailwind.config.ts",
-              "postcss.config.js",
-              "postcss.config.cjs",
-              "postcss.config.mjs",
-              "postcss.config.ts",
-              ".git"
-            )(...)
-          end,
+          -- Keep nvim-lspconfig's root detector. It uses Neovim's current
+          -- (bufnr, on_dir) API and detects both config-based Tailwind v3
+          -- projects and config-free Tailwind v4 package.json projects.
           filetypes = {
             "html",
             "css",
