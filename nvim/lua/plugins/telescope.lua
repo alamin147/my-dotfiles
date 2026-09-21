@@ -2,12 +2,6 @@ local function launch_root()
   return vim.g.original_cwd or vim.fn.getcwd()
 end
 
-local function search_current_file()
-  require("telescope.builtin").current_buffer_fuzzy_find({
-    prompt_title = "Search Current File",
-  })
-end
-
 local function search_all_files()
   require("telescope.builtin").live_grep({
     cwd = launch_root(),
@@ -52,35 +46,18 @@ return {
         function()
           local builtin = require("telescope.builtin")
           builtin.find_files({
+            cwd = launch_root(),
             no_ignore = true, -- Don't respect .gitignore
             hidden = true,
             file_ignore_patterns = {}, -- Clear any ignore patterns
           })
         end,
-        desc = "Lists files in your current working directory, respects .gitignore",
+        desc = "Find Files (Launch Root, Including Hidden/Ignored)",
       },
       {
         ";r",
         search_all_files,
         desc = "Search for a string in your current working directory and get results live as you type, respects .gitignore",
-      },
-      {
-        "<leader>sf",
-        search_current_file,
-        desc = "Search Text in Current File",
-      },
-      {
-        "<leader>sg",
-        search_all_files,
-        desc = "Search Text in All Files (Launch Root)",
-      },
-      {
-        "\\\\",
-        function()
-          local builtin = require("telescope.builtin")
-          builtin.buffers()
-        end,
-        desc = "Lists open buffers",
       },
       {
         ";;",
@@ -96,7 +73,15 @@ return {
           local builtin = require("telescope.builtin")
           builtin.diagnostics()
         end,
-        desc = "Lists Diagnostics for all open buffers or a specific buffer",
+        desc = "Diagnostics (Telescope)",
+      },
+      {
+        ";q",
+        function()
+          vim.diagnostic.setqflist()
+          vim.cmd.copen()
+        end,
+        desc = "Diagnostics to Quickfix",
       },
       {
         ";s",
@@ -104,7 +89,7 @@ return {
           local builtin = require("telescope.builtin")
           builtin.treesitter()
         end,
-        desc = "Lists Function names, variables, from Treesitter",
+        desc = "Treesitter Symbols",
       },
       {
         ";d",
@@ -118,7 +103,7 @@ return {
             no_ignore = false,
           })
         end,
-        desc = "Find all files in current file's directory and subdirectories",
+        desc = "Find Files Under Current File Directory",
       },
       {
         ";w",
@@ -126,34 +111,7 @@ return {
           local builtin = require("telescope.builtin")
           builtin.grep_string()
         end,
-        desc = "Search for the word under cursor in all files",
-      },
-      grep_string = {
-        layout_config = {
-          preview_width = 0.95,
-        },
-      },
-      {
-        "sf",
-        function()
-          local telescope = require("telescope")
-
-          local function telescope_buffer_dir()
-            return vim.fn.expand("%:p:h")
-          end
-
-          telescope.extensions.file_browser.file_browser({
-            path = "%:p:h",
-            cwd = telescope_buffer_dir(),
-            respect_gitignore = false,
-            hidden = true,
-            grouped = true,
-            previewer = false,
-            initial_mode = "normal",
-            layout_config = { height = 40 },
-          })
-        end,
-        desc = "Open File Browser with the path of the current buffer",
+        desc = "Grep Word Under Cursor",
       },
     },
     config = function(_, opts)

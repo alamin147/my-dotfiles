@@ -4,107 +4,37 @@
 local keymap = vim.keymap
 local opts = { noremap = true, silent = true }
 
-keymap.set("n", "x", '"_x')
--- telescope search current file only
-vim.keymap.set("n", "<leader>bs", function()
-  local ok, telescope_builtin = pcall(require, "telescope.builtin")
-  if not ok then
-    vim.notify("Telescope not available", vim.log.levels.WARN)
-    return
-  end
-  -- Fuzzy find within the contents of the current buffer
-  telescope_builtin.current_buffer_fuzzy_find()
-end, { desc = "Fuzzy find in current file" })
+keymap.set("n", "x", '"_x', { desc = "Delete character without yanking" })
 
--- telescope grep/find in current file
-vim.keymap.set("n", ";fw", function()
-  local ok, telescope_builtin = pcall(require, "telescope.builtin")
-  if not ok then
-    vim.notify("Telescope not available", vim.log.levels.WARN)
-    return
-  end
-  -- Live grep within the current buffer
-  telescope_builtin.live_grep({
-    grep_open_files = true,
-    prompt_title = "Live Grep in Current File",
-  })
-end, { desc = "Grep in current file" })
---
 -- Increment/decrement
-keymap.set("n", "+", "<C-a>")
-keymap.set("n", "-", "<C-x>")
+keymap.set("n", "+", "<C-a>", { desc = "Increment number" })
+keymap.set("n", "-", "<C-x>", { desc = "Decrement number" })
 
 -- Select all
-keymap.set("n", "<C-a>", "gg<S-v>G")
-
--- Save file and quit
-keymap.set("n", "<Leader>w", ":update<Return>", opts)
-keymap.set("n", "<Leader>q", ":quit<Return>", opts)
-keymap.set("n", "<Leader>Q", ":qa<Return>", opts)
-
--- Live grep in current directory (fix for symlinked dirs)
-keymap.set("n", "<Leader>/", function()
-  local ok, telescope_builtin = pcall(require, "telescope.builtin")
-  if not ok then
-    vim.notify("Telescope not available", vim.log.levels.WARN)
-    return
-  end
-  -- Use the original cwd (symlink path, not resolved)
-  local cwd = vim.g.original_cwd or vim.fn.getcwd()
-  telescope_builtin.live_grep({
-    cwd = cwd,
-  })
-end, { desc = "Grep in current directory" })
+keymap.set("n", "<C-a>", "gg<S-v>G", { desc = "Select all" })
 
 -- ============================================================================
 -- TOGGLETERM KEYBINDINGS
 -- ============================================================================
 -- Ctrl+\ toggles a persistent VS Code-style terminal panel.
--- Additional keybindings for different terminal modes:
-
 local editor_terminal = require("config.editor-terminal")
 
 keymap.set({ "n", "i" }, "<C-\\>", editor_terminal.toggle, {
   desc = "Toggle bottom terminal",
 })
 
--- <leader>ttt - Toggle floating terminal (main terminal - beautiful centered terminal)
-keymap.set("n", "<leader>ttt", function()
-  local status_ok, _ = pcall(require, "toggleterm")
-  if not status_ok then
-    vim.notify("ToggleTerm not loaded yet. Try again in a moment.", vim.log.levels.WARN)
-    return
-  end
-  vim.cmd("ToggleTerm direction=float")
-end, { desc = "Toggle floating terminal" })
-
--- <leader>tth - Toggle horizontal terminal (bottom split, respects current window width)
-keymap.set("n", "<leader>tth", function()
-  local status_ok, _ = pcall(require, "toggleterm")
-  if not status_ok then
-    vim.notify("ToggleTerm not loaded yet. Try again in a moment.", vim.log.levels.WARN)
-    return
-  end
-  -- Open a split below current window instead of full width
-  vim.cmd("belowright 5split")
-  vim.cmd("terminal")
-  vim.cmd("startinsert")
-end, { desc = "Toggle horizontal terminal (current window width)" })
-
--- <leader>ttv - Toggle vertical terminal (side split)
-keymap.set("n", "<leader>ttv", function()
-  local status_ok, _ = pcall(require, "toggleterm")
-  if not status_ok then
-    vim.notify("ToggleTerm not loaded yet. Try again in a moment.", vim.log.levels.WARN)
-    return
-  end
-  vim.cmd("ToggleTerm size=30 direction=vertical")
-end, { desc = "Toggle vertical terminal" })
-
--- ============================================================================
--- Tab pages are separate workspaces; the top bar itself contains buffers.
-keymap.set("n", "te", ":tabedit", { desc = "New tab page" })
-keymap.set("n", "tw", "<cmd>tabclose<cr>", { desc = "Close tab page" })
+-- The launch-root Telescope workflow and persistent bottom terminal are the
+-- intentional alternatives to these LazyVim aliases.
+for _, mapping in ipairs({
+  { "n", "<leader>/" },
+  { "n", "<leader>sg" },
+  { "n", "<leader>ft" },
+  { "n", "<leader>fT" },
+  { { "n", "t" }, "<C-/>" },
+  { { "n", "t" }, "<C-_>" },
+}) do
+  pcall(vim.keymap.del, mapping[1], mapping[2])
+end
 
 for index = 1, 9 do
   keymap.set("n", "<A-" .. index .. ">", "<cmd>BufferLineGoToBuffer " .. index .. "<cr>", {
@@ -113,38 +43,15 @@ for index = 1, 9 do
 end
 
 -- Split window
-keymap.set("n", "ss", ":split<Return>", opts)
-keymap.set("n", "sv", ":vsplit<Return>", opts)
+keymap.set("n", "ss", ":split<Return>", vim.tbl_extend("force", opts, { desc = "Split window below" }))
+keymap.set("n", "sv", ":vsplit<Return>", vim.tbl_extend("force", opts, { desc = "Split window right" }))
 
 -- Move window
-keymap.set("n", "sh", "<C-w>h")
-keymap.set("n", "sk", "<C-w>k")
-keymap.set("n", "sj", "<C-w>j")
-keymap.set("n", "sl", "<C-w>l")
-
--- Move between windows with Ctrl+H/J/K/L.
-keymap.set("n", "<C-h>", "<C-w>h", { desc = "Go to left window" })
-keymap.set("n", "<C-k>", "<C-w>k", { desc = "Go to upper window" })
-keymap.set("n", "<C-j>", "<C-w>j", { desc = "Go to lower window" })
-keymap.set("n", "<C-l>", "<C-w>l", { desc = "Go to right window" })
-
--- Resize window
-keymap.set("n", "<C-S-h>", "<C-w><")
-keymap.set("n", "<C-S-l>", "<C-w>>")
-keymap.set("n", "<C-S-k>", "<C-w>+")
-keymap.set("n", "<C-S-j>", "<C-w>-")
--- Diagnostics (changed from Ctrl+j to avoid conflict with window navigation)
-keymap.set("n", "]d", function()
-  vim.diagnostic.goto_next()
-end, { desc = "Next diagnostic" })
-keymap.set("n", "[d", function()
-  vim.diagnostic.goto_prev()
-end, { desc = "Previous diagnostic" })
+keymap.set("n", "sh", "<C-w>h", { desc = "Go to left window" })
+keymap.set("n", "sk", "<C-w>k", { desc = "Go to upper window" })
+keymap.set("n", "sj", "<C-w>j", { desc = "Go to lower window" })
+keymap.set("n", "sl", "<C-w>l", { desc = "Go to right window" })
 -- C++ Development shortcuts (handled by cpp-runner plugin)
--- <leader>cr - Compile and Run C++
--- <leader>cc - Compile and Run C
--- <leader>ci - Open Input File
--- <leader>co - Open Output File
 -- F5 - Quick compile and run (when in C/C++ files)
 -- F6 - Open input file (when in C/C++ files)
 -- F7 - Open output file (when in C/C++ files)
@@ -220,63 +127,6 @@ end, { noremap = true, silent = true, desc = "Open output file" })
 keymap.set("n", "<F8>", function()
   vim.cmd("vsplit ../io/output.txt")
 end, { noremap = true, silent = true, desc = "View output in split" })
-
--- Leader mappings for CP
-keymap.set("n", "<leader>ci", ":e ../io/input.txt<CR>", { noremap = true, silent = true, desc = "Open input file" })
-keymap.set("n", "<leader>co", ":e ../io/output.txt<CR>", { noremap = true, silent = true, desc = "Open output file" })
-keymap.set("n", "<leader>cr", function()
-  vim.cmd("w") -- save file
-  local filename = vim.fn.expand("%:t:r")
-  local filepath = vim.fn.expand("%:p")
-  local exe = "../outputs/" .. filename
-  local input = "../io/input.txt"
-  local output = "../io/output.txt"
-
-  -- Only create directories if they don't exist
-  vim.cmd("!mkdir -p ../outputs")
-  vim.cmd("!mkdir -p ../io")
-
-  -- Check if input file exists
-  local input_exists = vim.fn.filereadable(input) == 1
-  if not input_exists then
-    print("Creating input file at " .. input)
-    vim.cmd("!touch " .. input)
-  end
-
-  -- Compile with error checking
-  local compile_cmd = "g++ -o " .. exe .. " '" .. filepath .. "' -std=c++23 -O2 -Wall -Wextra"
-  print("Compiling: " .. filename)
-
-  local compile_result = vim.fn.system(compile_cmd)
-  local compile_exit_code = vim.v.shell_error
-
-  if compile_exit_code ~= 0 then
-    print("Compilation failed!")
-    print("Error: " .. compile_result)
-    return
-  end
-
-  print("Compilation successful! Running...")
-
-  -- Run the program
-  local run_cmd = exe .. " < " .. input .. " > " .. output .. " 2>&1"
-  local run_result = vim.fn.system(run_cmd)
-  local run_exit_code = vim.v.shell_error
-
-  if run_exit_code ~= 0 then
-    print("Runtime error occurred!")
-    print("Exit code: " .. run_exit_code)
-  else
-    print("Execution completed successfully!")
-  end
-
-  local output_size = vim.fn.getfsize(output)
-  if output_size > 0 then
-    print("Output generated (" .. output_size .. " bytes)")
-  else
-    print("No output generated. Check your code or input.")
-  end
-end, { noremap = true, silent = true, desc = "Compile and Run C++" })
 
 -- Template creation for competitive programming
 keymap.set("n", "<leader>ct", function()
@@ -466,113 +316,17 @@ keymap.set("n", "<F12>", function()
 end, { noremap = true, silent = true, desc = "Debug directory structure" })
 
 -- code runner
-vim.keymap.set("n", "<leader>rr", ":RunCode<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>rr", ":RunCode<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Run current file",
+})
 
-vim.keymap.set("n", "<leader>rrc", ":RunClose<CR>", { noremap = true, silent = true })
-
--- Toggle the most recently used terminal (useful to show/hide the RunCode terminal)
-keymap.set("n", "<leader>rt", function()
-  -- Find the most recently used terminal buffer
-  local term_buf = nil
-  local lastused = 0
-  for _, b in ipairs(vim.api.nvim_list_bufs()) do
-    if vim.api.nvim_buf_is_valid(b) and vim.api.nvim_buf_get_option(b, "buftype") == "terminal" then
-      local info = vim.fn.getbufinfo(b)[1]
-      if info and info.lastused and info.lastused > lastused then
-        lastused = info.lastused
-        term_buf = b
-      end
-    end
-  end
-
-  -- If no terminal buffer found, try ToggleTerm if available, otherwise open a new terminal split
-  if not term_buf then
-    if vim.fn.exists(":ToggleTerm") == 2 then
-      vim.cmd("ToggleTerm")
-    else
-      vim.cmd("botright 15split | terminal")
-    end
-    return
-  end
-
-  -- If the terminal buffer is already visible, close its window (toggle off)
-  for _, w in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_buf(w) == term_buf then
-      vim.api.nvim_win_close(w, true)
-      return
-    end
-  end
-
-  -- Otherwise, show the terminal in a bottom split and enter insert mode
-  vim.cmd("botright 15split")
-  local win = vim.api.nvim_get_current_win()
-  vim.api.nvim_win_set_buf(win, term_buf)
-  vim.cmd("startinsert")
-end, { noremap = true, silent = true, desc = "Toggle Run terminal" })
-
--- Compile current file from ./codeforces with debug info and place binary in /outputs
-keymap.set("n", "<leader>gD", function()
-  vim.cmd("w") -- save file
-  local filepath = vim.fn.expand("%:p")
-  -- Try to find a relative path under cp/ (case-insensitive)
-  local low = filepath:lower()
-  local s, e = low:find("[/\\]cp[/\\]")
-  local out_base
-  local rel
-  if s then
-    -- rel is path after cp/
-    rel = filepath:sub(e + 1)
-    -- prefix including up to the 'cp' directory
-    local prefix_cp = filepath:sub(1, e - 1)
-    out_base = prefix_cp .. "/outputs"
-  else
-    -- fallback: put outputs next to current working dir
-    out_base = vim.fn.getcwd() .. "/outputs"
-  end
-
-  local out_path
-  -- Flatten outputs to cp_root/outputs/{filename_without_ext}
-  local name_no_ext = vim.fn.expand("%:t:r")
-  out_path = out_base .. "/" .. name_no_ext
-
-  -- Ensure parent directory for output exists using vim.fn.mkdir (portable)
-  local out_dir = out_path:match("(.*/)") or out_base
-  vim.fn.mkdir(out_dir, "p")
-
-  local cmd = "g++ --debug '" .. filepath .. "' -o '" .. out_path .. "' 2>&1"
-  print("Running: " .. cmd)
-  local result = vim.fn.system(cmd)
-  local code = vim.v.shell_error
-  if code ~= 0 then
-    print("Compilation failed (exit " .. code .. ")")
-    print(result)
-  else
-    print("Compilation successful: " .. out_path)
-  end
-end, { noremap = true, silent = true, desc = "g++ --debug mirror cp/* -> /outputs/*" })
-
--- =====
--- TODO: COMMENTS
--- =====
-keymap.set("n", "<leader>xt", ":TodoQuickFix<CR>", { desc = "Find TODO comments" })
-
--- Normal mode
-vim.keymap.set("n", "<C-s>", ":w<CR>")
--- Insert mode
-vim.keymap.set("i", "<C-s>", "<Esc>:w<CR>i")
--- Visual mode
-vim.keymap.set("v", "<C-s>", "<Esc>:w<CR>gv")
-
--- =====
--- LSP Enhancements
--- =====
--- Show signature help in insert mode
-vim.keymap.set("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Show signature help" })
-
--- Better code actions
-vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
-vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions (visual)" })
-
+vim.keymap.set("n", "<leader>rc", ":RunClose<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Close code runner output",
+})
 
 -- Move selected block down
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected block down" })

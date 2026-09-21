@@ -15,6 +15,24 @@ for _, mode in ipairs(modes) do
   mode_names[mode.id] = mode.name
 end
 
+local function normalize_mode(mode)
+  return mode == "v" and "x" or mode
+end
+
+local function normalize_lhs(lhs)
+  lhs = tostring(lhs or "")
+
+  -- Active mappings expose lhsraw, while :help index mostly uses printable
+  -- notation. Convert both to the same keytrans form before comparing them.
+  if not lhs:find("[%z\1-\31\128-\255]") then
+    lhs = lhs:gsub("CTRL%-([%w%p])", "<C-%1>")
+    lhs = lhs:gsub(">_<", "><")
+    lhs = vim.api.nvim_replace_termcodes(lhs, true, true, true)
+  end
+
+  return vim.fn.keytrans(lhs)
+end
+
 -- Each group is injected into Telescope's searchable text when any member is
 -- present. This makes conceptual searches work: "error" finds diagnostics,
 -- "fix" finds code actions, and "docs" finds help/hover mappings.
@@ -147,23 +165,18 @@ local function mapping_source(mapping)
 end
 
 local function active_entries()
-  local entries = {}
-  local seen = {}
+  local by_id = {}
 
-  local function add(mapping, buffer_local)
-    local lhs = vim.fn.keytrans(mapping.lhsraw or mapping.lhs)
+  local function entry(mapping, buffer_local, requested_mode)
+    local mode = normalize_mode(mapping.mode ~= "" and mapping.mode or requested_mode)
+    local lhs = normalize_lhs(mapping.lhsraw or mapping.lhs)
     if lhs:find("<Plug>", 1, true) then
       return
     end
 
-    local id = table.concat({ mapping.mode, mapping.lhs, buffer_local and "buffer" or "global" }, "\0")
-    if seen[id] then
-      return
-    end
-    seen[id] = true
-
-    local rhs = clean(mapping.desc ~= nil and mapping.desc or mapping.rhs)
-    local description = description_overrides[mapping.mode .. ":" .. lhs] or clean(mapping.desc) or rhs
+    local id = mode .. "\0" .. lhs
+    local rhs = clean(mapping.rhs)
+    local description = description_overrides[mode .. ":" .. lhs] or clean(mapping.desc) or rhs
     if description == "" then
       description = rhs ~= "" and rhs or "Lua callback"
     end
@@ -173,40 +186,57 @@ local function active_entries()
       source = source .. " (buffer)"
     end
 
-    entries[#entries + 1] = {
-      mode = mapping.mode,
-      mode_name = mode_names[mapping.mode] or mapping.mode,
-      lhs = lhs,
-      description = description,
-      rhs = clean(mapping.rhs),
-      source = source,
-      kind = "active",
-    }
+    return id,
+      {
+        mode = mode,
+        mode_name = mode_names[mode] or mode,
+        lhs = lhs,
+        description = description,
+        rhs = clean(mapping.rhs),
+        source = source,
+        kind = "active",
+      }
   end
 
+  -- Globals establish the baseline. A current-buffer mapping with the same
+  -- normalized mode + lhs replaces it because that is what Neovim executes.
   for _, mode in ipairs(modes) do
     for _, mapping in ipairs(vim.api.nvim_get_keymap(mode.id)) do
-      add(mapping, false)
-    end
-    if vim.api.nvim_get_current_buf() ~= 0 then
-      for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(0, mode.id)) do
-        add(mapping, true)
+      local id, value = entry(mapping, false, mode.id)
+      if id then
+        by_id[id] = value
       end
     end
   end
 
-  return entries
+  if vim.api.nvim_get_current_buf() ~= 0 then
+    for _, mode in ipairs(modes) do
+      for _, mapping in ipairs(vim.api.nvim_buf_get_keymap(0, mode.id)) do
+        local id, value = entry(mapping, true, mode.id)
+        if id then
+          by_id[id] = value
+        end
+      end
+    end
+  end
+
+  local entries = {}
+  for _, value in pairs(by_id) do
+    entries[#entries + 1] = value
+  end
+
+  return entries, by_id
 end
 
 local index_modes = {
   ["Insert mode"] = { id = "i", name = "Insert" },
   ["Normal mode"] = { id = "n", name = "Normal" },
-  ["Visual mode"] = { id = "v", name = "Visual" },
+  ["Visual mode"] = { id = "x", name = "Visual" },
   ["Command-line editing"] = { id = "c", name = "Command" },
   ["Terminal mode"] = { id = "t", name = "Terminal" },
 }
 
-local function native_entries()
+local function native_entries(occupied)
   local path = vim.api.nvim_get_runtime_file("doc/index.txt", false)[1]
   if not path then
     return {}
@@ -214,6 +244,7 @@ local function native_entries()
 
   local lines = vim.fn.readfile(path)
   local entries = {}
+  local seen = {}
   local current_mode
   local current_entry
 
@@ -227,21 +258,29 @@ local function native_entries()
       local tag, rest = line:match("^|([^|]+)|%s*(.+)$")
       if tag and rest then
         local lhs, description = rest:match("^(.-)%s%s+(.+)$")
-        lhs = clean(lhs)
+        lhs = normalize_lhs(clean(lhs))
         description = clean(description)
 
         if lhs ~= "" and description ~= "" and not description:find("not used", 1, true) then
-          current_entry = {
-            mode = current_mode.id,
-            mode_name = current_mode.name,
-            lhs = lhs,
-            description = description,
-            rhs = "",
-            source = "Neovim default",
-            kind = "native",
-            tag = tag,
-          }
-          entries[#entries + 1] = current_entry
+          local mode = normalize_mode(current_mode.id)
+          local id = mode .. "\0" .. lhs
+
+          if not occupied[id] and not seen[id] then
+            seen[id] = true
+            current_entry = {
+              mode = mode,
+              mode_name = current_mode.name,
+              lhs = lhs,
+              description = description,
+              rhs = "",
+              source = "Neovim default",
+              kind = "native",
+              tag = tag,
+            }
+            entries[#entries + 1] = current_entry
+          else
+            current_entry = nil
+          end
         else
           current_entry = nil
         end
@@ -270,8 +309,8 @@ function M.search_text(item)
 end
 
 function M.collect()
-  local entries = active_entries()
-  vim.list_extend(entries, native_entries())
+  local entries, occupied = active_entries()
+  vim.list_extend(entries, native_entries(occupied))
 
   table.sort(entries, function(a, b)
     if a.kind ~= b.kind then

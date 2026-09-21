@@ -37,25 +37,6 @@ return {
       end, {})
     end,
   },
-  --which key
-  {
-    "folke/which-key.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
-    keys = {
-      {
-        "<leader>?",
-        function()
-          require("which-key").show({ global = false })
-        end,
-        desc = "Buffer Local Keymaps (which-key)",
-      },
-    },
-  },
   -- markdown
   {
     "MeanderingProgrammer/render-markdown.nvim",
@@ -146,25 +127,6 @@ return {
       })
     end,
   },
-  --refactor/rename
-  {
-    "smjonas/inc-rename.nvim",
-    cmd = "IncRename",
-    keys = {
-      {
-        "<leader>rn",
-        function()
-          return ":IncRename " .. vim.fn.expand("<cword>")
-        end,
-        desc = "Incremental rename",
-        mode = "n",
-        noremap = true,
-        expr = true,
-      },
-    },
-    config = true,
-  },
-
   -- Refactoring tool
   {
     "ThePrimeagen/refactoring.nvim",

@@ -1,252 +1,157 @@
 # Neovim Keybinds
 
-Leader key: `<Space>`
+Leader is `<Space>`. This is the audited mapping reference for the active
+LazyVim setup. `:Keybinds` / `<leader>hk` is the complete runtime browser; it
+shows the effective current-buffer mapping, not shadowed global or native
+entries.
 
-Mode legend:
+## Files and search
 
-- `n`: normal
-- `i`: insert
-- `v`: visual
-- `x`: visual/select
-- `o`: operator-pending
-- `c`: command-line
-- `t`: terminal
-
-This file lists active custom mappings from this config. The live
-`<leader>hk` / `:Keybinds` browser is broader: it discovers active custom,
-plugin, and LazyVim mappings at runtime, then adds the native Neovim defaults
-from `:help index`. Its search includes related terms, so searches such as
-`error`, `fix`, `docs`, or `window` find conceptually related actions even when
-their descriptions use different wording. Press `Enter` on a native default to
-open its full help page.
-
-## General Editing
-
-| Key | Mode | Action | Source |
+| Key | Mode | Action | Owner |
 | --- | --- | --- | --- |
-| `x` | `n` | Delete character into the black-hole register | `lua/config/keymaps.lua` |
-| `+` | `n` | Increment number | `lua/config/keymaps.lua` |
-| `-` | `n` | Decrement number | `lua/config/keymaps.lua` |
-| `<C-a>` | `n` | Select entire file | `lua/config/keymaps.lua` |
-| `<C-s>` | `n` | Save file | `lua/config/keymaps.lua` |
-| `<C-s>` | `i` | Save file and return to insert mode | `lua/config/keymaps.lua` |
-| `<C-s>` | `v` | Save file and keep visual selection | `lua/config/keymaps.lua` |
+| `<leader><space>` | `n` | Find project files | LazyVim / Snacks |
+| `<leader>ff` / `<leader>fF` | `n` | Find files from root / cwd | LazyVim / Snacks |
+| `;f` | `n` | Telescope files at launch root, including hidden/ignored | custom |
+| `;d` | `n` | Telescope files under the current file directory | custom |
+| `<leader>e` | `n` | Toggle Neo-tree at the original launch root | custom |
+| `<leader>E` | `n` | Toggle Neo-tree at cwd | LazyVim Neo-tree extra |
+| `<leader>fe` / `<leader>fE` | `n` | Neo-tree at LazyVim root / cwd | LazyVim Neo-tree extra |
+| `<leader>sb` | `n` | Search lines in the current buffer | LazyVim / Snacks |
+| `;r` | `n` | Telescope live grep at the original launch root | custom |
+| `;w` | `n` | Telescope grep word under cursor | custom |
+| `;s` | `n` | Telescope Treesitter symbols | custom |
+| `;;` | `n` | Resume Telescope | custom |
 
-## Files, Buffers, Tabs, And Windows
+`<leader>/` and `<leader>sg` are intentionally disabled aliases; `;r` is the
+single launch-root project-grep mapping. `<leader>f` remains a namespace, not a
+single action.
 
-| Key | Mode | Action | Source |
+## Diagnostics, TODO, and quickfix
+
+| Key | Mode | Action | Owner |
 | --- | --- | --- | --- |
-| `<leader>w` | `n` | Save/update current file | `lua/config/keymaps.lua` |
-| `<leader>q` | `n` | Quit current window | `lua/config/keymaps.lua` |
-| `<leader>Q` | `n` | Quit all windows | `lua/config/keymaps.lua` |
-| `<C-b>` | `n` | Toggle the Neo-tree Explorer | `lua/plugins/explorer.lua` |
-| `<leader>f` | `n` | Reveal current file in Neo-tree | `lua/plugins/explorer.lua` |
-| `<Tab>` | `n` | Go to next file buffer | `lua/plugins/bufferline.lua` |
-| `<S-Tab>` | `n` | Go to previous file buffer | `lua/plugins/bufferline.lua` |
-| `<A-1>` … `<A-9>` | `n` | Jump to visible buffer by position | `lua/config/keymaps.lua` |
-| `<leader>bo` | `n` | Close all other buffers | `lua/plugins/bufferline.lua` |
-| `te` | `n` | Open a new tab | `lua/config/keymaps.lua` |
-| `tw` | `n` | Close current tab | `lua/config/keymaps.lua` |
-| `ss` | `n` | Horizontal split | `lua/config/keymaps.lua` |
-| `sv` | `n` | Vertical split | `lua/config/keymaps.lua` |
-| `sh` | `n` | Move to left window | `lua/config/keymaps.lua` |
-| `sk` | `n` | Move to upper window | `lua/config/keymaps.lua` |
-| `sj` | `n` | Move to lower window | `lua/config/keymaps.lua` |
-| `sl` | `n` | Move to right window | `lua/config/keymaps.lua` |
-| `<C-h>` | `n` | Move to left window | `lua/config/keymaps.lua` |
-| `<C-k>` | `n` | Move to upper window | `lua/config/keymaps.lua` |
-| `<C-j>` | `n` | Move to lower window | `lua/config/keymaps.lua` |
-| `<C-l>` | `n` | Move to right window | `lua/config/keymaps.lua` |
-| `<C-S-h>` | `n` | Shrink window width | `lua/config/keymaps.lua` |
-| `<C-S-l>` | `n` | Grow window width | `lua/config/keymaps.lua` |
-| `<C-S-k>` | `n` | Grow window height | `lua/config/keymaps.lua` |
-| `<C-S-j>` | `n` | Shrink window height | `lua/config/keymaps.lua` |
+| `[d` / `]d` | `n` | Previous / next diagnostic | LazyVim |
+| `[e` / `]e` | `n` | Previous / next error | LazyVim |
+| `[w` / `]w` | `n` | Previous / next warning | LazyVim |
+| `<leader>cd` | `n` | Line diagnostic | LazyVim |
+| `<leader>xx` / `<leader>xX` | `n` | Project / current-buffer Trouble diagnostics | LazyVim |
+| `;e` | `n` | Telescope diagnostics | custom |
+| `;q` | `n` | Put diagnostics in quickfix and open it | custom |
+| `<leader>xq` | `n` | Toggle native quickfix | LazyVim |
+| `<leader>xQ` | `n` | Trouble quickfix | LazyVim |
+| `[q` / `]q` | `n` | Previous / next Trouble or quickfix item | LazyVim |
+| `<leader>xt` | `n` | TODO list in Trouble | LazyVim todo-comments |
+| `[t` / `]t` | `n` | Previous / next TODO | LazyVim todo-comments |
 
-## Neo-tree Panel
+## LSP and completion
 
-These mappings apply inside the Neo-tree window.
+The LSP mappings below are buffer-local and appear when the attached server
+supports the action.
 
-| Key | Mode | Action | Source |
+| Key | Mode | Action | Owner |
 | --- | --- | --- | --- |
-| `<CR>` | Neo-tree | Open item | `lua/plugins/explorer.lua` |
-| `o` | Neo-tree | Open item | `lua/plugins/explorer.lua` |
-| `l` | Neo-tree | Open item | `lua/plugins/explorer.lua` |
-| `H` | Neo-tree | Toggle hidden files | `lua/plugins/explorer.lua` |
+| `gd` / `gD` | `n` | Definition / declaration | LazyVim LSP |
+| `gr` / `gI` / `gy` | `n` | References / implementation / type definition | LazyVim LSP |
+| `K` / `gK` | `n` | Hover / signature help | LazyVim LSP |
+| `<C-k>` | `i` | Signature help | LazyVim LSP |
+| `<leader>ca` | `n`, `x` | Code action | LazyVim LSP |
+| `<leader>cr` | `n` | Rename symbol | LazyVim LSP |
+| `<leader>co` | `n` | Organize imports when supported | LazyVim LSP |
+| `<leader>cf` | `n`, `x` | Format | LazyVim |
+| `<Tab>` / `<S-Tab>` | `i` | Super-Tab completion/snippet navigation | Blink |
+| `<C-y>` | `i` | Select and accept completion | LazyVim / Blink |
+| `<M-l>` / `<M-w>` | `i` | Accept full / next-word Copilot suggestion | Copilot |
+| `<M-]>` / `<M-[>` | `i` | Next / previous Copilot suggestion | Copilot |
+| `<C-]>` | `i` | Dismiss Copilot suggestion | Copilot |
 
-## Telescope And Search
+Copilot no longer owns `<M-j>`; LazyVim keeps it for moving the insert-mode
+line down.
 
-| Key | Mode | Action | Source |
+## Buffers, windows, and tabs
+
+| Key | Mode | Action | Owner |
 | --- | --- | --- | --- |
-| `<leader>bs` | `n` | Fuzzy find inside current buffer | `lua/config/keymaps.lua` |
-| `;fw` | `n` | Live grep open/current-file search workflow | `lua/config/keymaps.lua` |
-| `<leader>/` | `n` | Live grep in current working directory | `lua/config/keymaps.lua` |
-| `;f` | `n` | Find files, including hidden and ignored files | `lua/plugins/telescope.lua` |
-| `;r` | `n` | Live grep in current working directory | `lua/plugins/telescope.lua` |
-| `\\` | `n` | List open buffers | `lua/plugins/telescope.lua` |
-| `;;` | `n` | Resume previous Telescope picker | `lua/plugins/telescope.lua` |
-| `;e` | `n` | Show diagnostics picker | `lua/plugins/telescope.lua` |
-| `;s` | `n` | Show Treesitter symbols picker | `lua/plugins/telescope.lua` |
-| `;d` | `n` | Find files under current file directory | `lua/plugins/telescope.lua` |
-| `;w` | `n` | Search word under cursor | `lua/plugins/telescope.lua` |
-| `sf` | `n` | Open Telescope file browser at current buffer directory | `lua/plugins/telescope.lua` |
+| `<Tab>` / `<S-Tab>` | `n` | Next / previous Bufferline buffer | custom |
+| `<S-h>` / `<S-l>`, `[b` / `]b` | `n` | Previous / next buffer | LazyVim |
+| `<A-1>` … `<A-9>` | `n` | Select visible buffer by position | custom |
+| `<leader>bo` | `n` | Delete other buffers | LazyVim / Snacks |
+| `<C-h/j/k/l>` | `n` | Move between windows | LazyVim |
+| `<C-Arrow>` | `n` | Resize windows | LazyVim |
+| `ss` / `sv` | `n` | Horizontal / vertical split | custom |
+| `sh` / `sj` / `sk` / `sl` | `n` | Move between windows | custom |
+| `<leader>-` / `<leader>\|` | `n` | Horizontal / vertical split | LazyVim |
+| `<leader><tab><tab>` | `n` | New tab page | LazyVim |
+| `<leader><tab>d` | `n` | Close tab page | LazyVim |
+| `<leader><tab>[` / `<leader><tab>]` | `n` | Previous / next tab page | LazyVim |
 
-## Telescope File Browser
-
-These mappings apply inside the Telescope file browser in normal mode.
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `N` | Telescope file browser | Create file or directory | `lua/plugins/telescope.lua` |
-| `h` | Telescope file browser | Go to parent directory | `lua/plugins/telescope.lua` |
-| `<C-u>` | Telescope file browser | Move selection up by 10 | `lua/plugins/telescope.lua` |
-| `<C-d>` | Telescope file browser | Move selection down by 10 | `lua/plugins/telescope.lua` |
-
-## Diagnostics, LSP, And Code Actions
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `]d` | `n` | Go to next diagnostic | `lua/config/keymaps.lua` |
-| `[d` | `n` | Go to previous diagnostic | `lua/config/keymaps.lua` |
-| `<C-k>` | `i` | Show LSP signature help | `lua/config/keymaps.lua` |
-| `<leader>ca` | `n` | Code actions | `lua/config/keymaps.lua` |
-| `<leader>ca` | `v` | Code actions for visual selection | `lua/config/keymaps.lua` |
-| `<leader>rn` | `n` | Incremental rename for word under cursor | `lua/plugins/plugs.lua` |
-| `<leader>r` | `v` | Select refactor action | `lua/plugins/plugs.lua` |
-
-## Completion And Snippets
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<C-space>` | Blink completion | Show completion and documentation, or hide documentation | `lua/plugins/completion.lua` |
-| `<C-e>` | Blink completion | Hide completion menu | `lua/plugins/completion.lua` |
-| `<C-y>` | Blink completion | Select and accept item | `lua/plugins/completion.lua` |
-| `<C-p>` | Blink completion | Select previous item, then fallback | `lua/plugins/completion.lua` |
-| `<C-n>` | Blink completion | Select next item, then fallback | `lua/plugins/completion.lua` |
-| `<C-b>` | Blink completion | Scroll documentation up, then fallback | `lua/plugins/completion.lua` |
-| `<C-f>` | Blink completion | Scroll documentation down, then fallback | `lua/plugins/completion.lua` |
-| `<Tab>` | Blink completion | Accept completion or move forward in a snippet | `lua/plugins/completion.lua` |
-| `<S-Tab>` | Blink completion | Jump backward in snippet, then fallback | `lua/plugins/completion.lua` |
-| `<C-k>` | Blink completion | Show or hide function signature help | `lua/plugins/completion.lua` |
-| `<M-l>` | Copilot suggestion | Accept the full inline suggestion | `lua/plugins/ai.lua` |
-| `<M-w>` | Copilot suggestion | Accept the next suggested word | `lua/plugins/ai.lua` |
-| `<M-j>` | Copilot suggestion | Accept the next suggested line | `lua/plugins/ai.lua` |
-| `<M-]>` | Copilot suggestion | Show the next suggestion | `lua/plugins/ai.lua` |
-| `<M-[>` | Copilot suggestion | Show the previous suggestion | `lua/plugins/ai.lua` |
-| `<C-]>` | Copilot suggestion | Dismiss the inline suggestion | `lua/plugins/ai.lua` |
-
-## Debugger
-
-These mappings come from the enabled LazyVim DAP core. The local adapter setup
-supports C/C++, Python, JavaScript, and TypeScript. C/C++ can build the current
-single file with `-g -O0` before launch; project binaries can be selected
-manually from the same start menu.
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<leader>db` | `n` | Toggle breakpoint | LazyVim DAP core |
-| `<leader>dB` | `n` | Set conditional breakpoint | LazyVim DAP core |
-| `<leader>dc` | `n` | Start or continue debug session | LazyVim DAP core |
-| `<leader>da` | `n` | Start with command-line arguments | LazyVim DAP core |
-| `<leader>dC` | `n` | Run to cursor | LazyVim DAP core |
-| `<leader>di` | `n` | Step into | LazyVim DAP core |
-| `<leader>dO` | `n` | Step over | LazyVim DAP core |
-| `<leader>do` | `n` | Step out | LazyVim DAP core |
-| `<leader>dP` | `n` | Pause | LazyVim DAP core |
-| `<leader>dt` | `n` | Terminate debug session | LazyVim DAP core |
-| `<leader>dl` | `n` | Run last debug configuration | LazyVim DAP core |
-| `<leader>dr` | `n` | Toggle debug REPL | LazyVim DAP core |
-| `<leader>du` | `n` | Toggle debugger UI | LazyVim DAP core |
-| `<leader>de` | `n`, `x` | Evaluate expression | LazyVim DAP core |
-| `<leader>dw` | `n` | Inspect value in a debugger widget | LazyVim DAP core |
-| `<leader>dj` / `<leader>dk` | `n` | Move down/up the call stack | LazyVim DAP core |
+Tab/Shift-Tab and the `s…` window family are intentional preferred-workflow
+aliases. The removed `te` / `tw` mappings no longer shadow native `t{char}`
+motions.
 
 ## Terminal
 
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<leader>ttt` | `n` | Toggle floating terminal | `lua/config/keymaps.lua` |
-| `<leader>tth` | `n` | Open horizontal terminal split | `lua/config/keymaps.lua` |
-| `<leader>ttv` | `n` | Toggle vertical terminal | `lua/config/keymaps.lua` |
-| `<leader>rt` | `n` | Toggle most recently used terminal or open one | `lua/config/keymaps.lua` |
-| `<Esc>` | `t` | Leave terminal insert mode | `lua/plugins/toggleterm.lua` |
-| `jk` | `t` | Leave terminal insert mode | `lua/plugins/toggleterm.lua` |
-| `<C-q>` | `t` | Kill terminal buffer | `lua/plugins/toggleterm.lua` |
-| `<C-x>` | `t` | Kill terminal buffer | `lua/plugins/toggleterm.lua` |
-| `<C-h>` | `t` | Move to left window | `lua/plugins/toggleterm.lua` |
-| `<C-j>` | `t` | Move to lower window | `lua/plugins/toggleterm.lua` |
-| `<C-k>` | `t` | Move to upper window | `lua/plugins/toggleterm.lua` |
-| `<C-l>` | `t` | Move to right window | `lua/plugins/toggleterm.lua` |
-| `<C-w>` | `t` | Enter window command prefix from terminal mode | `lua/plugins/toggleterm.lua` |
-
-Note: ToggleTerm has no default `open_mapping` active; use the leader terminal mappings above.
-
-## Competitive Programming And C++
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<F5>` | `n` | Save, compile C++ file, run with `../io/input.txt`, write `../io/output.txt` | `lua/config/keymaps.lua` |
-| `<F6>` | `n` | Open `../io/input.txt` | `lua/config/keymaps.lua` |
-| `<F7>` | `n` | Open `../io/output.txt` | `lua/config/keymaps.lua` |
-| `<F8>` | `n` | Open `../io/output.txt` in a vertical split | `lua/config/keymaps.lua` |
-| `<leader>ci` | `n` | Open `../io/input.txt` | `lua/config/keymaps.lua` |
-| `<leader>co` | `n` | Open `../io/output.txt` | `lua/config/keymaps.lua` |
-| `<leader>cr` | `n` | Save, compile, and run current C++ file | `lua/config/keymaps.lua` |
-| `<leader>ct` | `n` | Insert small C++ starter template | `lua/config/keymaps.lua` |
-| `<F9>` | `n` | Show input and output side by side | `lua/config/keymaps.lua` |
-| `<F10>` | `n` | Compile and run with terminal output | `lua/config/keymaps.lua` |
-| `cpp` | `n` | Insert full C++ competitive-programming template | `lua/config/keymaps.lua` |
-| `cph` | `n` | Insert minimal C++ header template | `lua/config/keymaps.lua` |
-| `<F11>` | `n` | Compile with verbose debug output | `lua/config/keymaps.lua` |
-| `<F12>` | `n` | Print current directory and CP path status | `lua/config/keymaps.lua` |
-| `<leader>gD` | `n` | Compile current file with `g++ --debug` into CP outputs directory | `lua/config/keymaps.lua` |
-
-## Code Runner, TODO, And Utilities
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<leader>rr` | `n` | Run current file with Code Runner | `lua/config/keymaps.lua` |
-| `<leader>rrc` | `n` | Close Code Runner output | `lua/config/keymaps.lua` |
-| `<leader>xt` | `n` | Open TODO quickfix list | `lua/config/keymaps.lua` |
-| `<leader>?` | `n` | Show buffer-local keymaps with WhichKey | `lua/plugins/plugs.lua` |
-
-## Harpoon
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `<leader>ha` | `n` | Add current file to Harpoon | `lua/plugins/plugs.lua` |
-| `<leader>hh` | `n` | Toggle Harpoon quick menu | `lua/plugins/plugs.lua` |
-| `<leader>hn` | `n` | Go to next Harpoon file | `lua/plugins/plugs.lua` |
-| `<leader>hp` | `n` | Go to previous Harpoon file | `lua/plugins/plugs.lua` |
-
-## Flash
-
-| Key | Mode | Action | Source |
-| --- | --- | --- | --- |
-| `zk` | `n`, `x`, `o` | Flash jump | `lua/plugins/flash.lua` |
-| `Zk` | `n`, `x`, `o` | Flash Treesitter jump | `lua/plugins/flash.lua` |
-| `r` | `o` | Remote Flash | `lua/plugins/flash.lua` |
-| `R` | `o`, `x` | Flash Treesitter search | `lua/plugins/flash.lua` |
-| `<C-s>` | `c` | Toggle Flash search | `lua/plugins/flash.lua` |
-
-## Plugin Commands Without Direct Keybinds
-
-| Command | Action | Source |
+| Key | Context | Action |
 | --- | --- | --- |
-| `:Tetris` | Open Tetris | `lua/plugins/plugs.lua` |
-| `:Rain` | Run `CellularAutomaton make_it_rain` | `lua/plugins/plugs.lua` |
-| `:CellularAutomaton` | Run cellular automaton animations | `lua/plugins/plugs.lua` |
-| `:ToggleTerm` | Open ToggleTerm manually | `lua/plugins/toggleterm.lua` |
-| `:TermExec` | Execute command in ToggleTerm | `lua/plugins/toggleterm.lua` |
-| `:EditorTransparencyToggle` | Toggle the transparent editor canvas | `lua/config/appearance.lua` |
+| `<C-\>` | normal / insert | Toggle the persistent editor-column bottom terminal |
+| `<C-\>` | its terminal buffer | Hide the terminal without killing its shell |
+| `<C-q>` | its terminal buffer | Kill the terminal |
+| `<Esc>` / `jk` | terminal buffer | Leave terminal insert mode |
+| `<C-h/j/k/l>` | terminal buffer | Move between windows |
+| `<C-w>` | terminal buffer | Enter window-command prefix |
 
-## Inactive Or Saved Commented Mappings
+LazyVim's Snacks `<C-/>`, `<leader>ft`, and `<leader>fT` entry points and the
+custom ToggleTerm leader aliases are disabled. `:ToggleTerm` and `:TermExec`
+remain available explicitly; their terminal-local controls stay scoped to
+ToggleTerm buffers.
 
-These were found in comments or disabled example specs, so they are not active right now.
+## Flash and scoped plugin mappings
 
-| Key | Intended Action | Source |
+| Key | Context | Action |
 | --- | --- | --- |
-| `<leader>th` | Telescope theme switcher | `lua/config/keymaps.lua` |
-| `<leader>fp` | Find Lazy plugin files | `lua/plugins/example.lua` |
-| `<leader>cR` | Typescript rename file | `lua/plugins/example.lua` |
+| `zk` | `n`, `x`, `o` | Flash jump |
+| `Zk` | `n`, `x`, `o` | Flash Treesitter jump |
+| `r` | operator-pending | Remote Flash |
+| `R` | operator-pending / visual | Treesitter search |
+| `<C-s>` | command-line | Toggle Flash search |
+| `<C-space>` | normal / operator / visual | Flash Treesitter incremental selection |
 
-Note: `lua/plugins/example.lua` returns an empty spec immediately, so its later example mappings are documentation only.
+Flash `s` and `S` are disabled so they cannot compete with `ss`, `sv`,
+`sh`, `sj`, `sk`, and `sl`. Neo-tree and Telescope's internal buffer-local
+mappings remain plugin-local and are not global duplicates.
+
+## Competitive programming, runner, and debugger
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `<F5>` | `n` | Compile and run C++ using `../io/input.txt` |
+| `<F6>` / `<F7>` | `n` | Open CP input / output |
+| `<F8>` | `n` | Open CP output in a vertical split |
+| `<F9>` | `n` | Show CP input/output side by side |
+| `<F10>` | `n` | Compile and run with terminal output |
+| `<F11>` / `<F12>` | `n` | Verbose compile / CP path diagnostics |
+| `<leader>ct` | `n` | Insert the small C++ starter template |
+| `cpp` / `cph` | `n` | Insert full / minimal C++ templates |
+| `<leader>rr` / `<leader>rc` | `n` | Run current file / close runner output |
+| `<leader>db` / `<leader>dc` | `n` | Toggle breakpoint / run or continue |
+| `<leader>di` / `<leader>dO` / `<leader>do` | `n` | Step into / over / out |
+| `<leader>du` | `n` | Toggle debugger UI |
+
+The CP `<leader>ci`, `<leader>co`, `<leader>cr`, and `<leader>gD` aliases were
+removed. Function keys own CP I/O/run actions; LazyVim owns LSP organize-imports
+and rename, and Snacks owns Git Diff at `<leader>gD`.
+
+## Themes, help, and editing overrides
+
+| Key | Mode | Action |
+| --- | --- | --- |
+| `<leader>uC` | `n` | Open the DMS / NvChad theme picker |
+| `<leader>hk` | `n` | Open the effective keybinding browser |
+| `<leader>?` | `n` | Show current-buffer WhichKey mappings |
+| `<C-s>` | `n`, `i`, `x`, `s` | Save | LazyVim |
+| `x` | `n` | Delete character without yanking | custom |
+| `+` / `-` | `n` | Increment / decrement number | custom |
+| `<C-a>` | `n` | Select all | custom |
+| `J` / `K` | `x` | Move selected block down / up | custom |
+
+`<leader>uC` is registered once as the custom theme picker. The old
+`<leader>th` alias and stale Harpoon documentation are gone.

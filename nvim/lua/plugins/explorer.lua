@@ -13,15 +13,6 @@ local function toggle_explorer()
   })
 end
 
-local function reveal_file()
-  require("neo-tree.command").execute({
-    source = "filesystem",
-    position = "left",
-    reveal = true,
-    dir = launch_root(),
-  })
-end
-
 local function saved_width()
   local ok, lines = pcall(vim.fn.readfile, width_file, "", 1)
   local width = ok and tonumber(lines[1]) or nil
@@ -86,8 +77,6 @@ return {
     end,
     keys = {
       { "<leader>e", toggle_explorer, desc = "Toggle Explorer (Launch Root)" },
-      { "<C-b>", toggle_explorer, desc = "Toggle Explorer (Launch Root)" },
-      { "<leader>f", reveal_file, desc = "Reveal File in Explorer (Launch Root)" },
     },
   },
 }

@@ -13,20 +13,7 @@ return {
       require("config.theme-selector").setup()
     end,
     keys = {
-      {
-        "<leader>th",
-        function()
-          require("config.theme-selector").open()
-        end,
-        desc = "Themes (DMS / NvChad)",
-      },
-      {
-        "<leader>uC",
-        function()
-          require("config.theme-selector").open()
-        end,
-        desc = "Themes (DMS / NvChad)",
-      },
+      { "<leader>uC", open_themes, desc = "Themes (DMS / NvChad)" },
     },
   },
   {
@@ -40,13 +27,9 @@ return {
   -- Base46 supplies these palettes; separate colorscheme engines are unnecessary.
   { "folke/tokyonight.nvim", enabled = false },
   { "catppuccin/nvim", name = "catppuccin", enabled = false },
-  -- LazyVim can assign uC through either picker; route both to the same catalog.
+  -- Keep LazyVim's Snacks colorscheme picker from claiming the custom picker key.
   {
     "folke/snacks.nvim",
-    keys = { { "<leader>uC", open_themes, desc = "Themes (DMS / NvChad)" } },
-  },
-  {
-    "nvim-telescope/telescope.nvim",
-    keys = { { "<leader>uC", open_themes, desc = "Themes (DMS / NvChad)" } },
+    keys = { { "<leader>uC", false } },
   },
 }
